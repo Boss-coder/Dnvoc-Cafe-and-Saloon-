@@ -1,2 +1,2 @@
 # Dnvoc Cafe and Saloon 
-PHP voting script development for Dnvoc
+This folder holds files for Dnvoc Cafe and Saloon service. 
