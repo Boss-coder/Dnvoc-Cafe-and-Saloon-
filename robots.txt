@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/sitemap.xml
