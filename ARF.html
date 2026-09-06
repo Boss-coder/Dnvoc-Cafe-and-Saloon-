@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment request form · DNVOC</title>
+  <style>
+    /* ----- minimal reset & basic styling ----- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #f2f2f2;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* watermark */
+    .watermark {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .watermark-text {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(48px, 8vw, 110px);
+      font-weight: 700;
+      color: #c0b8a8;
+      opacity: 0.15;
+      transform: rotate(-18deg) scale(1.2);
+      white-space: nowrap;
+      letter-spacing: 3px;
+      user-select: none;
+      width: 200%;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .watermark-text {
+        font-size: 32px;
+        transform: rotate(-22deg) scale(1.1);
+      }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 28px 32px 34px;
+      border: 1px solid #dcdcdc;
+    }
+
+    /* header */
+    .form-header {
+      text-align: center;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 14px;
+      margin-bottom: 24px;
+    }
+    .form-header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1e1e1e;
+      letter-spacing: 0.3px;
+    }
+    .form-header p {
+      color: #666;
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    /* form layout */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 24px;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field-group label {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .field-group label .required-star {
+      color: #c0392b;
+      font-size: 18px;
+    }
+    .field-group label .hint {
+      font-weight: 400;
+      font-size: 13px;
+      color: #999;
+    }
+    .field-group input,
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      background: #fafafa;
+      transition: border-color 0.2s;
+    }
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      outline: none;
+      border-color: #4a90d9;
+      box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
+    }
+    .field-group textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    /* section divider */
+    .section-divider {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 20px 0 18px;
+      border: 0;
+    }
+
+    /* group members - compact */
+    .group-section {
+      background: #f7f7f7;
+      border-radius: 6px;
+      padding: 12px 14px 14px;
+      border: 1px solid #e0e0e0;
+      margin-top: 6px;
+    }
+    .group-section .member-entry {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      align-items: flex-end;
+      margin-bottom: 6px;
+    }
+    .group-section .member-entry .field-group {
+      flex: 1 1 140px;
+      min-width: 100px;
+    }
+    .group-section .member-entry .field-group label {
+      font-size: 13px;
+    }
+    .group-section .member-entry input {
+      padding: 7px 10px;
+      font-size: 14px;
+      height: 38px;
+    }
+    .btn-add-member {
+      background: #4a90d9;
+      color: #fff;
+      border: none;
+      padding: 0 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      height: 38px;
+      white-space: nowrap;
+      transition: background 0.2s;
+      flex-shrink: 0;
+      margin-bottom: 0;
+      line-height: 38px;
+    }
+    .btn-add-member:hover {
+      background: #357abd;
+    }
+    .member-list {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .member-tag {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+    }
+    .member-tag .remove-member {
+      background: none;
+      border: none;
+      color: #b33;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .member-tag .remove-member:hover {
+      color: #d00;
+    }
+
+    /* checkbox rows */
+    .checkbox-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px 28px;
+      padding: 6px 0;
+    }
+    .checkbox-row label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      cursor: pointer;
+      color: #222;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #4a90d9;
+      cursor: pointer;
+    }
+    .badge-price {
+      font-size: 0.85em;
+      background: #eee;
+      padding: 1px 12px;
+      border-radius: 12px;
+      color: #555;
+      font-weight: 600;
+    }
+    .spiral-check-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 0;
+    }
+    .spiral-check-wrapper label {
+      font-weight: 600;
+      font-size: 15px;
+      color: #222;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .spiral-check-wrapper input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #4a90d9;
+      cursor: pointer;
+    }
+
+    /* buttons */
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .btn-primary {
+      background: #4a90d9;
+      color: #fff;
+      border: none;
+      padding: 11px 28px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-width: 140px;
+    }
+    .btn-primary:hover {
+      background: #357abd;
+    }
+    .btn-submit {
+      background: #27ae60;
+      color: #fff;
+      border: none;
+      padding: 11px 28px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      min-width: 140px;
+    }
+    .btn-submit:hover {
+      background: #1e8b4d;
+    }
+    .btn-secondary {
+      background: #e0e0e0;
+      color: #333;
+      border: none;
+      padding: 11px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #ccc;
+    }
+
+    /* quotation box */
+    .quotation-box {
+      background: #f7f7f7;
+      border-radius: 8px;
+      padding: 18px 22px 22px;
+      margin-top: 20px;
+      border-left: 4px solid #4a90d9;
+    }
+    .quotation-box.hidden {
+      display: none;
+    }
+    .quotation-box h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #1e1e1e;
+      font-weight: 600;
+    }
+    .quotation-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px 24px;
+      font-size: 15px;
+    }
+    .quotation-breakdown .q-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .quotation-breakdown .q-item .q-label {
+      color: #555;
+    }
+    .quotation-breakdown .q-item .q-value {
+      font-weight: 700;
+    }
+    .quotation-total {
+      grid-column: 1 / -1;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 2px solid #4a90d9;
+      display: flex;
+      justify-content: space-between;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .quotation-total .q-value {
+      color: #2c3e50;
+    }
+    .quotation-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #888;
+      font-style: italic;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 10px;
+    }
+
+    .form-footnote {
+      text-align: center;
+      font-size: 14px;
+      color: #999;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+    }
+
+    /* utility */
+    .hidden {
+      display: none !important;
+    }
+
+    /* responsive */
+    @media (max-width: 720px) {
+      .page { padding: 18px 16px 22px; }
+      .form-grid { grid-template-columns: 1fr; gap: 12px; }
+      .full-width { grid-column: 1; }
+      .quotation-breakdown { grid-template-columns: 1fr; }
+      .action-row { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-submit { min-width: unset; width: 100%; }
+      .group-section .member-entry { flex-wrap: wrap; }
+      .btn-add-member { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .page { padding: 12px; }
+      .form-header h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- watermark -->
+  <div class="watermark" aria-hidden="true">
+    <div class="watermark-text">Dnvoc Assignment request form</div>
+  </div>
+
+  <div class="page">
+    <header class="form-header">
+      <h1>Assignment request form</h1>
+      <p>Fill in the details to get a cost estimate</p>
+    </header>
+
+    <form id="quotationForm" novalidate>
+
+      <!-- Assignment type (first) -->
+      <div style="max-width:300px;margin:0 auto 16px;">
+        <div class="field-group">
+          <label for="assignmentType">Assignment type <span class="required-star">*</span></label>
+          <select id="assignmentType" required>
+            <option value="single">Single</option>
+            <option value="group">Group</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Group members (hidden by default) -->
+      <div id="groupSection" class="group-section hidden">
+        <div style="font-weight:600;margin-bottom:8px;">Group members</div>
+        <div class="member-entry">
+          <div class="field-group">
+            <label for="memberName">Name <span class="required-star">*</span></label>
+            <input type="text" id="memberName" placeholder="Full name" />
+          </div>
+          <div class="field-group">
+            <label for="memberMat">Mat. number <span class="required-star">*</span></label>
+            <input type="text" id="memberMat" placeholder="e.g ABM/14037399" />
+          </div>
+          <button type="button" class="btn-add-member" id="addMemberBtn">+ Add</button>
+        </div>
+        <div id="memberListContainer" class="member-list"></div>
+        <div style="font-size:14px;color:#888;margin-top:4px;">
+          <span id="memberCountDisplay">0 members added</span>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- Personal info (hidden for group) -->
+      <div id="singleUserFields" class="form-grid">
+        <div class="field-group">
+          <label for="fullName">Full name <span class="required-star">*</span></label>
+          <input type="text" id="fullName" placeholder="Enter Full name" required />
+        </div>
+        <div class="field-group">
+          <label for="matNumber">Matriculation number <span class="required-star">*</span></label>
+          <input type="text" id="matNumber" placeholder="e.g ABM/14037399" required />
+        </div>
+      </div>
+
+      <!-- common fields (always visible) -->
+      <div class="form-grid">
+        <div class="field-group full-width">
+          <label for="assignmentQuestion">Assignment question <span class="required-star">*</span></label>
+          <input type="text" id="assignmentQuestion" placeholder="e.g Introduction to Marketing" required />
+        </div>
+        <div class="field-group">
+          <label for="department">Department <span class="required-star">*</span></label>
+          <input type="text" id="department" placeholder="e.g Cooperative and Supply Chain Management" required />
+        </div>
+        <div class="field-group">
+          <label for="course">Course <span class="required-star">*</span></label>
+          <input type="text" id="course" placeholder="Introduction to Marketing" required />
+        </div>
+        <div class="field-group">
+          <label for="school">School <span class="required-star">*</span></label>
+          <input type="text" id="school" placeholder="Administration Business and Management Studies" required />
+        </div>
+        <div class="field-group">
+          <label for="classLevel">Class / level <span class="required-star">*</span></label>
+          <input type="text" id="classLevel" placeholder="e.g HND II" required />
+        </div>
+        <div class="field-group">
+          <label for="arm">Arm <span class="hint">(optional)</span></label>
+          <input type="text" id="arm" placeholder="A, B e.t.c" />
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- Service options -->
+      <h2 style="font-size:20px;font-weight:600;color:#1e1e1e;margin:0 0 12px;">Service options</h2>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <label for="numPages">Number of pages <span class="required-star">*</span></label>
+          <input type="number" id="numPages" min="1" value="1" step="1" required />
+        </div>
+        <div class="field-group">
+          <label for="numCopies">Number of copies <span class="required-star">*</span></label>
+          <input type="number" id="numCopies" min="1" value="1" step="1" required />
+        </div>
+
+        <!-- Cover page (optional now) -->
+        <div class="field-group full-width">
+          <div class="checkbox-row">
+            <label style="font-weight:600;">
+              <input type="checkbox" id="includeCover" checked />
+              Cover page
+              <span class="badge-price">₦300</span>
+            </label>
+            <label style="font-weight:400;color:#555;">
+              <input type="checkbox" id="coverInCopies" checked />
+              Include in copies
+            </label>
+          </div>
+        </div>
+
+        <!-- Spiral binding checkbox -->
+        <div class="field-group full-width">
+          <div class="spiral-check-wrapper">
+            <label>
+              <input type="checkbox" id="spiralCheck" />
+              Spiral binding
+              <span class="badge-price">+ ₦300</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional info -->
+      <div class="field-group" style="margin-top:16px;">
+        <label for="additionalInfo">Additional information <span class="hint">(optional)</span></label>
+        <textarea id="additionalInfo" rows="2" placeholder="Any special instructions or notes..."></textarea>
+      </div>
+
+      <!-- Buttons -->
+      <div class="action-row">
+        <button type="button" class="btn-primary" id="calculateBtn">Get estimate</button>
+        <button type="button" class="btn-submit" id="submitBtn">Submit request</button>
+        <button type="button" class="btn-secondary" id="resetBtn">Reset</button>
+      </div>
+
+      <!-- Quotation display -->
+      <div id="quotationDisplay" class="quotation-box hidden">
+        <h3>Estimate</h3>
+        <div id="quotationBreakdown" class="quotation-breakdown"></div>
+        <div class="quotation-note">
+          This is an estimate. Final price may vary based on final review.
+        </div>
+      </div>
+
+      <div class="form-footnote">
+        Fill this form to get a quotation on your assignment work. All prices in Nigerian Naira (₦).
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // DOM refs
+      const form = document.getElementById('quotationForm');
+      const assignmentType = document.getElementById('assignmentType');
+      const groupSection = document.getElementById('groupSection');
+      const singleUserFields = document.getElementById('singleUserFields');
+      const memberName = document.getElementById('memberName');
+      const memberMat = document.getElementById('memberMat');
+      const addMemberBtn = document.getElementById('addMemberBtn');
+      const memberListContainer = document.getElementById('memberListContainer');
+      const memberCountDisplay = document.getElementById('memberCountDisplay');
+
+      const fullName = document.getElementById('fullName');
+      const matNumber = document.getElementById('matNumber');
+      const assignmentQuestion = document.getElementById('assignmentQuestion');
+      const department = document.getElementById('department');
+      const course = document.getElementById('course');
+      const school = document.getElementById('school');
+      const classLevel = document.getElementById('classLevel');
+      const arm = document.getElementById('arm');
+      const numPages = document.getElementById('numPages');
+      const numCopies = document.getElementById('numCopies');
+      const includeCover = document.getElementById('includeCover');
+      const coverInCopies = document.getElementById('coverInCopies');
+      const spiralCheck = document.getElementById('spiralCheck');
+      const additionalInfo = document.getElementById('additionalInfo');
+
+      const calculateBtn = document.getElementById('calculateBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const quotationDisplay = document.getElementById('quotationDisplay');
+      const quotationBreakdown = document.getElementById('quotationBreakdown');
+
+      let members = [];
+
+      // toggle group section & hide/show single user fields
+      function toggleGroupFields() {
+        const isGroup = assignmentType.value === 'group';
+        groupSection.classList.toggle('hidden', !isGroup);
+        singleUserFields.classList.toggle('hidden', isGroup);
+        if (!isGroup) {
+          members = [];
+          renderMembers();
+        }
+      }
+
+      function renderMembers() {
+        memberListContainer.innerHTML = '';
+        members.forEach((m, idx) => {
+          const div = document.createElement('div');
+          div.className = 'member-tag';
+          div.innerHTML = `
+            <span><strong>${m.name}</strong> · ${m.mat}</span>
+            <button type="button" class="remove-member" data-index="${idx}">&times;</button>
+          `;
+          div.querySelector('.remove-member').addEventListener('click', function() {
+            const i = parseInt(this.dataset.index, 10);
+            members.splice(i, 1);
+            renderMembers();
+          });
+          memberListContainer.appendChild(div);
+        });
+        memberCountDisplay.textContent = members.length + ' member' + (members.length === 1 ? '' : 's') + ' added';
+      }
+
+      function addMember() {
+        const name = memberName.value.trim();
+        const mat = memberMat.value.trim();
+        if (!name || !mat) {
+          alert('Please enter both name and matriculation number.');
+          return;
+        }
+        members.push({ name, mat });
+        memberName.value = '';
+        memberMat.value = '';
+        renderMembers();
+      }
+
+      // calculation
+      function calculateQuotation() {
+        const pages = parseInt(numPages.value, 10) || 0;
+        const copies = parseInt(numCopies.value, 10) || 0;
+        const hasCover = includeCover.checked;
+        const coverInCopy = coverInCopies.checked;
+        const spiral = spiralCheck.checked;
+
+        const coverPrice = 300;
+        const spiralPrice = 300;
+        const copyRate = 60;
+        const typingRate = 500;
+
+        const typingCost = typingRate * pages;
+        let extraPages = 0;
+        if (hasCover && coverInCopy) extraPages += 1;
+        const totalPagesPerCopy = pages + extraPages;
+        const copyCost = totalPagesPerCopy * copies * copyRate;
+        const coverCost = hasCover ? coverPrice : 0;
+        const spiralCost = spiral ? spiralPrice : 0;
+
+        const total = typingCost + copyCost + coverCost + spiralCost;
+
+        const breakdown = [
+          { label: 'Typing / Printing / Research', value: '₦' + typingCost.toLocaleString(), detail: pages + ' page' + (pages === 1 ? '' : 's') + ' × ₦500' },
+          { label: 'Printing copies', value: '₦' + copyCost.toLocaleString(), detail: totalPagesPerCopy + ' page' + (totalPagesPerCopy === 1 ? '' : 's') + ' × ' + copies + ' copy' + (copies === 1 ? '' : 's') + ' × ₦60' }
+        ];
+        if (hasCover) {
+          breakdown.push({ label: 'Cover page', value: '₦' + coverCost.toLocaleString(), detail: 'Fixed price' });
+        }
+        if (spiral) {
+          breakdown.push({ label: 'Spiral binding', value: '₦' + spiralCost.toLocaleString(), detail: 'Added' });
+        }
+        return { total, breakdown };
+      }
+
+      function renderQuotation() {
+        const result = calculateQuotation();
+        if (parseInt(numPages.value, 10) === 0 && parseInt(numCopies.value, 10) === 0 && !spiralCheck.checked && !includeCover.checked) {
+          quotationDisplay.classList.add('hidden');
+          return;
+        }
+        quotationDisplay.classList.remove('hidden');
+        let html = '';
+        result.breakdown.forEach(item => {
+          html += `
+            <div class="q-item">
+              <span class="q-label">${item.label} <span style="font-weight:400;color:#777;font-size:0.85em;">(${item.detail})</span></span>
+              <span class="q-value">${item.value}</span>
+            </div>
+          `;
+        });
+        html += `
+          <div class="quotation-total">
+            <span class="q-label">Total estimate</span>
+            <span class="q-value">₦${result.total.toLocaleString()}</span>
+          </div>
+        `;
+        quotationBreakdown.innerHTML = html;
+      }
+
+      // validation
+      function validateForm() {
+        // Common required fields
+        const commonFields = [
+          { el: assignmentQuestion, name: 'Assignment question' },
+          { el: department, name: 'Department' },
+          { el: course, name: 'Course' },
+          { el: school, name: 'School' },
+          { el: classLevel, name: 'Class / level' }
+        ];
+        for (let f of commonFields) {
+          if (!f.el.value.trim()) {
+            alert('Please fill in: ' + f.name);
+            f.el.focus();
+            return false;
+          }
+        }
+
+        const isGroup = assignmentType.value === 'group';
+        if (isGroup) {
+          if (members.length === 0) {
+            alert('Please add at least one group member.');
+            return false;
+          }
+        } else {
+          const singleFields = [
+            { el: fullName, name: 'Full name' },
+            { el: matNumber, name: 'Matriculation number' }
+          ];
+          for (let f of singleFields) {
+            if (!f.el.value.trim()) {
+              alert('Please fill in: ' + f.name);
+              f.el.focus();
+              return false;
+            }
+          }
+        }
+        return true;
+      }
+
+      function getFormData() {
+        const isGroup = assignmentType.value === 'group';
+        const data = {
+          type: assignmentType.value,
+          fullName: isGroup ? '' : fullName.value.trim(),
+          matNumber: isGroup ? '' : matNumber.value.trim(),
+          question: assignmentQuestion.value.trim(),
+          department: department.value.trim(),
+          course: course.value.trim(),
+          school: school.value.trim(),
+          classLevel: classLevel.value.trim(),
+          arm: arm.value.trim(),
+          pages: parseInt(numPages.value, 10) || 0,
+          copies: parseInt(numCopies.value, 10) || 0,
+          coverIncluded: includeCover.checked,
+          coverInCopies: coverInCopies.checked,
+          spiral: spiralCheck.checked,
+          additional: additionalInfo.value.trim(),
+          members: members
+        };
+        return data;
+      }
+
+      function handleSubmit() {
+        if (!validateForm()) return;
+        const data = getFormData();
+        const result = calculateQuotation();
+        let msg = 'ASSIGNMENT REQUEST\n';
+        msg += '─────────────────────\n';
+        msg += 'Type: ' + data.type.toUpperCase() + '\n';
+        if (data.type === 'single') {
+          msg += 'Name: ' + data.fullName + '\n';
+          msg += 'Mat. No: ' + data.matNumber + '\n';
+        }
+        msg += 'Question: ' + data.question + '\n';
+        msg += 'Dept: ' + data.department + '\n';
+        msg += 'Course: ' + data.course + '\n';
+        msg += 'School: ' + data.school + '\n';
+        msg += 'Level: ' + data.classLevel + '\n';
+        if (data.arm) msg += 'Arm: ' + data.arm + '\n';
+        msg += 'Pages: ' + data.pages + '\n';
+        msg += 'Copies: ' + data.copies + '\n';
+        msg += 'Cover: ' + (data.coverIncluded ? 'Yes (₦300)' : 'No') + (data.coverIncluded && data.coverInCopies ? ' · in copies' : '') + '\n';
+        msg += 'Spiral: ' + (data.spiral ? 'Yes (+₦300)' : 'No') + '\n';
+        if (data.additional) msg += 'Notes: ' + data.additional + '\n';
+        if (data.type === 'group' && data.members.length > 0) {
+          msg += '\nGroup members:\n';
+          data.members.forEach((m, i) => {
+            msg += '  ' + (i+1) + '. ' + m.name + ' · ' + m.mat + '\n';
+          });
+        }
+        msg += '\nTotal estimate: ₦' + result.total.toLocaleString();
+        alert(msg + '\n\n(Simulated submission – data would be sent to server.)');
+        console.log('Form data:', data);
+        console.log('Quotation:', result);
+      }
+
+      // event listeners
+      assignmentType.addEventListener('change', function() {
+        toggleGroupFields();
+        if (!quotationDisplay.classList.contains('hidden')) renderQuotation();
+      });
+
+      addMemberBtn.addEventListener('click', addMember);
+      memberName.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addMember(); } });
+      memberMat.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addMember(); } });
+
+      [numPages, numCopies, includeCover, coverInCopies, spiralCheck].forEach(field => {
+        field.addEventListener('change', function() {
+          if (!quotationDisplay.classList.contains('hidden')) renderQuotation();
+        });
+        if (field.type === 'number') {
+          field.addEventListener('input', function() {
+            if (!quotationDisplay.classList.contains('hidden')) renderQuotation();
+          });
+        }
+      });
+
+      calculateBtn.addEventListener('click', function() {
+        if (!validateForm()) return;
+        renderQuotation();
+        quotationDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      submitBtn.addEventListener('click', handleSubmit);
+
+      resetBtn.addEventListener('click', function() {
+        form.reset();
+        members = [];
+        renderMembers();
+        quotationDisplay.classList.add('hidden');
+        fullName.value = '';
+        matNumber.value = '';
+        assignmentQuestion.value = '';
+        department.value = '';
+        course.value = '';
+        school.value = '';
+        classLevel.value = '';
+        arm.value = '';
+        additionalInfo.value = '';
+        numPages.value = 1;
+        numCopies.value = 1;
+        includeCover.checked = true;
+        coverInCopies.checked = true;
+        spiralCheck.checked = false;
+        assignmentType.value = 'single';
+        toggleGroupFields();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // init
+      toggleGroupFields();
+      renderMembers();
+
+      // auto-show estimate if there is data
+      setTimeout(() => {
+        if (parseInt(numPages.value, 10) > 1 || parseInt(numCopies.value, 10) > 1 || spiralCheck.checked || includeCover.checked) {
+          if (validateForm()) renderQuotation();
+        }
+      }, 300);
+
+    })();
+  </script>
+
+</body>
+</html>
