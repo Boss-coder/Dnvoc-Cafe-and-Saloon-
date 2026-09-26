@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assignment Request & Cost Estimator | DNVOC</title>
+    <style>
+        :root {
+            --gold: #d7ae5e;
+            --gold-dark: #9b742d;
+            --gold-light: #e8cf8a;
+            --ink: #111;
+            --line: #cfcfcf;
+            --paper: #fff;
+            --dark: #1a1a1a;
+            --dark-card: #242424;
+        }
+
+        /* ---------- Global Reset & Fonts ---------- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #f7f7f7;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            padding: 24px 12px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ---------- Hamburger & Side Curtain Drawer ---------- */
+        .hamburger-btn {
+            position: fixed;
+            top: 25px;
+            right: 15px;
+            z-index: 10001;
+            background: var(--gold);
+            color: #000;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .hamburger-btn:hover {
+            transform: scale(1.05);
+            background: var(--gold);
+            color: #1a1a1a;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 3px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+
+        /* Hamburger Animation to 'X' */
+        .hamburger-btn.is-active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-btn.is-active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.is-active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .curtain-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(85vw, 380px);
+            height: 100%;
+            background-color: var(--gold-light);
+            color: #fff;
+            z-index: 10003;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .curtain-drawer.active {
+            transform: translateX(0);
+        }
+
+        .curtain-close-btn {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .curtain-close-btn:hover {
+            color: var(--gold);
+        }
+
+        .curtain-content {
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .curtain-nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .curtain-nav-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin: 0 0 2px 2px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        .curtain-link-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            background: #242424;
+            color: #f1f1f1;
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #333;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .curtain-link-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+
+        /* WhatsApp Promo Box */
+        .drawer-wa-box {
+            background: #0d2818;
+            border: 1px solid #128C7E;
+            border-radius: 8px;
+            padding: 14px;
+            color: #e2f7ed;
+        }
+        .drawer-wa-title {
+            color: #25D366;
+            font-family: Impact, sans-serif;
+            font-size: 18px;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .drawer-wa-promo {
+            font-family: sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            padding-left: 16px;
+            list-style: disc;
+        }
+        .drawer-wa-promo li {
+            margin-bottom: 6px;
+        }
+        .drawer-wa-btn {
+            display: block;
+            text-align: center;
+            background: #25D366;
+            color: #000;
+            font-weight: bold;
+            font-family: sans-serif;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .drawer-wa-btn:hover {
+            background: #1eb857;
+        }
+
+
+        /* ---------- Main Container & Header ---------- */
+        .page {
+            max-width: 850px;
+            width: 100%;
+            background: var(--paper);
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            padding: 32px;
+            border: 1px solid var(--line);
+            position: relative;
+            z-index: 1;
+        }
+        .form-header {
+            text-align: center;
+            border-bottom: 3px solid var(--line);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+        }
+        .form-header h1 {
+            color: var(--gold);
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.1;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0 #111, -1px -1px 0 #111;
+            margin-bottom: 6px;
+        }
+        .form-header p {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            color: #444;
+            font-size: 16px;
+        }
+
+        /* ---------- Form Layout ---------- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px 24px;
+        }
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .field-group label {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .field-group label .required-star {
+            color: #c0392b;
+            font-size: 16px;
+        }
+        .field-group label .hint {
+            font-weight: 400;
+            font-size: 13px;
+            color: #777;
+            font-family: Georgia, serif;
+        }
+        .field-group input[type="text"],
+        .field-group input[type="number"],
+        .field-group select,
+        .field-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: Georgia, serif;
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .field-group input:focus,
+        .field-group select:focus,
+        .field-group textarea:focus {
+            outline: none;
+            border-color: var(--gold-dark);
+            box-shadow: 0 0 0 3px rgba(215, 174, 94, 0.25);
+            background: #fff;
+        }
+
+        /* ---------- Section Dividers & Subsections ---------- */
+        .section-header {
+            font-family: Impact, Haettenschweiler, sans-serif;
+            color: var(--gold);
+            font-size: 24px;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 0 #111;
+            margin: 24px 0 14px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--line);
+        }
+        .section-divider {
+            height: 1px;
+            background: var(--line);
+            margin: 22px 0;
+            border: 0;
+        }
+        .sub-box {
+            background: #fafafa;
+            border: 1px dashed var(--line);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 10px;
+        }
+
+        /* ---------- Group Members Component ---------- */
+        .group-section {
+            background: #fafafa;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .group-section .member-entry {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-end;
+            margin-bottom: 10px;
+        }
+        .group-section .member-entry .field-group {
+            flex: 1 1 180px;
+        }
+        .group-section label {
+            color: var(--ink);
+        }
+        .group-section input {
+            background: #fff !important;
+            color: #111 !important;
+            -webkit-text-fill-color: #111 !important;
+            caret-color: #111;
+            border: 1.5px solid var(--line);
+        }
+
+        .group-section input::placeholder {
+            color: #777;
+            opacity: 1;
+        }
+
+        .group-section input:focus {
+            color: #111 !important;
+            -webkit-text-fill-color: #111 !important;
+            background: #fff !important;
+        }
+        .btn-add-member {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: Impact, sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            height: 42px;
+        }
+        .btn-add-member:hover {
+            background: var(--gold-light);
+        }
+        .member-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .member-tag {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            font-size: 14px;
+            color: #222;
+        }
+        .member-tag .remove-member {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        /* ---------- Checkbox & Price Badges ---------- */
+        .checkbox-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 24px;
+            padding: 4px 0;
+        }
+        .checkbox-row label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            color: #222;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--gold-dark);
+            cursor: pointer;
+        }
+        .badge-price {
+            font-size: 0.85em;
+            background: #eee;
+            padding: 2px 10px;
+            border-radius: 12px;
+            color: #444;
+            font-weight: 600;
+            font-family: sans-serif;
+        }
+
+        /* ---------- Action Buttons ---------- */
+        .action-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .service-btn {
+            padding: 12px 28px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 18px;
+            letter-spacing: .5px;
+            text-decoration: none;
+            text-align: center;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #f8f9fa;
+            cursor: pointer;
+            line-height: 1.2;
+            transition: background .25s ease, color .25s ease, border-color .25s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+            min-width: 150px;
+        }
+        .service-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: #000;
+        }
+        .service-btn--submit {
+            background: #1e8b4d;
+            border-color: #1e8b4d;
+        }
+        .service-btn--submit:hover {
+            background: #27ae60;
+            color: #fff;
+            border-color: #27ae60;
+        }
+        .service-btn--secondary {
+            background: #e0e0e0;
+            color: #333;
+            border-color: #ccc;
+        }
+        .service-btn--secondary:hover {
+            background: #ccc;
+            color: #000;
+        }
+
+        /* ---------- Quotation Box ---------- */
+        .quotation-box {
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+            border-left: 5px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .quotation-box h3 {
+            font-family: Impact, sans-serif;
+            color: var(--gold);
+            font-size: 22px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .quotation-breakdown {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            font-size: 15px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+        }
+        .quotation-breakdown .q-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #333;
+        }
+        .quotation-breakdown .q-item .q-label {
+            color: #ddd;
+        }
+        .quotation-breakdown .q-item .q-value {
+            font-weight: 700;
+            color: var(--gold-light);
+        }
+        .quotation-total {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 2px solid var(--gold);
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-family: Impact, sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .quotation-total .q-value {
+            color: var(--gold);
+        }
+        .quotation-note {
+            margin-top: 12px;
+            font-size: 13px;
+            color: #aaa;
+            font-style: italic;
+            border-top: 1px solid #333;
+            padding-top: 8px;
+            font-family: Georgia, serif;
+        }
+
+        .payment-account {
+            margin-top: 16px;
+            padding: 14px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 8px;
+        }
+
+        .payment-instruction {
+            margin: 0 0 12px;
+            color: #eee;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .payment-account h4 {
+            margin: 0 0 8px;
+            color: var(--gold);
+            font-family: Impact, sans-serif;
+            font-size: 18px;
+            text-transform: none;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 6px 0;
+            border-bottom: 1px solid #333;
+            font-family: Georgia, serif;
+        }
+
+        .account-row:last-child {
+            border-bottom: 0;
+        }
+
+        .account-row span {
+            color: #ccc;
+        }
+
+        .account-row strong {
+            color: #fff;
+            text-align: right;
+        }
+
+        .form-footnote {
+            text-align: center;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            color: #666;
+            margin-top: 24px;
+            padding-top: 14px;
+            border-top: 1px solid var(--line);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 700px) {
+            .page { padding: 20px 16px; }
+            .form-grid { grid-template-columns: 1fr; gap: 14px; }
+            .full-width { grid-column: 1; }
+            .action-row { flex-direction: column; }
+            .service-btn { width: 100%; }
+            .curtain-drawer { left: 0; right: auto; transform: translateX(-100%); }
+            .curtain-drawer.active { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HAMBURGER BUTTON ===== -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- ===== CURTAIN DRAWER MENU ===== -->
+    <aside class="curtain-drawer" id="curtainDrawer" aria-label="Navigation drawer">
+        
+        <div class="curtain-content">
+            
+            <!-- Quick Jump Actions -->
+            <div class="curtain-nav-group">
+
+<div class="curtain-header">
+            <button class="curtain-close-btn" id="closeDrawerBtn" aria-label="Close menu">&times;</button>
+        </div>
+
+                <div class="curtain-nav-title">Quick links  & Forms</div>
+                <a href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/" class="curtain-link-btn">🏠 Home Page</a>
+
+                <a href="#" target="_blank" class="curtain-link-btn" >📚 Past Questions Directory</a>
+                <a href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/" class="curtain-link-btn">👢 Register for shoe making training</a>
+                <a href="https://dwinliznvm.blogspot.com/p/payment.html" target="_blank" rel="noopener noreferrer" class="curtain-link-btn" >👑 Register for Next-Voc Contest</a>
+<a href="https://ee-3.blogspot.com/search/label/Scholarships%20and%20grants" target="_blank" class="curtain-link-btn" >‍🎓 Scholarship & Grant Opportunities</a>
+              <a href="https://wa.me/2349013357735" target="_blank" class="curtain-link-btn">💬 Contact Support</a>
+            </div>
+
+            <!-- WhatsApp Community Promotion -->
+            <div class="curtain-nav-group">
+                <div class="curtain-nav-title">Community Channel</div>
+                <div class="drawer-wa-box">
+                    <div class="drawer-wa-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Dnvoc Cafe &amp; Salon 
+                    </div>
+                    <ul class="drawer-wa-promo">
+                        <li><strong>Buy & Sell</strong> – Exchange goods and service and  discover great deals.</li>
+                        <li><strong>Stay informed </strong> –  About happening events within Auchi metropolis.</li>
+                        <li><strong>DNVOC Updates</strong>  – Stay informed about upcoming Dnvoc offers, events, and promos.</li>
+                    </ul>
+                    <a href="https://whatsapp.com/channel/0029VaCBij80bIduavXyDK2t" target="_blank" rel="noopener noreferrer" class="drawer-wa-btn">Join WhatsApp Channel &#8301;</a>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT PAGE ===== -->
+    <div class="page">
+        <header class="form-header">
+            <h1>Assignment Request Form</h1>
+            <p>Fill this form to get an accurate quotation on your assignment work</p>
+        </header>
+
+        <form id="quotationForm" novalidate>
+
+            <!-- Assignment Type Selector -->
+            <div style="max-width: 320px; margin: 0 auto 20px;">
+                <div class="field-group">
+                    <label for="assignmentType">Assignment Type <span class="required-star">*</span></label>
+                    <select id="assignmentType" required>
+                        <option value="personal">Personal / Single</option>
+                        <option value="group">Group</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Group Members Container (Toggled via JS) -->
+            <div id="groupSection" class="group-section hidden">
+                <div class="field-group" style="margin-bottom: 12px;">
+                    <label for="groupNumber">Group Number / Name <span class="hint">(optional)</span></label>
+                    <input type="text" id="groupNumber" placeholder="e.g. Group 4" />
+                </div>
+                <div style="font-family: Impact, sans-serif; font-size: 18px; color: var(--gold-light); margin-bottom: 8px;">
+                    Add Group Members
+                </div>
+                <div class="member-entry">
+                    <div class="field-group">
+                        <label for="memberName">Member Name</label>
+                        <input type="text" id="memberName" placeholder="Full name" />
+                    </div>
+                    <div class="field-group">
+                        <label for="memberMat">Matriculation No.</label>
+                        <input type="text" id="memberMat" placeholder="e.g. ABM/14037399" />
+                    </div>
+                    <button type="button" class="btn-add-member" id="addMemberBtn">+ Add</button>
+                </div>
+                <div id="memberListContainer" class="member-list"></div>
+                <div style="font-size:13px; color:#666; margin-top:6px;">
+                    <span id="memberCountDisplay">0 members added</span>
+                </div>
+            </div>
+
+            <!-- Single User Details Container -->
+            <div id="singleUserFields" class="form-grid">
+                <div class="field-group">
+                    <label for="fullName">Full Name <span class="required-star">*</span></label>
+                    <input type="text" id="fullName" placeholder="Enter full name" required />
+                </div>
+                <div class="field-group">
+                    <label for="matNumber">Matriculation Number <span class="required-star">*</span></label>
+                    <input type="text" id="matNumber" placeholder="e.g. ABM/14037399" required />
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <!-- Academic Request Information -->
+            <h2 class="section-header">Academic Details</h2>
+            <div class="form-grid">
+                <div class="field-group full-width">
+                    <label for="assignmentQuestion">Assignment Question <span class="required-star">*</span></label>
+                    <input type="text" id="assignmentQuestion" placeholder="Enter assignment topic / question" required />
+                </div>
+                <div class="field-group">
+                    <label for="department">Department <span class="required-star">*</span></label>
+                    <input type="text" id="department" placeholder="e.g. Business Administration" required />
+                </div>
+                <div class="field-group">
+                    <label for="course">Course <span class="required-star">*</span></label>
+                    <input type="text" id="course" placeholder="e.g. Introduction to Marketing" required />
+                </div>
+                <div class="field-group">
+                    <label for="school">School / School Faculty <span class="required-star">*</span></label>
+                    <input type="text" id="school" placeholder="e.g. School of Business Studies" required />
+                </div>
+                <div class="field-group">
+                    <label for="classLevel">Class / Level <span class="required-star">*</span></label>
+                    <input type="text" id="classLevel" placeholder="e.g. HND II / ND I" required />
+                </div>
+                <div class="field-group full-width">
+                    <label for="arm">Arm <span class="hint">(optional)</span></label>
+                    <input type="text" id="arm" placeholder="e.g. Arm A, Arm B" />
+                </div>
+            </div>
+
+            <!-- Main Work Requirements -->
+            <h2 class="section-header">Main Work Requirements</h2>
+            <div class="form-grid">
+                <div class="field-group">
+                    <label for="numPages">Number of Pages <span class="required-star">*</span></label>
+                    <input type="number" id="numPages" min="1" value="1" step="1" required />
+                    <span style="font-size: 12px; color:#666;">Typing, printing & research @ ₦500/page</span>
+                </div>
+                
+                <div class="field-group full-width">
+                    <div class="checkbox-row">
+                        <label>
+                            <input type="checkbox" id="includeCover" checked />
+                            Include Cover / Title Page
+                            <span class="badge-price">₦300</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="includeReference" checked />
+                            Include Reference Page <span class="badge-price">₦0</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field-group full-width">
+                    <div class="checkbox-row">
+                        <label>
+                            <input type="checkbox" id="mainSpiral" />
+                            Spiral Binding (Main Work)
+                            <span class="badge-price">₦300</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photocopies and Binding Options -->
+            <h2 class="section-header">Photocopies & Binding Options</h2>
+            <div class="form-grid">
+                <div class="field-group full-width">
+                    <label for="numCopies">Number of Copies <span class="required-star">*</span></label>
+                    <input type="number" id="numCopies" min="0" value="0" step="1" required />
+                    <span style="font-size: 12px; color:#666;">Each copy replicates main pages @ ₦50/page</span>
+                </div>
+
+                <div class="field-group full-width sub-box">
+                    <label style="color:var(--gold-dark); margin-bottom:6px;">Copy Cover Page Options</label>
+                    <div class="checkbox-row">
+                        <label>
+                            <input type="checkbox" id="coverAllCopies" />
+                            Add cover page to every copy
+                            <span class="badge-price">₦50 / copy</span>
+                        </label>
+                    </div>
+                    <div id="customCoverContainer" class="field-group" style="margin-top: 8px;">
+                        <label for="customCoverCount" class="hint">Otherwise specify number of cover pages:</label>
+                        <input type="number" id="customCoverCount" min="0" value="0" placeholder="Number of cover copies" />
+                    </div>
+                </div>
+
+                <div class="field-group full-width sub-box">
+                    <label style="color:var(--gold-dark); margin-bottom:6px;">Copy Spiral Binding Options</label>
+                    <div class="checkbox-row">
+                        <label>
+                            <input type="checkbox" id="spiralAllCopies" />
+                            Spiral bind every copy
+                            <span class="badge-price">₦300 / copy</span>
+                        </label>
+                    </div>
+                    <div id="customSpiralContainer" class="field-group" style="margin-top: 8px;">
+                        <label for="customSpiralCount" class="hint">Otherwise specify number of copies to spiral bind:</label>
+                        <input type="number" id="customSpiralCount" min="0" value="0" placeholder="Number of copies to bind" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="field-group" style="margin-top: 20px;">
+                <label for="additionalInfo">Additional Information <span class="hint">(optional)</span></label>
+                <textarea id="additionalInfo" rows="3" placeholder="Enter any special guidelines, instructions or details..."></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-row">
+                <button type="button" class="service-btn" id="calculateBtn">Get Estimate</button>
+                <button type="button" class="service-btn service-btn--submit" id="submitBtn">Submit Request</button>
+                <button type="button" class="service-btn service-btn--secondary" id="resetBtn">Reset</button>
+            </div>
+
+            <!-- Quotation Display -->
+            <div id="quotationDisplay" class="quotation-box hidden">
+                <h3>Price Quotation Summary</h3>
+                <div id="quotationBreakdown" class="quotation-breakdown"></div>
+                <div class="quotation-note">
+                    * Total calculation is automatically generated based on the service charges provided.
+                </div>
+            </div>
+
+            <div class="form-footnote">
+                Fill this form to get a quotation on your assignment work. All pricing in Nigerian Naira (₦).
+            </div>
+        </form>
+    </div>
+
+    <!-- ===== JAVASCRIPT LOGIC ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // DOM References
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const curtainDrawer = document.getElementById('curtainDrawer');
+            const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+            const form = document.getElementById('quotationForm');
+            const assignmentType = document.getElementById('assignmentType');
+            const groupSection = document.getElementById('groupSection');
+            const singleUserFields = document.getElementById('singleUserFields');
+            const groupNumber = document.getElementById('groupNumber');
+            const memberName = document.getElementById('memberName');
+            const memberMat = document.getElementById('memberMat');
+            const addMemberBtn = document.getElementById('addMemberBtn');
+            const memberListContainer = document.getElementById('memberListContainer');
+            const memberCountDisplay = document.getElementById('memberCountDisplay');
+
+            const fullName = document.getElementById('fullName');
+            const matNumber = document.getElementById('matNumber');
+            const assignmentQuestion = document.getElementById('assignmentQuestion');
+            const department = document.getElementById('department');
+            const course = document.getElementById('course');
+            const school = document.getElementById('school');
+            const classLevel = document.getElementById('classLevel');
+            const arm = document.getElementById('arm');
+
+            const numPages = document.getElementById('numPages');
+            const includeCover = document.getElementById('includeCover');
+            const includeReference = document.getElementById('includeReference');
+            const mainSpiral = document.getElementById('mainSpiral');
+
+            const numCopies = document.getElementById('numCopies');
+            const coverAllCopies = document.getElementById('coverAllCopies');
+            const customCoverCount = document.getElementById('customCoverCount');
+            const customCoverContainer = document.getElementById('customCoverContainer');
+            const spiralAllCopies = document.getElementById('spiralAllCopies');
+            const customSpiralCount = document.getElementById('customSpiralCount');
+            const customSpiralContainer = document.getElementById('customSpiralContainer');
+            const additionalInfo = document.getElementById('additionalInfo');
+
+            const calculateBtn = document.getElementById('calculateBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const quotationDisplay = document.getElementById('quotationDisplay');
+            const quotationBreakdown = document.getElementById('quotationBreakdown');
+
+            let members = [];
+
+            /* Drawer Toggle Handlers */
+            function toggleCurtain(open) {
+                hamburgerBtn.setAttribute('aria-expanded', open);
+                if (open) {
+                    hamburgerBtn.classList.add('is-active');
+                    curtainDrawer.classList.add('active');
+                } else {
+                    hamburgerBtn.classList.remove('is-active');
+                    curtainDrawer.classList.remove('active');
+                }
+            }
+            hamburgerBtn.onclick = (e) => { e.stopPropagation(); toggleCurtain(!curtainDrawer.classList.contains('active')); };
+            closeDrawerBtn.onclick = (e) => { e.stopPropagation(); toggleCurtain(false); };
+            curtainDrawer.onclick = (e) => { e.stopPropagation(); };
+            document.addEventListener('click', () => { if (curtainDrawer.classList.contains('active')) toggleCurtain(false); });
+
+            /* Group / Personal Toggle */
+            function toggleGroupFields() {
+                const isGroup = assignmentType.value === 'group';
+                groupSection.classList.toggle('hidden', !isGroup);
+                singleUserFields.classList.toggle('hidden', isGroup);
+            }
+
+            /* Member Management */
+            function renderMembers() {
+                memberListContainer.innerHTML = '';
+                members.forEach((m, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'member-tag';
+                    div.innerHTML = `
+                        <span><strong>${m.name}</strong> (${m.mat})</span>
+                        <button type="button" class="remove-member" data-index="${idx}">&times;</button>
+                    `;
+                    div.querySelector('.remove-member').addEventListener('click', function() {
+                        const i = parseInt(this.dataset.index, 10);
+                        members.splice(i, 1);
+                        renderMembers();
+                    });
+                    memberListContainer.appendChild(div);
+                });
+                memberCountDisplay.textContent = members.length + ' member' + (members.length === 1 ? '' : 's') + ' added';
+            }
+
+            function addMember() {
+                const name = memberName.value.trim();
+                const mat = memberMat.value.trim();
+                if (!name || !mat) {
+                    alert('Please enter both member name and matriculation number.');
+                    return;
+                }
+                members.push({ name, mat });
+                memberName.value = '';
+                memberMat.value = '';
+                renderMembers();
+            }
+
+            /* Photocopy Binding and Cover Inputs Synchronization */
+            function syncCopyOptions() {
+                const copies = parseInt(numCopies.value, 10) || 0;
+                
+                if (coverAllCopies.checked) {
+                    customCoverCount.value = copies;
+                    customCoverContainer.classList.add('hidden');
+                } else {
+                    customCoverContainer.classList.remove('hidden');
+                }
+
+                if (spiralAllCopies.checked) {
+                    customSpiralCount.value = copies;
+                    customSpiralContainer.classList.add('hidden');
+                } else {
+                    customSpiralContainer.classList.remove('hidden');
+                }
+            }
+
+            /* Calculation Engine */
+            function calculateQuotation() {
+                const pages = parseInt(numPages.value, 10) || 0;
+                const copies = parseInt(numCopies.value, 10) || 0;
+                const hasMainCover = includeCover.checked;
+                const hasMainSpiral = mainSpiral.checked;
+
+                // Copy Cover details
+                let copyCoverPages = 0;
+                if (coverAllCopies.checked) {
+                    copyCoverPages = copies;
+                } else {
+                    copyCoverPages = parseInt(customCoverCount.value, 10) || 0;
+                }
+
+                // Copy Spiral details
+                let copySpiralCount = 0;
+                if (spiralAllCopies.checked) {
+                    copySpiralCount = copies;
+                } else {
+                    copySpiralCount = parseInt(customSpiralCount.value, 10) || 0;
+                }
+
+                // Rates
+                const typingRatePerPage = 500;
+                const mainCoverPrice = 300;
+                const mainSpiralPrice = 300;
+                const copyRatePerPage = 50;
+                const copyCoverPrice = 50;
+                const copySpiralPrice = 300;
+
+                // Calculations
+                const typingCost = pages * typingRatePerPage;
+                const mainCoverCost = hasMainCover ? mainCoverPrice : 0;
+                const mainSpiralCost = hasMainSpiral ? mainSpiralPrice : 0;
+
+                const copyPageCost = pages * copies * copyRatePerPage;
+                const copyCoverCost = copyCoverPages * copyCoverPrice;
+                const copySpiralCost = copySpiralCount * copySpiralPrice;
+
+                const total = typingCost + mainCoverCost + mainSpiralCost + copyPageCost + copyCoverCost + copySpiralCost;
+
+                const breakdown = [
+                    { label: 'Typing, Printing & Research', value: '₦' + typingCost.toLocaleString(), detail: pages + ' pg × ₦500' }
+                ];
+
+                if (hasMainCover) {
+                    breakdown.push({ label: 'Main Work Cover Page', value: '₦' + mainCoverCost.toLocaleString(), detail: 'Fixed cost' });
+                }
+                if (hasMainSpiral) {
+                    breakdown.push({ label: 'Main Work Spiral Binding', value: '₦' + mainSpiralCost.toLocaleString(), detail: 'Fixed cost' });
+                }
+                if (copies > 0) {
+                    breakdown.push({ label: 'Photocopies (' + copies + ' copies)', value: '₦' + copyPageCost.toLocaleString(), detail: pages + ' pg × ' + copies + ' copies × ₦50' });
+                }
+                if (copyCoverPages > 0) {
+                    breakdown.push({ label: 'Photocopy Cover Pages', value: '₦' + copyCoverCost.toLocaleString(), detail: copyCoverPages + ' cover(s) × ₦50' });
+                }
+                if (copySpiralCount > 0) {
+                    breakdown.push({ label: 'Photocopy Spiral Binding', value: '₦' + copySpiralCost.toLocaleString(), detail: copySpiralCount + ' bound copy(ies) × ₦300' });
+                }
+
+                return { total, breakdown, copyCoverPages: copyCoverPages, copySpiralCount: copySpiralCount };
+            }
+
+            function renderQuotation() {
+                const result = calculateQuotation();
+                quotationDisplay.classList.remove('hidden');
+                let html = '';
+                result.breakdown.forEach(item => {
+                    html += `
+                        <div class="q-item">
+                            <span class="q-label">${item.label} <small style="color:#aaa;">(${item.detail})</small></span>
+                            <span class="q-value">${item.value}</span>
+                        </div>
+                    `;
+                });
+                html += `
+                    <div class="quotation-total">
+                        <span class="q-label">Total Amount Payable</span>
+                        <span class="q-value">₦${result.total.toLocaleString()}</span>
+                    </div>
+
+                    <div class="payment-account">
+                        <p class="payment-instruction">Pay the estimate quotation into the below account information for work commencement.</p>
+                        <h4>Account Information</h4>
+                        <div class="account-row"><span>Bank</span><strong>Opay</strong></div>
+                        <div class="account-row"><span>No</span><strong>9013357735</strong></div>
+                        <div class="account-row"><span>Name</span><strong>Bossey Thomas</strong></div>
+                    </div>
+                `;
+                quotationBreakdown.innerHTML = html;
+            }
+
+            /* Validation logic */
+            function validateForm() {
+                const isGroup = assignmentType.value === 'group';
+
+                if (isGroup) {
+                    if (members.length === 0) {
+                        alert('Please add at least one group member.');
+                        memberName.focus();
+                        return false;
+                    }
+                } else {
+                    if (!fullName.value.trim()) {
+                        alert('Please enter your Full Name.');
+                        fullName.focus();
+                        return false;
+                    }
+                    if (!matNumber.value.trim()) {
+                        alert('Please enter your Matriculation Number.');
+                        matNumber.focus();
+                        return false;
+                    }
+                }
+
+                const requiredFields = [
+                    { el: assignmentQuestion, name: 'Assignment Question' },
+                    { el: department, name: 'Department' },
+                    { el: course, name: 'Course' },
+                    { el: school, name: 'School' },
+                    { el: classLevel, name: 'Class / Level' }
+                ];
+
+                for (let f of requiredFields) {
+                    if (!f.el.value.trim()) {
+                        alert('Please fill in: ' + f.name);
+                        f.el.focus();
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            async function handleSubmit() {
+                if (!validateForm()) return;
+
+                const result = calculateQuotation();
+                const isGroup = assignmentType.value === 'group';
+                const submitButton = submitBtn;
+                const originalText = submitButton.textContent;
+
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sending...';
+
+                try {
+                    const formData = new FormData();
+
+                    formData.append('_subject', 'DNVOC Assignment Work Request - ' + (isGroup ? 'Group' : 'Personal'));
+                    formData.append('_template', 'table');
+                    formData.append('_captcha', 'true');
+                    formData.append('_url', window.location.href);
+                    formData.append('request_type', assignmentType.value === 'group' ? 'Group Assignment' : 'Personal / Single Assignment');
+
+                    if (isGroup) {
+                        formData.append('group_name', groupNumber.value.trim() || 'Not provided');
+                        formData.append('members_count', String(members.length));
+                        members.forEach((m, index) => {
+                            formData.append('member_' + (index + 1), m.name + ' — ' + m.mat);
+                        });
+                    } else {
+                        formData.append('full_name', fullName.value.trim());
+                        formData.append('matriculation_number', matNumber.value.trim());
+                    }
+
+                    formData.append('assignment_question', assignmentQuestion.value.trim());
+                    formData.append('department', department.value.trim());
+                    formData.append('course', course.value.trim());
+                    formData.append('school_faculty', school.value.trim());
+                    formData.append('class_level', classLevel.value.trim());
+                    formData.append('arm', arm.value.trim() || 'Not provided');
+
+                    formData.append('number_of_pages', numPages.value);
+                    formData.append('cover_title_page', includeCover.checked ? 'Yes — ₦300' : 'No');
+                    formData.append('reference_page', includeReference.checked ? 'Yes' : 'No');
+                    formData.append('main_spiral_binding', mainSpiral.checked ? 'Yes — ₦300' : 'No');
+                    formData.append('number_of_copies', numCopies.value);
+                    formData.append('copy_cover_pages', String(result.copyCoverPages));
+                    formData.append('copy_spiral_binding', String(result.copySpiralCount));
+                    formData.append('additional_information', additionalInfo.value.trim() || 'None');
+
+                    formData.append('total_amount_payable', '₦' + result.total.toLocaleString());
+                    formData.append('payment_instruction', 'Pay the estimate quotation into the below account information for work commencement.');
+                    formData.append('bank', 'Opay');
+                    formData.append('account_number', '9013357735');
+                    formData.append('account_name', 'Bossey Thomas');
+
+                    formData.append('quotation_breakdown', result.breakdown.map(item =>
+                        item.label + ': ' + item.value + ' (' + item.detail + ')'
+                    ).join('\n'));
+
+                    const response = await fetch('https://formsubmit.co/ajax/dwinliz.nvm@gmail.com', {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: formData
+                    });
+
+                    const responseText = await response.text();
+                    let responseData = {};
+                    try { responseData = JSON.parse(responseText); } catch (_) {}
+
+                    if (!response.ok || responseData.success === false) {
+                        throw new Error(responseData.message || 'Unable to submit the form.');
+                    }
+
+                    alert('Submitted successfully! Your assignment request has been sent.');
+                } catch (error) {
+                    console.error('FormSubmit error:', error);
+                    alert('Sorry, your request could not be sent. Please check your internet connection and try again.');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                }
+            }
+
+            /* Event Listeners */
+            assignmentType.addEventListener('change', toggleGroupFields);
+            addMemberBtn.addEventListener('click', addMember);
+
+            [coverAllCopies, spiralAllCopies, numCopies].forEach(el => {
+                el.addEventListener('change', syncCopyOptions);
+                el.addEventListener('input', syncCopyOptions);
+            });
+
+            [numPages, numCopies, includeCover, mainSpiral, coverAllCopies, customCoverCount, spiralAllCopies, customSpiralCount].forEach(el => {
+                el.addEventListener('change', () => {
+                    if (!quotationDisplay.classList.contains('hidden')) renderQuotation();
+                });
+                if (el.type === 'number') {
+                    el.addEventListener('input', () => {
+                        if (!quotationDisplay.classList.contains('hidden')) renderQuotation();
+                    });
+                }
+            });
+
+            calculateBtn.addEventListener('click', () => {
+                if (!validateForm()) return;
+                renderQuotation();
+                quotationDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            submitBtn.addEventListener('click', handleSubmit);
+
+            resetBtn.addEventListener('click', () => {
+                form.reset();
+                members = [];
+                renderMembers();
+                quotationDisplay.classList.add('hidden');
+                toggleGroupFields();
+                syncCopyOptions();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Initial setup
+            toggleGroupFields();
+            syncCopyOptions();
+
+        })();
+    </script>
+</body>
+</html>
+
