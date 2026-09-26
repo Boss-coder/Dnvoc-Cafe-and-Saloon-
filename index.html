@@ -1,0 +1,4438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DNVOC Cafe & Salon offers digital services, salon services, shoe products and weekend shoe-making training in Auchi and Benin, Edo State, Nigeria." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="DNVOC Cafe & Salon" />
+    <link rel="canonical" href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DNVOC Cafe & Salon | Digital Services, Salon & Training Services" />
+    <meta property="og:description" content="Digital services, salon services, quality slides and weekend shoe-making training from DNVOC Cafe & Salon." />
+    <meta property="og:url" content="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="DNVOC Cafe & Salon" />
+    <meta name="twitter:description" content="Digital services, salon services, quality slides and weekend shoe-making training." />
+
+    <title>DNVOC Cafe & Salon | Digital Services, Salon & Shoe Training</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "DNVOC Cafe & Salon",
+      "url": "https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/",
+      "description": "DNVOC Cafe & Salon offers digital services, salon services, shoe products and weekend shoe-making training."
+    }
+    </script>
+
+    <style>
+        :root {
+            --gold: #d7ae5e;
+            --gold-dark: #9b742d;
+            --gold-light: #e8cf8a;
+            --ink: #111;
+            --line: #cfcfcf;
+            --paper: #fff;
+            --dark: #1a1a1a;
+            --soft: #fafafa;
+        }
+
+        /* ---------- Global reset ---------- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Prevents blue highlight overlay on touch/click */
+        }
+        html {
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            width: 100%;
+            min-width: 0;
+            background: #fff;
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            overflow-x: hidden;
+        }
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+        button {
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        img {
+            max-width: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        /* ---------- Hamburger & Side Curtain Drawer ---------- */
+        .hamburger-btn {
+            position: fixed;
+            top: 25px;
+            right: 15px;
+            z-index: 10001;
+            background: var(--gold);
+            color: #000;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .hamburger-btn:hover {
+            transform: scale(1.05);
+            background: var(--gold);
+            color: #1a1a1a;
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 3px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+
+        /* Hamburger Animation to 'X' */
+        .hamburger-btn.is-active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-btn.is-active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.is-active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .curtain-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(85vw, 380px);
+            height: 100%;
+            background-color: var(--gold-light);
+            color: #fff;
+            z-index: 10003;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .curtain-drawer.active {
+            transform: translateX(0);
+        }
+
+        .curtain-close-btn {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .curtain-close-btn:hover {
+            color: var(--gold);
+        }
+
+        .curtain-content {
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .curtain-nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .curtain-nav-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin: 0 0 2px 2px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        .curtain-link-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            background: #242424;
+            color: #f1f1f1;
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #333;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .curtain-link-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+
+        /* WhatsApp Promo Box */
+        .drawer-wa-box {
+            background: #0d2818;
+            border: 1px solid #128C7E;
+            border-radius: 8px;
+            padding: 14px;
+            color: #e2f7ed;
+        }
+        .drawer-wa-title {
+            color: #25D366;
+            font-family: Impact, sans-serif;
+            font-size: 18px;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .drawer-wa-promo {
+            font-family: sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            padding-left: 16px;
+            list-style: disc;
+        }
+        .drawer-wa-promo li {
+            margin-bottom: 6px;
+        }
+        .drawer-wa-btn {
+            display: block;
+            text-align: center;
+            background: #25D366;
+            color: #000;
+            font-weight: bold;
+            font-family: sans-serif;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .drawer-wa-btn:hover {
+            background: #1eb857;
+        }
+
+        /* ---------- Page / hero ---------- */
+        .page {
+            width: min(100%, 1200px);
+            min-height: 100vh;
+            margin: 0 auto;
+            background: var(--paper);
+            overflow: hidden;
+        }
+        .hero {
+            text-align: Center;
+            padding: 10px 8px 4px;
+            border-bottom: 3px solid #e2e2e2;
+        }
+        .hero h1 {
+            display: block;
+            visibility: visible;
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            color: #e2bc70;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(32px, 6vw, 50px);
+            line-height: .98;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #111, -1px -1px 0 #111, 0 0 2px #111;
+        }
+
+        .hero .sub { display: block; }
+
+/* ---------- Top image gallery ---------- */
+        .gallery {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 3px;
+            background: #ddd;
+            margin-top: 0;
+        }
+        .gallery img {
+            display: block;
+            width: 100%;
+            height: clamp(180px, 35vh, 350px);
+            object-fit: cover;
+        }
+
+        /* ---------- Scroll Message Ticker Widget ---------- */
+        .ticker-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            background-color: var(--gold-light);
+            height: 0px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), border 0.3s ease;
+            border-bottom: 0px solid var(--gold-dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .ticker-wrapper.visible {
+            height: 24px;
+            border-bottom: 1px solid var(--gold-dark);
+        }
+
+        .ticker-track {
+            display: flex;
+            white-space: nowrap;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) translateX(100vw);
+            will-change: transform;
+        }
+
+        /* Single-pass animation prevents stuttering/glitching */
+        .ticker-wrapper.scrolling .ticker-track {
+            animation: singleScroll 15s linear forwards;
+        }
+
+        .ticker-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--ink);
+            padding: 0 10px;
+            font-family: sans-serif;
+            line-height: 24px;
+        }
+
+        @keyframes singleScroll {
+            0% { transform: translateY(-50%) translateX(100vw); }
+            100% { transform: translateY(-50%) translateX(-100%); }
+        }
+
+        /* Modal / Pop-out Overlay */
+        .ticker-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .ticker-modal.active {
+            display: flex;
+        }
+
+        .ticker-modal-content {
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            font-family: sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--ink);
+        }
+
+        .ticker-modal-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--ink);
+        }
+
+        /* ---------- Main service layout ---------- */
+        .content {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+            column-gap: 36px;
+            align-items: start;
+            padding: 22px 36px 36px;
+        }
+        .divider {
+            width: 1px;
+            align-self: stretch;
+            min-height: 100%;
+            background: var(--line);
+        }
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--line);
+            margin: 28px 0;
+        }
+        .mobile-main-divider {
+            display: none;
+        }
+        .column {
+            min-width: 0;
+        }
+        .column h2,
+        .column h3 {
+            display: block;
+            visibility: visible;
+            position: relative;
+            z-index: 1;
+            margin: 0 0 8px;
+            color: var(--gold);
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            text-shadow: 1px 1px 0 #111, -1px -1px 0 #111;
+            letter-spacing: .4px;
+        }
+        .column h2 {
+            text-align: center;
+            font-size: clamp(27px, 4vw, 39px);
+            line-height: 1.05;
+        }
+        .column h3 {
+            text-align: center;
+            font-size: clamp(22px, 3vw, 35px);
+            line-height: 1.05;
+            margin-top: 18px;
+            white-space: nowrap;
+        }
+        .column ul {
+            margin: 0;
+            padding-left: 22px;
+            list-style: none;
+        }
+        .column li {
+            position: relative;
+            margin: 0 0 8px;
+            padding-left: 7px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 700;
+            font-size: clamp(18px, 2.45vw, 29px);
+            line-height: 1.18;
+        }
+        .column li::before {
+            content: "-";
+            position: absolute;
+            left: -18px;
+            font-family: Georgia, serif;
+            font-weight: 900;
+        }
+        .column .sublist {
+            margin: 0 0 7px;
+            padding-left: 28px;
+        }
+        .column .sublist li {
+            margin-bottom: 5px;
+        }
+        .column .sublist li::before {
+            content: "•";
+            left: -17px;
+        }
+
+        /* ----- Digital service list link styling ----- */
+        .column .sublist li a {
+            display: inline-block;
+            text-decoration: none;
+            color: inherit;
+            font-weight: inherit;
+            transition: transform 0.2s ease, color 0.15s ease;
+        }
+        .column .sublist li a:hover {
+            transform: scale(1.08);
+        }
+        .column .sublist li a:active {
+            color: var(--gold);
+        }
+
+        .small-text {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 300;
+            font-size: clamp(20px, 2vw, 22px);
+            line-height: 1.3;
+            color: #333;
+            text-align: justify;
+            margin: 12px 0;
+            letter-spacing: .17px;
+        }
+
+        .saloon-contest-list {
+            margin: 8px 0;
+            padding-left: 22px;
+            list-style: none;
+        }
+        .saloon-contest-list li {
+            position: relative;
+            margin: 0 0 8px;
+            padding-left: 7px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 700;
+            font-size: clamp(18px, 2.45vw, 29px);
+            line-height: 1.18;
+            color: #222;
+        }
+        .saloon-contest-list li::before {
+            content: "-";
+            position: absolute;
+            left: -18px;
+            font-family: Georgia, serif;
+            font-weight: 900;
+        }
+
+       
+        .image-dnvoc-box {
+            width: 100%;
+            height: 100%;  
+        }
+
+   .image-dnvoc-box > img {display: block; }
+
+        /* ---------- Service buttons ---------- */
+        .service-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 22px;
+        }
+        .service-btn,
+        .service-btn--register {
+            display: inline-block;
+            max-width: 100%;
+            padding: 12px 24px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(16px, 1.8vw, 22px);
+            letter-spacing: .5px;
+            text-decoration: none;
+            text-align: center;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #f8f9fa;
+            cursor: pointer;
+            line-height: 1.2;
+            transition: background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+        }
+
+        .service-btn--project {
+            animation: trafficator-project 9.5s ease-in-out infinite;
+        }
+        .service-btn--book {
+            animation: trafficator-book 8s ease-in-out infinite;
+        }
+        .service-btn--register {
+            animation: trafficator-register 11.2s ease-in-out infinite;
+        }
+
+        .service-btn:hover,
+        .service-btn:focus-visible,
+        .service-btn--register:hover,
+        .service-btn--register:focus-visible {
+            animation-play-state: paused;
+            background: var(--gold);
+            color: #000;
+            border-color: #000;
+            outline: none;
+        }
+
+        @keyframes trafficator-project {
+            0%, 60%, 100% { background: #1a1a1a; color: #f8f9fa; border-color: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, .15); }
+            68%, 80% { background: #d7ae5e; color: #000; border-color: #000; box-shadow: 0 0 14px rgba(215, 174, 94, .6); }
+        }
+        @keyframes trafficator-register {
+            0%, 50%, 100% { background: #1a1a1a; color: #f8f9fa; border-color: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, .15); }
+            60%, 75% { background: #d7ae5e; color: #000; border-color: #000; box-shadow: 0 0 14px rgba(215, 174, 94, .6); }
+        }
+        @keyframes trafficator-book {
+            0%, 70%, 100% { background: #1a1a1a; color: #f8f9fa; border-color: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, .15); }
+            78%, 90% { background: #d7ae5e; color: #000; border-color: #000; box-shadow: 0 0 14px rgba(215, 174, 94, .6); }
+        }
+
+
+
+ /*  DNVOC CUSTOMER REWARD BONUS  */
+        .dnvcr-wrap {
+            max-width: 100%;
+            margin: 14px 0 0 0;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            text-align: center;
+        }
+        .dnvcr-launch {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #fff;
+            font-weight: 500;
+            font-size: clamp(16px, 1.8vw, 22px);
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            letter-spacing: .5px;
+            line-height: 1.2;
+            cursor: pointer;
+            transition: background .25s ease, border-color .25s ease, color .25s ease;
+        }
+        .dnvcr-launch:hover,
+        .dnvcr-launch:focus-visible {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: #fff;
+            outline: none;
+        }
+        .dnvcr-launch span:last-child { font-size: 15px; }
+
+        .dnvcr-curtain {
+            display: none;
+            opacity: 0;
+            margin-top: 12px;
+            border: 1px solid #d7ae5e;
+            border-radius: 10px;
+            background: #fdfdfd;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+            transition: opacity .3s ease;
+            text-align: left;
+        }
+        .dnvcr-curtain.open { display: block; opacity: 1; }
+        .dnvcr-body { padding: 16px; }
+ 
+
+        .dnvcr-card-id {
+            text-align: center;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 100;
+            font-size: clamp(20px, 2vw, 22px);
+
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .dnvcr-card-id span { color: var(--gold-dark); font-weight: 700; }
+
+        .dnvcr-instructions {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            text-align: center;
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0 0 12px;
+        }
+
+  
+    /* --- Star circles: capped width to match first-example sizing --- */
+        .dnvcr-stamps {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 6px auto 12px;
+            max-width: 300px;
+            width: 100%;
+        }
+        .dnvcr-stamp {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 2px dashed #cfcfcf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: #d4d4d4;
+            background: #fafafa;
+            transition: all .25s ease;
+        }
+        .dnvcr-stamp.filled {
+            background: var(--gold);
+            border: 2px solid var(--gold-dark);
+            color: #fff;
+            box-shadow: 0 3px 8px rgba(215,174,94,.4);
+            transform: scale(1.02);
+        }
+
+        .dnvcr-progress-bar {
+            height: 9px;
+            background: #f0ebe0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 8px auto 6px;
+            max-width: 320px;
+        }
+        .dnvcr-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+            width: 0%;
+            transition: width .35s ease;
+        }
+         .dnvcr-stamps-count {
+            text-align: center;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            color: #555;
+            font-size: clamp(20px, 2vw, 22px);
+            font-weight: 500;
+        }
+
+        .dnvcr-reward-box {
+            margin-top: 14px;
+            background: linear-gradient(135deg, #fff9ec, #fdf1d4);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+        .dnvcr-reward-label {
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            color: var(--gold-dark);
+            font-size: 14px;
+            letter-spacing: 1.5px;
+        }
+        .dnvcr-reward-amount {
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            color: var(--ink);
+            font-size: clamp(30px, 6vw, 42px);
+            line-height: 1;
+            margin: 6px 0;
+            text-shadow: 1px 1px 0 var(--gold);
+        }
+        .dnvcr-reward-code {
+            font-family: "Courier New", monospace;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+            color: var(--ink);
+            background: #fff;
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px dashed var(--gold-dark);
+            margin: 6px 0;
+        }
+        .dnvcr-reward-hint {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin: 6px 0 0;
+        }
+
+        .dnvcr-btn {
+            display: block;
+            width: 100%;
+            padding: 11px 16px;
+            margin-top: 8px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            border: 2px solid var(--dark);
+            background: var(--dark);
+            color: #fff;
+            transition: all .2s ease;
+            box-shadow: 0 3px 9px rgba(0,0,0,.15);
+            cursor: pointer;
+        }
+        .dnvcr-btn:hover:not(:disabled) {
+            background: var(--gold);
+            color: #000;
+            border-color: #000;
+            box-shadow: 0 3px 12px rgba(215,174,94,.5);
+        }
+        .dnvcr-btn:disabled { opacity: .75; cursor: not-allowed; }
+        .dnvcr-btn--gold {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold-dark);
+        }
+        .dnvcr-btn--gold:hover:not(:disabled) {
+            background: var(--gold-dark);
+            color: #fff;
+            border-color: var(--gold-dark);
+        }
+        .dnvcr-btn--ghost {
+            background: transparent;
+            color: #555;
+            border: 2px solid #e2e8f0;
+            box-shadow: none;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            letter-spacing: 0;
+            font-weight: 700;
+            padding: 9px;
+        }
+        .dnvcr-btn--ghost:hover:not(:disabled) {
+            background: #f4f2ec;
+            color: var(--ink);
+            border-color: var(--gold);
+            box-shadow: none;
+        }
+        .dnvcr-small-buttons { display: flex; gap: 8px; margin-top: 6px; }
+        .dnvcr-small-buttons .dnvcr-btn { margin-top: 0; }
+
+        .dnvcr-history-title {
+           font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            color: var(--gold-dark);
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin: 18px 0 6px;
+            text-align: center;
+            text-shadow: none;
+        }
+        .dnvcr-history {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            text-align: center;
+            color: #555;
+            max-height: 160px;
+            overflow-y: auto;
+        }
+        .dnvcr-history-item {
+            padding: 7px 9px;
+            border-bottom: 1px dashed #eee;
+            line-height: 1.4;
+        }
+        .dnvcr-history-item:last-child { border-bottom: none; }
+        .dnvcr-history-empty {
+            text-align: center;
+            padding: 14px;
+            color: #999;
+        }
+
+        .dnvcr-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.78);
+            z-index: 30000;
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .dnvcr-modal.active { display: flex; }
+        .dnvcr-modal__content {
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 22px;
+            max-width: 380px;
+            width: 100%;
+            position: relative;
+        }
+        .dnvcr-modal__close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: 0;
+            font-size: 24px;
+            color: #999;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .dnvcr-modal__close:hover { color: var(--gold-dark); }
+        .dnvcr-modal__title {
+            margin: 0 0 14px;
+            color: var(--gold);
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 20px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        .dnvcr-form-group { margin-bottom: 12px; }
+        .dnvcr-form-group label {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #555;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .dnvcr-form-group input {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #cfcfcf;
+            background: #fafafa;
+            font-size: 16px;
+            font-family: "Courier New", monospace;
+            letter-spacing: 4px;
+            text-align: center;
+            color: var(--ink);
+        }
+        .dnvcr-form-group input:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+            background: #fff;
+        }
+        .dnvcr-form-error {
+            color: #c0392b;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            margin: 6px 0 0;
+            text-align: center;
+            min-height: 16px;
+            line-height: 1.35;
+        }
+
+
+
+
+         /* ---------- CGPA Calculator Embedded UI ---------- */
+        .cgpa-wrap {
+            max-width: 100%;
+            margin: 14px 0 0 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .cgpa-launch {
+            width: 70%;
+            margin:0 auto;
+            border: 2px solid #000;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #fff;
+            padding: 13px 18px;
+            font-weight: 500;
+            font-size: clamp(15px, 1.6vw, 19px);
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            letter-spacing: .5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background .25s ease, border-color .25s ease, color .25s ease;
+        }
+        .cgpa-launch:hover,
+        .cgpa-launch:focus-visible {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: #fff;
+            outline: none;
+        }
+        .cgpa-launch span:last-child {
+            font-size: 15px;
+        }
+
+        .curtain {
+            display: none;
+            opacity: 0;
+            margin-top: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #fdfdfd;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .05);
+            transition: opacity .3s ease;
+        }
+        .curtain.open {
+            display: block;
+            opacity: 1;
+        }
+
+        .cgpa-wrap .body {
+            padding: 16px;
+        }
+
+        .cgpa-wrap .prev-cgpa-fields {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .cgpa-wrap .prev-cgpa-field {
+            min-width: 0;
+        }
+        .cgpa-wrap .prev-cgpa-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        @media (max-width: 480px) {
+            .cgpa-wrap .prev-cgpa-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cgpa-wrap .course-head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 58px 70px 32px;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+        .cgpa-wrap .course-head span:nth-child(2),
+        .cgpa-wrap .course-head span:nth-child(3) {
+            text-align: center;
+        }
+
+        .cgpa-wrap .courses {
+            display: grid;
+            gap: 8px;
+        }
+
+        .cgpa-wrap .course {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 58px 70px 32px;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .cgpa-wrap input,
+        .cgpa-wrap select {
+            width: 100%;
+            min-width: 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 8px 9px;
+            font-size: 13px;
+            background: #fff;
+            color: #1f2937;
+            box-sizing: border-box;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .cgpa-wrap input:focus,
+        .cgpa-wrap select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(215, 174, 94, .2);
+        }
+
+        .cgpa-wrap .remove {
+            border: 1px solid var(--gold);
+            background: #fff;
+            border-radius: 6px;
+            color: var(--gold-dark);
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s ease, color .2s ease;
+        }
+        .cgpa-wrap .remove:hover {
+            background: var(--gold);
+            color: #fff;
+        }
+
+        .cgpa-wrap .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .cgpa-wrap .btn {
+            flex: 1;
+            min-width: 90px;
+            border: 1px solid var(--gold);
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            background: var(--gold);
+            color: #171717;
+            transition: background .2s ease, border-color .2s ease, color .2s ease;
+        }
+        .cgpa-wrap .btn:hover {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: #fff;
+        }
+        .cgpa-wrap .btn.secondary {
+            background: #fff;
+            color: #374151;
+            border-color: #e2e8f0;
+        }
+        .cgpa-wrap .btn.secondary:hover {
+            background: #f9fafb;
+            border-color: var(--gold);
+            color: var(--gold-dark);
+        }
+
+        .cgpa-wrap .result {
+            margin-top: 14px;
+            border-radius: 8px;
+            background: #fdf8e6;
+            border: 1px solid var(--gold);
+            padding: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .cgpa-wrap .metric small {
+            display: block;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .cgpa-wrap .metric strong {
+            font-size: 22px;
+            display: block;
+            margin-top: 2px;
+            color: #1f2937;
+        }
+        .cgpa-wrap .classification {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(215, 174, 94, .45);
+            padding-top: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        /* ---------- Shoe carousel ---------- */
+        .shoe-gallery {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 24px auto 0;
+            padding: 0 75px 0 0;
+        }
+        .shoe-gallery__track {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+            overscroll-behavior-x: contain;
+        }
+        .shoe-gallery__track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .shoe-card {
+            background: #000;
+            border-radius: 8px;
+            flex: 0 0 200px;
+            min-width: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+            height: 270px;
+        }
+        .shoe-card__media {
+            flex: 1 1 auto;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+        }
+        .shoe-card img {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            flex: 1 1 auto;
+        }
+        
+        .shoe-card__description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            padding: 8px 6px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.82);
+            font-size: 13px;
+            line-height: 1.35;
+            text-align: center;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+
+        .shoe-card__action {
+            flex: 0 0 38px;
+            height: 38px;
+            font-size: 13px;
+            color: #d0a92c;
+            text-align: center;
+            width: 100%;
+            border: 0;
+            background: #000;
+            padding: 0 6px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 3;
+        }
+        .shoe-card__action:hover,
+        .shoe-card__action:focus-visible {
+            background: #1a1a1a;
+            color: #fff;
+            outline: none;
+        }
+
+        .shoe-gallery__right-controls {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+        }
+        .shoe-gallery__view-all {
+            position: relative;
+            z-index: 5;
+            background: #000;
+            color: #d0a92c;
+            border: 1px solid #d0a92c;
+            font-size: 11px;
+            padding: 8px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: all .2s;
+        }
+        .shoe-gallery__view-all:hover,
+        .shoe-gallery__view-all:focus-visible {
+            background: #d0a92c;
+            color: #000;
+            outline: none;
+        }
+
+        /* ---------- Auchi Service Connection UI ---------- */
+        .auchi-connect {
+            margin: 24px 0 0;
+            padding: 18px 0 0;
+            border-top: 1px solid var(--line);
+        }
+        .auchi-connect h3 { margin-bottom: 10px; }
+        .auchi-connect p {text-align: center;}
+        .auchi-connect-cards {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            align-items: stretch;
+        }
+        .auchi-connect-card {
+            width: 100%;
+            min-height: 168px;
+            padding: 18px 12px;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            background: #fafafa;
+            color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-family: Georgia, "Times New Roman", serif;
+            transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+        }
+        .auchi-connect-card:hover,
+        .auchi-connect-card:focus-visible {
+            background: #fff7e6;
+            border-color: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 14px rgba(0,0,0,.10);
+            outline: none;
+        }
+        .auchi-connect-card svg { 
+            width: 34px; 
+            height: 34px; 
+            fill: none; 
+            stroke: currentColor; 
+            stroke-width: 1.4; 
+        }
+        .auchi-connect-card strong {
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(15px, 1vw, 20px);
+            line-height: 1.08;
+        }
+        .auchi-connect-card span { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.25; color: #555; }
+        .auchi-disclaimer {
+            margin: 14px 0 0;
+            padding: 12px 14px;
+            border-left: 4px solid var(--gold);
+            background: #f8f8f8;
+            color: #333;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: clamp(15px, 1.6vw, 19px);
+            line-height: 1.45;
+        }
+        .auchi-disclaimer strong { display: block; margin-bottom: 4px; color: #111; }
+.auchi-disclaimer >div{ font-size: 16px;}
+
+        /* ---------- Checkbox / Sub-group Styling ---------- */
+        .checkbox-group {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #ddd;
+            line-height: 1.3;
+        }
+        .sub-fieldset {
+            border: 1px dashed #444;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 6px;
+        }
+        .sub-fieldset legend {
+            color: #d0a92c;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 0 4px;
+        }
+
+        /* Spacing between fields in the "Register Your Service" form */
+
+        /* ---------- Modal ---------- */
+        .shoe-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .85);
+            z-index: 10000;
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .shoe-modal.is-active {
+            display: flex;
+        }
+        .shoe-modal__content {
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 900px;
+            width: min(100%, 900px);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .shoe-modal__close {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 24px;
+            background: transparent;
+            border: 0;
+            color: #fff;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .shoe-modal__close:hover,
+        .shoe-modal__close:focus-visible {
+            color: #d0a92c;
+            outline: none;
+        }
+        .shoe-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 15px;
+        }
+        
+        .shoe-grid-item {
+            cursor: pointer;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform .2s, border-color .2s;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            height: 220px;
+        }
+        .shoe-grid-item:hover,
+        .shoe-grid-item:focus-visible {
+            transform: scale(1.02);
+            border-color: #d0a92c;
+            outline: none;
+        }
+        .shoe-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #050505;
+            display: block;
+        }
+        .shoe-single-view {
+            text-align: center;
+        }
+        .shoe-single-view img {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 6px;
+            margin: 0 auto 15px;
+        }
+        .modal-btn {
+            display: inline-block;
+            background: #d0a92c;
+            color: #000;
+            border: 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .modal-btn:hover,
+        .modal-btn:focus-visible {
+            background: #b89324;
+            outline: 2px solid #fff;
+            outline-offset: 1px;
+        }
+        .modal-btn--secondary {
+            background: #444;
+            color: #fff;
+            margin-left: 10px;
+        }
+        .modal-btn--secondary:hover,
+        .modal-btn--secondary:focus-visible {
+            background: #555;
+        }
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 460px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group label {
+            font-size: 14px;
+            color: #ccc;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-size: 14px;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: 2px solid #d0a92c;
+            outline-offset: 1px;
+        }
+
+        .link-no-underline {
+            text-decoration: none;
+        }
+        .modal-text {
+            margin: 0;
+            padding-top: 10px;
+        }
+        .modal-heading {
+            text-align: center;
+            color: #d0a92c;
+            margin: 0 0 10px;
+        }
+        .modal-heading--spaced {
+            margin-bottom: 15px;
+        }
+        .add-guarantor-btn {
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        .form-group--spaced {
+            margin-bottom: 16px;
+        }
+
+        .service-choice-group {
+            margin-top: 0;
+        }
+        
+
+        .form-footnote {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 500;
+            font-size: clamp(14px, 1.4vw, 17px);
+            color: #ffffff;
+            text-align: center;
+            margin: 10px 0 0;
+            padding: 10px 0 0;
+            border-top: 1px solid #333;
+        }
+
+
+
+        /* =========================================================
+           ===== AUCHI SERVICE STANDALONE FORMS =====================
+           ========================================================= */
+        .dnvoc-service-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 26000;
+            padding: 20px;
+            background: rgba(0,0,0,.78);
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .dnvoc-service-modal.active { display: flex; }
+        body.modal-open { overflow: hidden; }
+        .dnvoc-service-modal__content {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            max-height: 92vh;
+            overflow-y: auto;
+            padding: 22px;
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+        }
+        .dnvoc-service-modal__close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: 0;
+            font-size: 24px;
+            color: #999;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .dnvoc-service-modal__close:hover { color: var(--gold-dark); }
+        .dnvoc-service-modal__title {
+            margin: 0 0 16px;
+            color: var(--gold);
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 22px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        .dnvoc-service-form-group { margin-bottom: 12px; }
+        .dnvoc-service-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #555;
+            font-weight: 700;
+        }
+        .dnvoc-service-form-group input,
+        .dnvoc-service-form-group select,
+        .dnvoc-service-form-group textarea {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cfcfcf;
+            background: #fafafa;
+            font-size: 14px;
+            font-family: Georgia, serif;
+            color: var(--ink);
+        }
+        .dnvoc-service-form-group input:focus,
+        .dnvoc-service-form-group select:focus,
+        .dnvoc-service-form-group textarea:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+            background: #fff;
+        }
+        .dnvoc-service-form-footnote {
+            margin: 10px 0;
+            padding: 10px 0 0;
+            color: var(--ink);
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            text-align: center;
+        }
+        .dnvoc-service-submit {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 12px 18px;
+            border: 2px solid var(--gold-dark);
+            border-radius: 8px;
+            background: var(--gold);
+            color: #000;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease;
+        }
+        .dnvoc-service-submit:hover { background: var(--gold-dark); color: #fff; }
+        .dnvoc-service-submit:disabled { opacity: .6; cursor: not-allowed; }
+        .dnvoc-service-secondary {
+            display: block;
+            width: 100%;
+            margin: 8px 0 12px;
+            padding: 9px 12px;
+            border: 1px solid #999;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--ink);
+            cursor: pointer;
+        }
+        .dnvoc-service-checkbox {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin: 12px 0;
+            font-size: 13px;
+        }
+        .dnvoc-service-checkbox input { margin-top: 3px; flex: 0 0 auto; }
+        .dnvoc-service-checkbox label { line-height: 1.4; }
+
+ /* =========================================================
+           ===== OPPORTUNITIES WITH DNVOC (dnvoc-opp- prefixed) ====
+           ========================================================= */
+        .dnvoc-opp-section {
+            margin-top: 24px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            text-align: center;
+        }
+        .dnvoc-opp-section h3 {
+             text-align: left; margin-bottom: 6px; 
+        }
+        .dnvoc-opp-section p {   
+            border-right: 4px solid var(--gold);
+            background: #f8f8f8;
+            padding: 12px 14px;
+
+}
+      
+        .dnvoc-opp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            padding: 12px 20px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(15px, 1.7vw, 19px);
+            letter-spacing: .5px;
+            border: 2px solid #000;
+            border-radius: 8px;
+            background: var(--gold);
+            color: #000;
+            cursor: pointer;
+            transition: background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+        }
+        .dnvoc-opp-btn:hover,
+        .dnvoc-opp-btn:focus-visible {
+            background: var(--dark);
+            color: var(--gold);
+            border-color: var(--gold);
+            outline: none;
+        }
+
+        .dnvoc-opp-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.78);
+            z-index: 25000;
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .dnvoc-opp-modal.active { display: flex; }
+        .dnvoc-opp-modal__content {
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 22px;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+        .dnvoc-opp-modal__close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: 0;
+            font-size: 24px;
+            color: #999;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .dnvoc-opp-modal__close:hover { color: var(--gold-dark); }
+        .dnvoc-opp-modal__title {
+            margin: 0 0 16px;
+            color: var(--gold);
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 22px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        .dnvoc-opp-form-group { margin-bottom: 12px; }
+        .dnvoc-opp-form-group label {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #555;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .dnvoc-opp-form-group input,
+        .dnvoc-opp-form-group select,
+        .dnvoc-opp-form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cfcfcf;
+            background: #fafafa;
+            font-size: 14px;
+            font-family: Georgia, serif;
+            color: var(--ink);
+        }
+        .dnvoc-opp-form-group input:focus,
+        .dnvoc-opp-form-group select:focus,
+        .dnvoc-opp-form-group textarea:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+            background: #fff;
+        }
+        .dnvoc-opp-submit {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 12px 18px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            border: 2px solid var(--gold-dark);
+            border-radius: 8px;
+            background: var(--gold);
+            color: #000;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease;
+        }
+        .dnvoc-opp-submit:hover { background: var(--gold-dark); color: #fff; }
+        .dnvoc-opp-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+        /* SUGGESTIONS & FEEDBACK (dnvofb- prefixed)  */
+        
+        .dnvofb-wrap {
+            margin-top: 18px;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+       .dnvofb-wrap p {  
+            border:none;
+            background: none;
+    }
+     
+  
+        .dnvofb-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.78);
+            z-index: 27000;
+            padding: 20px;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        .dnvofb-modal.active { display: flex; }
+        .dnvofb-modal__content {
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-radius: 14px;
+            padding: 22px;
+            max-width: 440px;
+            width: 100%;
+            position: relative;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+        .dnvofb-modal__close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: transparent;
+            border: 0;
+            font-size: 24px;
+            color: #999;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .dnvofb-modal__close:hover { color: var(--gold-dark); }
+        .dnvofb-modal__title {
+            margin: 0 0 16px;
+            color: var(--gold);
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 22px;
+            text-align: center;
+            letter-spacing: .5px;
+        }
+        .dnvofb-form-group { margin-bottom: 12px; }
+        .dnvofb-form-group label {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #555;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .dnvofb-form-group input,
+        .dnvofb-form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cfcfcf;
+            background: #fafafa;
+            font-size: 14px;
+            font-family: Georgia, serif;
+            color: var(--ink);
+        }
+        .dnvofb-form-group input:focus,
+        .dnvofb-form-group textarea:focus {
+            outline: 2px solid var(--gold);
+            outline-offset: 1px;
+            background: #fff;
+        }
+
+        /* --- 5-star rating row --- */
+        .dnvofb-stars {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin: 4px 0 2px;
+        }
+        .dnvofb-star {
+            background: transparent;
+            border: none;
+            font-size: 32px;
+            line-height: 1;
+            color: #d4d4d4;
+            cursor: pointer;
+            padding: 2px 4px;
+            transition: color .15s ease, transform .15s ease;
+        }
+        .dnvofb-star:hover,
+        .dnvofb-star.hovered,
+        .dnvofb-star.active {
+            color: var(--gold);
+        }
+        .dnvofb-star.active { transform: scale(1.08); }
+        .dnvofb-rating-label {
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #666;
+            margin: 0 0 10px;
+            min-height: 16px;
+            line-height: 1.3;
+        }
+        .dnvofb-submit {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 12px 18px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            border: 2px solid var(--gold-dark);
+            border-radius: 8px;
+            background: var(--gold);
+            color: #000;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease;
+        }
+        .dnvofb-submit:hover { background: var(--gold-dark); color: #fff; }
+        .dnvofb-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+        
+        /* ---------- Contact ---------- */
+        .contact {
+            margin-top: 24px;
+        }
+        .contact h3 {
+            text-align: left;
+            margin-bottom: 6px;
+        }
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 12px;
+        }
+        .whatsapp-link,
+        .location-icon-wrapper,
+        .channel-icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform .2s, filter .2s;
+            line-height: 1;
+            flex: 0 0 auto;
+            width: 48px;
+        }
+        .whatsapp-icon,
+        .location-icon,
+        .channel-icon {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        .whatsapp-link:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 6px rgba(37, 211, 102, .4));
+        }
+        .phones {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 700;
+            font-size: clamp(20px, 2.8vw, 30px);
+            line-height: 1.25;
+        }
+        .locations-text {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(14px, 1.55vw, 17px);
+            font-style: italic;
+            font-weight: 600;
+            line-height: 1.45;
+            color: #333;
+        }
+        .locations-text p {
+            margin: 0 0 6px;
+        }
+        .locations-text p:last-child {
+            margin: 0;
+        }
+
+        .channel-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color:#25D366;
+            text-decoration: none;
+            transition: opacity .2s;
+        }
+        .channel-link:hover {
+            opacity: 0.7;
+            color: #128C7E;
+        }
+        .channel-link span {
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-weight: 600;
+            font-size: clamp(16px, 1.6vw, 20px);
+            
+        }
+        .channel-link svg {
+            width: 35px;
+            height: 35px;
+            fill: currentColor;
+            margin: 1px 8px;
+            flex-shrink: 0;
+        }
+        
+
+        /* ---------- Responsive ---------- */
+
+        /* Tablet */
+        @media (max-width: 800px) {
+            .content {
+
+                            column-gap: 18px;
+
+                            padding-left: 20px;
+
+                            padding-right: 20px;
+
+                        }
+
+                        .gallery img {
+
+                            height: 320px;
+
+                        }
+
+                        .shoe-gallery {
+
+                            padding-right: 65px;
+
+                        }
+.shoe-grid-item {
+
+                            height: 190px;
+
+                        }
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+            .service-choice-group {
+
+                            margin-top: 14px;
+
+                        }
+
+                        .curtain-close-btn {
+
+                            display: none; /* Hide drawer close icon on mobile view */
+
+                        }
+
+            .channel-link svg {
+
+                            width: 28px;
+
+                            height: 28px;
+
+                        }
+
+            /* Keep the hero clear of the fixed hamburger button. */
+
+                        .hero {
+
+                            padding-left: 12px;
+
+                            padding-right: 62px;
+
+                        }
+
+
+
+                        /* Mobile drawer opens from the opposite side, keeping the
+
+                           hamburger-to-X animation visible. */
+
+                        .curtain-drawer {
+
+                            left: 0;
+
+                            right: auto;
+
+                            transform: translateX(-100%);
+
+                            width: min(85vw, 380px);
+
+                            max-width: 100%;
+
+                        }
+
+                        .curtain-drawer.active {
+
+                            transform: translateX(0);
+
+                        }
+
+
+
+                        .shoe-card {
+                flex-basis: 175px;
+            }
+
+            .shoe-gallery__right-controls {
+
+                            right: 2px;
+
+                        }
+
+                        .hero {
+
+                            padding-top: 16px;
+
+                        }
+
+                        .gallery img {
+
+                            height: 260px;
+
+                        }
+
+                        .content {
+
+                            grid-template-columns: 1fr;
+
+                            row-gap: 22px;
+
+                            padding: 12px 20px 24px;
+
+                        }
+
+                        #mobileMainDivider {
+
+                            grid-column: 1;
+
+                        }
+
+                        .divider {
+
+                            display: none;
+
+                        }
+
+                        .mobile-main-divider {
+
+                            display: block;
+
+                            margin: 22px 0 0;
+
+                        }
+
+                        .column+.column {
+
+                            border-top: 0;
+
+                            margin-top: 0;
+
+                            padding-top: 0;
+
+                        }
+
+                        .column li {
+
+                            font-size: 20px;
+
+                        }
+
+                        .service-btn,
+
+                        .service-btn--register {
+
+                            padding: 10px 18px;
+
+                            font-size: 16px;
+
+                        }
+
+                        .whatsapp-icon,
+
+                        .location-icon,
+
+                        .channel-icon,
+
+                        .whatsapp-link,
+
+                        .location-icon-wrapper,
+
+                        .channel-icon-wrapper {
+
+                            width: 40px;
+
+                            height: 40px;
+
+                        }
+
+                        .contact-row {
+
+                            justify-content: flex-start;
+
+                        }
+
+                        .shoe-gallery {
+
+                            margin-top: 20px;
+
+                        }
+
+                        .shoe-gallery__track {
+
+                            gap: 6px;
+
+                        }
+
+                        .auchi-connect-cards {
+
+                            gap: 8px;
+
+                        }
+
+                        .auchi-connect-card {
+
+                            min-height: 150px;
+
+                            padding: 14px 8px;
+
+                        }
+
+                        .auchi-connect-card svg {
+
+                            width: 26px;
+
+                            height: 26px;
+
+                        }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .cgpa-launch,
+
+                        .dnvcr-launch { font-size: 14px; padding: 11px 16px; }
+
+                        .dnvcr-stamps { gap: 6px; max-width: 260px; }
+
+                        .dnvofb-star { font-size: 28px; padding: 2px 2px; }
+
+            .hero {
+
+                            font-size: 20px;
+
+                        }
+
+                       .hero .sub { display:inline; }
+
+
+
+                        .gallery img {
+
+                            height: 200px;
+
+                        }
+
+                        .content {
+
+                            padding-left: 17px;
+
+                            padding-right: 17px;
+
+                        }
+
+                        .shoe-gallery {
+
+                            padding-right: 55px;
+
+                        }
+
+                        .shoe-card {
+
+                            flex-basis: 160px;
+
+                            height: 200px;
+
+                        }
+
+                        .shoe-card__description {
+
+                            font-size: 11px;
+
+                            padding: 6px 4px;
+
+                        }
+
+                        .shoe-card__action {
+
+                            font-size: 11px;
+
+                            flex-basis: 34px;
+
+                            height: 34px;
+
+                        }
+
+                        .shoe-gallery-grid {
+
+                            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                            gap: 12px;
+
+                        }
+
+                        .shoe-grid-item {
+
+                            height: 160px;
+
+                        }
+
+                        .shoe-modal {
+
+                            padding: 10px;
+
+                        }
+
+                        .shoe-modal__content {
+
+                            padding: 15px;
+
+                        }
+
+                        .modal-btn {
+
+                            padding: 9px 14px;
+
+                            font-size: 14px;
+
+                        }
+
+                        .modal-btn--secondary {
+
+                            margin-left: 5px;
+
+                        }
+
+                        .whatsapp-icon,
+
+                        .location-icon,
+
+                        .channel-icon,
+
+                        .whatsapp-link,
+
+                        .location-icon-wrapper,
+
+                        .channel-icon-wrapper {
+
+                            width: 34px;
+
+                            height: 34px;
+
+                        }
+        }
+
+        /* Very small mobile */
+        @media (max-width: 400px) {
+            .hero h1 {
+
+                            font-size: 28px;
+
+                            margin-right: 20px;
+
+                        }
+
+                        .service-btn-group {
+
+                            gap: 8px;
+
+                        }
+
+                        .shoe-gallery {
+
+                            padding-right: 48px;
+
+                        }
+
+                        .shoe-card {
+
+                            flex-basis: 160px;
+
+                            height: 180px;
+
+                        }
+
+                        .shoe-card__description {
+
+                            font-size: 10px;
+
+                        }
+
+                        .shoe-card__action {
+
+                            font-size: 10px;
+
+                        }
+
+                        .shoe-gallery-grid {
+
+                            grid-template-columns: 1fr;
+
+                        }
+
+                        .dnvoc-opp-section .small-text {
+            
+                              font-size:16px;
+            
+                        }
+                        .dnvofb-wrap .small-text {
+            
+                             font-size: clamp(20px, 2vw, 22px);
+            
+                        }
+
+
+
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                            scroll-behavior: auto;
+                        }
+                        .service-btn--project,
+                        .service-btn--book,
+                        .service-btn--register {
+                            animation: none;
+                        }
+                        .shoe-gallery__track {
+                            scroll-behavior: auto;
+                        }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== HAMBURGER BUTTON ===== -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- ===== CURTAIN DRAWER MENU ===== -->
+    <aside class="curtain-drawer" id="curtainDrawer" aria-label="Navigation drawer">
+        
+        <div class="curtain-content">
+            
+            <!-- Quick Jump Actions -->
+            <div class="curtain-nav-group">
+
+<div class="curtain-header">
+            <button class="curtain-close-btn" id="closeDrawerBtn" aria-label="Close menu">&times;</button>
+        </div>
+
+                <div class="curtain-nav-title">Quick links  & Forms</div>
+                 <a href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/ARF" target="_blank" class="curtain-link-btn" >📝 Assignment Calculator</a>
+
+                <button class="curtain-link-btn" id="drawerCgpaBtn">📊 CGPA Calculator </button>
+                <a href="#" target="_blank" class="curtain-link-btn" >📚 Pass Question Directory</a>
+                <button class="curtain-link-btn" id="drawerFindServiceBtn">👷 Get service man near you</button>
+                <button class="curtain-link-btn" id="drawerRegisterServiceBtn">🛠️ Register as a service provider</button>
+                <button class="curtain-link-btn" id="drawerShoeTrainingBtn">👢 Register for shoe making training</button>
+                <a href="https://dwinliznvm.blogspot.com/p/payment.html" target="_blank" rel="noopener noreferrer" class="curtain-link-btn" >👑 Register for Next-Voc Contest</a>
+<a href="https://ee-3.blogspot.com/search/label/Scholarships%20and%20grants" target="_blank" class="curtain-link-btn" >‍🎓 Scholarship & Grant Opportunities</a>
+                <button class="curtain-link-btn" id="drawerSaloonSessionBtn">💇 Book Salon session</button>
+            </div>
+
+            <!-- WhatsApp Community Promotion -->
+            <div class="curtain-nav-group">
+                <div class="curtain-nav-title">Community Channel</div>
+                <div class="drawer-wa-box">
+                    <div class="drawer-wa-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Dnvoc Cafe &amp; Salon 
+                    </div>
+                    <ul class="drawer-wa-promo">
+                        <li><strong>Buy & Sell</strong> – Exchange goods and service and  discover great deals.</li>
+                        <li><strong>Stay informed </strong> –  About happening events within Auchi metropolis.</li>
+                        <li><strong>DNVOC Updates</strong>  – Stay informed about upcoming Dnvoc offers, events, and promos.</li>
+                    </ul>
+                    <a href="https://whatsapp.com/channel/0029VaCBij80bIduavXyDK2t" target="_blank" rel="noopener noreferrer" class="drawer-wa-btn">Join WhatsApp Channel &#8301;</a>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <main class="page">
+
+        <!-- ===== HERO ===== -->
+        <header class="hero">
+            <h1>Welcome to <span class="sub">Dnvoc Cafe &amp; Salon </span></h1>
+        </header>
+
+        <!-- ===== GALLERY ===== -->
+        <section class="gallery" aria-label="Dnvoc services">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMQ2URg3k8oveR1gec0DHBYVtX7LiCoz6Iu9WkOTl2bESwZsrXAHZ8uehENgYxJkeZ-cCtHOYGLj42KDY7fAFXuF26aSW3V7eOARS1RdhJVgQVNQc7ns74mqG5xX74Z0_yjJYDMVuoscmlzpS0InBT0_BzP42faQ5g-8zSrPKGC1bnML_98Lhyphenhyphen_qcocmc/s320/digital.jpg" alt="Digital service" />
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6v4yg_VGZaxRLkh-0T6J72lTnLhBtBMFx-4sWlt0L9uycYJN0CeJGWLpdqm-flLIV1mrhVS0cGZcsGcaQrvUGew81q0yG16WKmm6E7-XsAsHViI4ZdX0PsYaGF3EAonCqgqMppRjbxlsBkPvGB3sUfEdXghVEbtzptyDorAaf10BC5i4IPNlFcUDHolg/s320/barber~2.jpg" alt="Barbering service" />
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBQceeGYFCTOmP5okhEvb2ypnzrwRAK11iFq2ynGc83Jtf_a9SWBzwC0FbxWmNPxJyyuqz0B55IbVjRmRVIj1whAT3Mir2huZpsLvkDSKVSLXI-CTeNerhD0_p6rAgDXgcmVN4EdvIYAV-vlOP_DSH6pva27Z5TG92ash0CfdsJ691_mhzLK_3C88Spp4/w256-h320/IMG_20260825_184448.jpg" alt="Hair braiding service" />
+        </section>
+
+<!-- ===== TICKER WIDGET ===== -->
+    <div class="ticker-wrapper" id="tickerWidget" onclick="openMessageModal()">
+        <div class="ticker-track">
+            <span class="ticker-text" id="tickerText"></span>
+        </div>
+    </div>
+
+    <!-- ===== TICKER POP-OUT MODAL ===== -->
+    <div class="ticker-modal" id="tickerModal">
+        <div class="ticker-modal-content">
+            <button class="ticker-modal-close" onclick="closeMessageModal(event)">&times;</button>
+            <div id="modalText" ></div>
+        </div>
+    </div>
+
+        <!-- ===== CONTENT ===== -->
+        <section class="content">
+
+            <!-- ===== DIGITAL COLUMN ===== -->
+            <div class="column">
+                <h2>Digital Service</h2>
+                <ul>
+                    <li>Purchase of ND/ HND form</li>
+                    <li>
+                        Remita Payments for:
+                        <ul class="sublist">
+                            <li>School Fees</li>
+                            <li>Logbook</li>
+                            <li>Result Verification e.t.c</li>
+                        </ul>
+                    </li>
+                    <li>
+                        Writing for:
+                        <ul class="sublist">
+                            <li><a href="#">Publication</a></li>
+                            <li><a href="#">Seminar</a></li>
+                            <li><a href="#">Project</a></li>
+                            <li><a href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/ARF">Assignments</a></li>
+                        </ul>
+                    </li>
+                    <li>Document Scanning</li>
+                    <li>Photocopy &amp; Printing</li>
+                    <li>Passport Photograph</li>
+                    <li>I.T. Logbook filling</li>
+                    <li>NIN Slip Printing</li>
+                </ul>
+
+                <h3>Jamb Related</h3>
+                <ul>
+                    <li>
+                        Retrival and Printing of:
+                        <ul class="sublist">
+                            <li>Jamb Admission letter</li>
+                            <li>Jamb Result</li>
+                            <li>Jamb Registration Form</li>
+                        </ul>
+                    </li>
+                    <li>Jamb Matriculation List</li>
+                    <li>NYSC Biodata Page</li>
+                </ul>
+
+                <div class="service-btn-group">
+                    <a href="javascript:void(0)" class="service-btn service-btn--project">📑Get Project Topics / Materials</a>
+                </div>
+
+
+
+
+                <!--   == DNVOC CUSTOMER REWARD BONUS == -->
+
+                <div class="dnvcr-wrap" id="dnvcrSection">
+                    <button class="dnvcr-launch" id="dnvcrToggleBtn" aria-expanded="false" aria-controls="dnvcrDrawer">
+                        <span>🎁 Dnvoc customer reward bonus</span>
+                        <span id="dnvcrToggleIcon">▼</span>
+                    </button>
+
+                    <div class="dnvcr-curtain" id="dnvcrDrawer">
+                        <div class="dnvcr-body">
+                            <div class="dnvcr-card-id">Card ID: <span id="dnvcrCardId">&hellip;</span></div>
+
+                            <p class="dnvcr-instructions">
+                                Collect 5 stamps to get <strong>&#8358;100 OFF</strong> on your next purchase.<br/>
+<span>
+Rewards can be used across our various products and services, including <b>slide purchase, digital and salon service,  the Creamy Yogurt drinks from Annyclem</b> and  <b>POS charges </b>.</span>
+
+                            </p>
+
+                            <div class="dnvcr-stamps" id="dnvcrStampsGrid" aria-label="Stamp progress"></div>
+                            <div class="dnvcr-progress-bar"><div class="dnvcr-progress-fill" id="dnvcrProgressFill"></div></div>
+                            <div class="dnvcr-stamps-count" id="dnvcrStampsCount">0/5 stamps</div>
+
+                            <div id="dnvcrRewardSection"></div>
+
+                            <button id="dnvcrAddStampBtn" class="dnvcr-btn" type="button">&#10133; Add Stamp (By Staff)</button>
+                            <button id="dnvcrRedeemBtn" class="dnvcr-btn dnvcr-btn--gold" type="button" disabled>&#127873; Redeem &#8358;100 OFF</button>
+
+                            <div class="dnvcr-small-buttons">
+                                <button id="dnvcrBackupBtn" class="dnvcr-btn dnvcr-btn--ghost" type="button">Backup</button>
+                                <button id="dnvcrRestoreBtn" class="dnvcr-btn dnvcr-btn--ghost" type="button">Restore</button>
+                            </div>
+
+                            <h4 class="dnvcr-history-title">Activity History</h4>
+                            <div class="dnvcr-history" id="dnvcrHistory"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ===== END DNVOC CUSTOMER REWARD BONUS ===== -->
+
+
+      <!-- ===== CGPA CALCULATOR EMBEDDED ===== -->
+                <div class="cgpa-wrap" id="cgpaSection">
+                    <button class="cgpa-launch" id="toggleDrawer" aria-expanded="false" aria-controls="cgpaDrawer">
+                        <span> 📈 CGPA Calculator</span>
+                        <span id="toggleIcon">▼</span>
+                    </button>
+
+                    <div class="curtain" id="cgpaDrawer">
+                        <div class="body">
+                            <div class="prev-cgpa-fields">
+                                <div class="prev-cgpa-field">
+                                    <label for="prevCgpa">Previous CGPA (Optional)</label>
+                                    <input type="number" id="prevCgpa" step="0.01" min="0" max="4.0" placeholder="e.g. 3.50">
+                                </div>
+                                <div class="prev-cgpa-field">
+                                    <label for="prevUnits">Previous Total Units (Required with Previous CGPA)</label>
+                                    <input type="number" id="prevUnits" step="1" min="0" placeholder="e.g. 80">
+                                </div>
+                            </div>
+
+                            <div class="course-head">
+                                <span>Course Name</span>
+                                <span>Units</span>
+                                <span>Grade</span>
+                                <span></span>
+                            </div>
+
+                            <div class="courses" id="courseContainer">
+                                <div class="course">
+                                    <input type="text" placeholder="Course 1" class="course-name">
+                                    <input type="number" placeholder="" min="1" class="course-units">
+                                    <select class="course-grade">
+                                        <option value="4.0">A</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                    <button class="remove" title="Remove course">&times;</button>
+                                </div>
+                            </div>
+
+                            <div class="actions">
+                                <button class="btn secondary" id="addCourseBtn">+ Add Course</button>
+                                <button class="btn secondary" id="clearBtn">Clear All</button>
+                                <button class="btn" id="calculateBtn">Calculate</button>
+                            </div>
+
+                            <div class="result" id="resultBox">
+                                <div class="metric">
+                                    <small>Current Total Units</small>
+                                    <strong id="unitsVal">0</strong>
+                                </div>
+                                <div class="metric">
+                                    <small>Current GPA</small>
+                                    <strong id="gpaVal">0.00</strong>
+                                </div>
+                                <div class="metric">
+                                    <small>New CGPA</small>
+                                    <strong id="cgpaVal">0.00</strong>
+                                </div>
+                                <div class="classification" id="classVal">
+                                    Classification: --
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>          
+
+
+                <div class="section-divider"></div>
+
+                <!-- ===== SHOE DISPLAY ===== -->
+                <section class="shoe-gallery" id="shoeGallerySection" aria-label="Shoe gallery">
+                    <h3>Other Products / Service</h3>
+
+                    <div id="horizontal_slide" class="shoe-gallery__track">
+                        <!-- Carousel items render dynamically -->
+                    </div>
+
+                    <div class="shoe-gallery__right-controls">
+                        <button id="openGridBtn" class="shoe-gallery__view-all" type="button">View All</button>
+                    </div>
+                </section>
+
+                <!-- ===== SHOE MODAL / GENERAL MODAL ===== -->
+                <div id="modalOverlay" class="shoe-modal" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+                    <div class="shoe-modal__content">
+                        <button id="closeModalBtn" class="shoe-modal__close" type="button" aria-label="Close modal">&times;</button>
+
+                        <div id="gridView">
+                            <h2 id="galleryTitle" class="modal-heading">Gallery</h2>
+                            <div id="galleryContainer" class="shoe-gallery-grid"></div>
+                        </div>
+
+                        <div id="singleView" class="shoe-single-view" hidden>
+                            <img id="detailImage" src="" alt="Selected preview">
+                            <div>
+                                <button id="placeOrderBtn" class="modal-btn" type="button">Shop Now</button>
+                                <button id="backToGridBtn" class="modal-btn modal-btn--secondary" type="button">Back</button>
+                            </div>
+                        </div>
+
+                        <div id="formView" hidden>
+                            <h2 id="formTitle" class="modal-heading modal-heading--spaced">Register for Training</h2>
+                            <form id="orderForm" class="order-form" action="https://formsubmit.co/ajax/dwinliz.nvm@gmail.com" method="POST">
+                                <input type="hidden" id="formType" name="form_type" value="Training Registration">
+                                <input type="hidden" id="formSubject" name="_subject" value="DNVOC Website - Training Registration">
+                                <input type="hidden" name="_template" value="table">
+                                <input type="hidden" name="_captcha" value="true">
+                                <input type="hidden" id="formUrl" name="_url" value="">
+
+                                <!-- Common Fields -->
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" name="full_name" required placeholder="Enter your full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="whatsapp">WhatsApp Number</label>
+                                    <input type="tel" id="whatsapp" name="whatsapp_number" required placeholder="Enter your WhatsApp number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="location">Location / Address</label>
+                                    <textarea id="location" name="location" rows="2" required placeholder="Your address or location"></textarea>
+                                </div>
+
+                                <!-- Shoe Specific Fields -->
+                                <div id="shoeFields" hidden>
+                                    <div class="form-group" >
+                                        <label for="productName">Product Name</label>
+                                        <input type="text" id="productName" name="product_name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shoeSize">Shoe Size</label>
+                                        <input type="text" id="shoeSize" name="shoe_size" placeholder="e.g. 42 / UK 8">
+                                    </div>
+                                </div>
+
+                                <!-- Saloon Specific Fields -->
+                                <div id="saloonFields" hidden>
+                                    <div class="form-group">
+                                        <label for="visitDate">Intended Visit Date</label>
+                                        <input type="date" id="visitDate" name="intended_visit_date">
+                                    </div>
+                                    <div class="form-group service-choice-group">
+                                        <label for="serviceType">Choose Service</label>
+                                        <select id="serviceType" name="saloon_service">
+                                            <option value="Normal Saloon session">Normal Saloon Session</option>
+                                            <option value="Next-Voc Session">Next-Voc Session</option>
+                                            <option value="Home Service">Home Service</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Footnotes -->
+                                <div id="shoeFootnote" class="form-footnote" hidden>
+                                    You will be connected with a sales representative on WhatsApp after submitting this form.
+                                </div>
+                                <div id="trainingVenue" class="form-footnote" hidden>
+                                    Training Venue: 4th Barwak Opp. Steez Havana Benin Auchi Express way.
+                                </div>
+
+                                <button type="submit" class="modal-btn">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="small-text" id="shoeTrainingSection">
+                    Shop high quality affordable slides from Dnvoc.
+                    We also offer weekend shoe-making training at a &#8358;500 entry fee. Click below to learn more and register.
+                </div>
+
+                <div class="service-btn-group">
+                    <button type="button" class="service-btn--register open-pop-form">Register for shoe making training</button>
+                </div>
+
+                <!-- Divider between Digital Service and Saloon Service on mobile -->
+                <div class="section-divider mobile-main-divider" id="mobileMainDivider" aria-hidden="true"></div>
+            </div>
+
+            <!-- ===== DIVIDER ===== -->
+            <div class="divider" aria-hidden="true"></div>
+
+            <!-- ===== SALOON / SHOE / CONTACT COLUMN ===== -->
+            <div class="column" id="saloonSection">
+                <h2>Salon Service</h2>
+                <ul>
+                    <li>Hair cut and Shaving</li>
+                    <li>Hair Wash and Drying</li>
+                    <li>Hair dying</li>
+                    <li>Braiding and Twisting</li>
+                    <li>Nail Maintenance</li>
+                    <li>Make up Service</li>
+                    <li>Lash Fixing</li>
+                    <li>Wiging and installation</li>
+                    <li>Wig stretching &amp; maintenance</li>
+                    <li>Hair Extension installation</li>
+                    <li>Scalp treatment</li>
+                </ul>
+
+                
+                <!-- ===== SALOON TALK CONTEST SECTION ===== -->
+                <div class="image-dnvoc-box">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhlaT6hFMUKx7gbfk4OyVkbdTOqw3BP17Fw1krzr5UBTZhLryYh6aJO90_Tu187aiPlDB_j7I-af-AiNBoM1tuBJvELDANDNUisP4yH_Sfsgriqw_ggI3Rnko7JAsp3lTAEwjHbNm-TVhP7RRsRwktSPZ8ukw4hNvGQ1hw9H_Sm_cL88o5ILMlNnurn_8s/s320/1000049950.png" alt="Saloon Talk Contest Banner"/>
+                </div>
+                <div class="small-text">
+                    Also you  get to win &#8358;50,000+ in cash price when you participate in the Nex-Voc Contest during your salon session. To participate :
+                </div>
+                <ul class="saloon-contest-list">
+                    <li>Visit a partner saloon to get styled.</li>
+                    <li>Opt in for the Nex-Voc Contest session to get interviewed</li>
+                    <li>Gain the most vote on your interview  video and</li>
+                    <li>Win the attached contest prize.</li>
+                </ul>
+
+                <div class="service-btn-group">
+                    <button type="button" class="service-btn service-btn--book open-saloon-form">📅 Book Session</button>
+                </div>
+
+                <!-- ===== AUCHI SERVICE CONNECTION ===== -->
+                <section class="auchi-connect" id="auchiConnectSection" aria-labelledby="auchiConnectTitle">
+                    <h3 id="auchiConnectTitle">Find Service in Auchi</h3>
+                    <p class="small-text">Need a service or have a skill to offer? <br/>Let Dnvoc connect you.</p>
+                    <div class="auchi-connect-cards">
+                        <button type="button" class="auchi-connect-card" id="findServiceBtn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg>
+                            <span>Find / Get Service</span>
+                            <span>Tell us what service you need.</span>
+                        </button>
+                        <button type="button" class="auchi-connect-card" id="registerServiceBtn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"></circle><path d="M2 21v-2a7 7 0 0 1 14 0v2M19 8v6M16 11h6"></path></svg>
+                            <span>Register Your Service</span>
+                            <span>Offer a service and get discovered.</span>
+                        </button>
+                    </div>
+                    <div class="auchi-disclaimer">
+                        <strong>Service connection notice</strong>
+                      <div class="small-text"> DNVOC connects service seekers with registered service providers. Users should independently confirm prices, availability, qualifications and service quality before engaging a provider. DNVOC does not guarantee every service or transaction.
+                    </div> </div>
+                </section>
+
+                <div class="section-divider"></div>
+
+
+
+                <!-- OPPORTUNITIES WITH DNVOC  -->
+                <section class="dnvoc-opp-section" aria-labelledby="dnvocOppTitle">
+                    <h3 id="dnvocOppTitle">Opportunities with Dnvoc</h3>
+                    <p class="small-text">
+                        Are you a <strong>Computer Operator</strong>, <strong>Hairdresser</strong>,
+                        <strong>Barber</strong>, or <strong>Videographer</strong> staying around the
+                        <strong>Campus II area</strong> of Auchi, Edo State? We are constantly in need
+                        of persons with these skills. Click below to submit your expression of interest
+                        to work with us &mdash; we'll reach out when an opportunity matches your skill.
+                    </p>
+                    <button type="button" class="dnvoc-opp-btn" id="dnvocOppBtn">
+                        📝 Submit Application
+                    </button>
+
+                    <!-- ===== SUGGESTIONS & FEEDBACK (dnvofb-*) ===== -->
+                    <div class="dnvofb-wrap">
+                        <p class="small-text">
+                            We are constantly working to improve our service and bring you the most value.
+                            Please tell us where we can improve, or what other service you would like to see added.
+                        </p>
+                        <button type="button" class="dnvoc-opp-btn" id="dnvofbOpenBtn">
+                            💬 Send suggestions / feedback
+                        </button>
+                    </div>
+                    <!-- ===== END SUGGESTIONS & FEEDBACK ===== -->
+                </section>
+                <!-- ===== END OPPORTUNITIES WITH DNVOC ===== -->
+
+ <div class="section-divider"></div>
+
+
+                <!-- ===== CONTACT ===== -->
+                <div class="contact">
+                    <h3>Contact us:</h3>
+                    <div class="contact-row">
+                        <a href="https://wa.me/2349013357735" target="_blank" rel="noopener noreferrer" class="whatsapp-link" aria-label="Chat on WhatsApp">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhBLHPQ36yVm52gtJqaqOJkC_p26TFlNCT1HF7FiuPy2aJtH18wGPvi5jEPi6U-He3OK_KeaqR3-TEmtrABMv12u4NM1_Vb_qQyFIygQRQrHD9_YjxoceF61lPHqfP9L6gQpBtbtZf9JPHsRM5sgO7_wK7TMjajTmpMijDdRfBl3GHhhJpdCfYz_Q_stNs/s320/whatsapp-icon.png" alt="WhatsApp Icon" class="whatsapp-icon">
+                        </a>
+                        <div class="phones">
+                            0901-335-7735<br>
+                            0706-877-8321
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="location-icon-wrapper" aria-label="Location">
+                            <svg class="location-icon" viewBox="0 0 24 24" fill="#d7ae5e">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        </div>
+                        <div class="locations-text">
+                            <p>Campus II Extension Market Opp. C.P.B Venue Auchi Edo State</p>
+                            <p>4th Barwak Opp. Steez Havana Benin Auchi Express way</p>
+                        </div>
+                    </div>
+                    <!-- WhatsApp Channel link -->
+                    <div class="contact-row">
+                        <a href="https://whatsapp.com/channel/0029VaCBij80bIduavXyDK2t" target="_blank" rel="noopener noreferrer" class="channel-link">
+                            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                            </svg> 
+                            <span>Never miss an update, subscribe to our Whatsapp channel</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+
+ <!-- =====================================================
+         ===== STAFF PIN MODAL (for Customer Reward) =====
+         ===================================================== -->
+    <div class="dnvcr-modal" id="dnvcrStaffModal" role="dialog" aria-modal="true" aria-labelledby="dnvcrStaffModalTitle">
+        <div class="dnvcr-modal__content">
+            <button class="dnvcr-modal__close" id="dnvcrStaffModalClose" type="button" aria-label="Close">&times;</button>
+            <h3 class="dnvcr-modal__title" id="dnvcrStaffModalTitle">Staff Action</h3>
+            <form id="dnvcrStaffForm">
+                <div class="dnvcr-form-group">
+                    <label for="dnvcrPinInput">Staff PIN</label>
+                    <input type="password" id="dnvcrPinInput" inputmode="numeric"
+                           autocomplete="off" maxlength="6"
+                           placeholder="&bull;&bull;&bull;&bull;&bull;&bull;" required>
+                </div>
+                <div class="dnvcr-form-error" id="dnvcrStaffError"></div>
+                <button type="submit" class="dnvcr-btn dnvcr-btn--gold" id="dnvcrStaffSubmitBtn">Confirm</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         ===== FIND / GET SERVICE STANDALONE FORM =====
+         ===================================================== -->
+    <div class="dnvoc-service-modal" id="findServiceModal" role="dialog" aria-modal="true" aria-labelledby="findServiceFormTitle">
+        <div class="dnvoc-service-modal__content">
+            <button class="dnvoc-service-modal__close" id="findServiceClose" type="button" aria-label="Close">&times;</button>
+            <h3 class="dnvoc-service-modal__title" id="findServiceFormTitle">Find / Get Service</h3>
+            <form id="findServiceForm" action="https://formsubmit.co/ajax/dwinliz.nvm@gmail.com" method="POST">
+                <input type="hidden" name="form_type" value="Find Service Request">
+                <input type="hidden" name="_subject" value="DNVOC Website - Find/Get Service Request">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_url" value="">
+
+                <div class="dnvoc-service-form-group">
+                    <label for="findServiceName">Full Name</label>
+                    <input type="text" id="findServiceName" name="full_name" required placeholder="Enter your full name">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="findServiceWhatsapp">WhatsApp Number</label>
+                    <input type="tel" id="findServiceWhatsapp" name="whatsapp_number" required placeholder="Enter your WhatsApp number">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="findServiceLocation">Location / Address</label>
+                    <textarea id="findServiceLocation" name="location" rows="2" required placeholder="Your address or location"></textarea>
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="findServiceRequired">Select Service Required</label>
+                    <select id="findServiceRequired" name="service_required" required>
+                        <option value="">Select a service</option>
+                        <option value="Generator repairer">Generator repairer</option>
+                        <option value="Block molder">Block molder</option>
+                        <option value="Tiler">Tiler</option>
+                        <option value="Painter">Painter</option>
+                        <option value="Barber">Barber</option>
+                        <option value="Tailor">Tailor</option>
+                        <option value="Cake maker">Cake maker</option>
+                        <option value="Home service salon">Home service salon</option>
+                        <option value="Dispatch rider">Dispatch rider</option>
+                        <option value="Carpenter">Carpenter</option>
+                        <option value="NSQ writing assistance">NSQ writing assistance</option>
+                        <option value="Welder">Welder</option>
+                        <option value="Mechanic">Mechanic</option>
+                        <option value="Car wash home service">Car wash home service</option>
+                        <option value="General repairer">General repairer</option>
+                        <option value="Massage therapist">Massage therapist</option>
+                        <option value="Nurse">Nurse</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Event decorator / organiser">Event decorator / organiser</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Food order / vendor">Food order / vendor</option>
+                        <option value="Hook up">Hook up</option>
+                        <option value="Photographer">Photographer</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="dnvoc-service-form-footnote">
+                    Please note that an applicable commission may be required to facilitate connection.
+                </div>
+                <button type="submit" class="dnvoc-service-submit" id="findServiceSubmit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         ===== REGISTER SERVICE STANDALONE FORM =====
+         ===================================================== -->
+    <div class="dnvoc-service-modal" id="registerServiceModal" role="dialog" aria-modal="true" aria-labelledby="registerServiceFormTitle">
+        <div class="dnvoc-service-modal__content">
+            <button class="dnvoc-service-modal__close" id="registerServiceClose" type="button" aria-label="Close">&times;</button>
+            <h3 class="dnvoc-service-modal__title" id="registerServiceFormTitle">Register Your Service</h3>
+            <form id="registerServiceForm" action="https://formsubmit.co/ajax/dwinliz.nvm@gmail.com" method="POST">
+                <input type="hidden" name="form_type" value="Skill Registration">
+                <input type="hidden" name="_subject" value="DNVOC Website - Register Your Service">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" name="_url" value="">
+
+                <div class="dnvoc-service-form-group">
+                    <label for="registerServiceName">Full Name</label>
+                    <input type="text" id="registerServiceName" name="full_name" required placeholder="Enter your full name">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="registerServiceWhatsapp">WhatsApp Number</label>
+                    <input type="tel" id="registerServiceWhatsapp" name="whatsapp_number" required placeholder="Enter your WhatsApp number">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="registerServiceLocation">Location / Address</label>
+                    <textarea id="registerServiceLocation" name="location" rows="2" required placeholder="Your address or location"></textarea>
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="registerEducation">Education / Qualification</label>
+                    <input type="text" id="registerEducation" name="education_qualification" placeholder="e.g. OND, HND, BSc, SSCE, Trade Cert">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="registerServiceOffered">Service / Services Offered</label>
+                    <select id="registerServiceOffered" name="service_offered" required>
+                        <option value="">Select primary service offered</option>
+                        <option value="Generator repairer">Generator repairer</option>
+                        <option value="Block molder">Block molder</option>
+                        <option value="Tiler">Tiler</option>
+                        <option value="Painter">Painter</option>
+                        <option value="Barber">Barber</option>
+                        <option value="Tailor">Tailor</option>
+                        <option value="Cake maker">Cake maker</option>
+                        <option value="Home service salon">Home service salon</option>
+                        <option value="Dispatch rider">Dispatch rider</option>
+                        <option value="Carpenter">Carpenter</option>
+                        <option value="NSQ writing assistance">NSQ writing assistance</option>
+                        <option value="Welder">Welder</option>
+                        <option value="Mechanic">Mechanic</option>
+                        <option value="Car wash home service">Car wash home service</option>
+                        <option value="General repairer">General repairer</option>
+                        <option value="Massage therapist">Massage therapist</option>
+                        <option value="Nurse">Nurse</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Event decorator / organiser">Event decorator / organiser</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Food order / vendor">Food order / vendor</option>
+                        <option value="Hook up">Hook up</option>
+                        <option value="Photographer">Photographer</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="registerServiceDescription">Brief description of service and Professional conduct declaration</label>
+                    <textarea id="registerServiceDescription" name="description_and_conduct" rows="3" placeholder="Describe your service and declare your commitment to professional conduct..."></textarea>
+                </div>
+
+                <div id="standaloneGuarantorsContainer">
+                    <fieldset class="sub-fieldset guarantor-entry">
+                        <legend>Guarantor / Reference 1</legend>
+                        <div class="dnvoc-service-form-group">
+                            <label for="standaloneG1Name">Name</label>
+                            <input type="text" id="standaloneG1Name" name="guarantor1_name" placeholder="Full name">
+                        </div>
+                        <div class="dnvoc-service-form-group">
+                            <label for="standaloneG1Phone">Phone Number</label>
+                            <input type="tel" id="standaloneG1Phone" name="guarantor1_phone" placeholder="Phone number">
+                        </div>
+                        <div class="dnvoc-service-form-group">
+                            <label for="standaloneG1Address">Address</label>
+                            <input type="text" id="standaloneG1Address" name="guarantor1_address" placeholder="Residential address">
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="button" id="standaloneAddGuarantorBtn" class="dnvoc-service-secondary">+ Add Guarantor</button>
+
+                <div class="dnvoc-service-checkbox">
+                    <input type="checkbox" id="standaloneDeclarationConsent" name="declaration_consent" value="Yes" required>
+                    <label for="standaloneDeclarationConsent">I agree that the provided information is true and to abide by the service guidelines.</label>
+                </div>
+
+                <div class="dnvoc-service-form-footnote">
+                <div class="section-divider"></div>
+                    Please note that an applicable commission may be required to facilitate connection.
+                </div>
+                <button type="submit" class="dnvoc-service-submit" id="registerServiceSubmit">Submit Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         ===== OPPORTUNITIES POP-OUT FORM (hidden by default) =====
+         ===================================================== -->
+    <div class="dnvoc-opp-modal" id="dnvocOppModal" role="dialog" aria-modal="true" aria-labelledby="dnvocOppFormTitle">
+        <div class="dnvoc-opp-modal__content">
+            <button class="dnvoc-opp-modal__close" id="dnvocOppClose" type="button" aria-label="Close">&times;</button>
+            <h3 class="dnvoc-opp-modal__title" id="dnvocOppFormTitle">Expression of Interest</h3>
+            <form id="dnvocOppForm" action="https://formsubmit.co/ajax/dwinliz.nvm@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="DNVOC Website - Expression of Interest">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="true">
+                <div class="dnvoc-opp-form-group">
+                    <label for="dnvocOppName">Full Name</label>
+                    <input type="text" id="dnvocOppName" name="full_name" required placeholder="Enter your full name">
+                </div>
+                <div class="dnvoc-opp-form-group">
+                    <label for="dnvocOppPhone">Phone / WhatsApp Number</label>
+                    <input type="tel" id="dnvocOppPhone" name="phone" required placeholder="e.g. 0901 335 7735">
+                </div>
+                <div class="dnvoc-opp-form-group">
+                    <label for="dnvocOppSkill">Your Skill</label>
+                    <select id="dnvocOppSkill" name="skill" required>
+                        <option value="">Select your skill</option>
+                        <option>Computer Operator</option>
+                        <option>Hairdresser</option>
+                        <option>Barber</option>
+                        <option>Videographer</option>
+                        <option>Other (specify below)</option>
+                    </select>
+                </div>
+                <div class="dnvoc-opp-form-group">
+                    <label for="dnvocOppLocation">Area / Landmark in Auchi</label>
+                    <input type="text" id="dnvocOppLocation" name="location" required placeholder="e.g. Campus II, Sabo, Poly Road">
+                </div>
+                <div class="dnvoc-opp-form-group">
+                    <label for="dnvocOppAbout">Brief About You (optional)</label>
+                    <textarea id="dnvocOppAbout" name="about" rows="3" placeholder="Years of experience, availability, portfolio link, etc."></textarea>
+                </div>
+                <button type="submit" class="dnvoc-opp-submit" id="dnvocOppSubmit">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         ===== SUGGESTIONS & FEEDBACK POP-OUT FORM =====
+         ===================================================== -->
+    <div class="dnvofb-modal" id="dnvofbModal" role="dialog" aria-modal="true" aria-labelledby="dnvofbTitle">
+        <div class="dnvofb-modal__content">
+            <button class="dnvofb-modal__close" id="dnvofbClose" type="button" aria-label="Close">&times;</button>
+            <h3 class="dnvofb-modal__title" id="dnvofbTitle">Suggestions &amp; Feedback</h3>
+            <form id="dnvofbForm" action="https://formsubmit.co/ajax/dwinliz.nvm@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="DNVOC Website - Suggestions & Feedback">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="true">
+                <input type="hidden" id="dnvofbRatingValue" name="experience_rating" value="">
+
+                <div class="dnvofb-form-group">
+                    <label for="dnvofbName">Full Name</label>
+                    <input type="text" id="dnvofbName" name="full_name" required placeholder="Enter your full name">
+                </div>
+                <div class="dnvofb-form-group">
+                    <label for="dnvofbPhone">Phone / WhatsApp Number</label>
+                    <input type="tel" id="dnvofbPhone" name="phone" required placeholder="e.g. 0901 335 7735">
+                </div>
+
+                <div class="dnvofb-form-group">
+                    <label>Experience Rating</label>
+                    <div class="dnvofb-stars" id="dnvofbStars" role="radiogroup" aria-label="Experience rating">
+                        <button type="button" class="dnvofb-star" data-value="1" aria-label="1 star">★</button>
+                        <button type="button" class="dnvofb-star" data-value="2" aria-label="2 stars">★</button>
+                        <button type="button" class="dnvofb-star" data-value="3" aria-label="3 stars">★</button>
+                        <button type="button" class="dnvofb-star" data-value="4" aria-label="4 stars">★</button>
+                        <button type="button" class="dnvofb-star" data-value="5" aria-label="5 stars">★</button>
+                    </div>
+                    <div class="dnvofb-rating-label" id="dnvofbRatingLabel">Tap a star to rate your experience</div>
+                </div>
+
+                <div class="dnvofb-form-group">
+                    <label for="dnvofbComment">Suggestions / Feedback</label>
+                    <textarea id="dnvofbComment" name="comment" rows="4" required placeholder="Tell us how we can improve, or what service you would like added."></textarea>
+                </div>
+
+                <button type="submit" class="dnvofb-submit" id="dnvofbSubmit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+ <script>
+        /* ---------- Drawer Toggle & Close on Document Click ---------- */
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const curtainDrawer = document.getElementById('curtainDrawer');
+        const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+        function toggleCurtain(open) {
+            hamburgerBtn.setAttribute('aria-expanded', open);
+            if (open) {
+                hamburgerBtn.classList.add('is-active');
+                curtainDrawer.classList.add('active');
+            } else {
+                hamburgerBtn.classList.remove('is-active');
+                curtainDrawer.classList.remove('active');
+            }
+        }
+
+        hamburgerBtn.onclick = (e) => {
+            e.stopPropagation();
+            toggleCurtain(!curtainDrawer.classList.contains('active'));
+        };
+
+        closeDrawerBtn.onclick = (e) => {
+            e.stopPropagation();
+            toggleCurtain(false);
+        };
+
+        curtainDrawer.onclick = (e) => {
+            e.stopPropagation();
+        };
+
+        document.addEventListener('click', () => {
+            if (curtainDrawer.classList.contains('active')) {
+                toggleCurtain(false);
+            }
+        });
+
+        // Drawer Jump Links Logic
+        document.getElementById('drawerCgpaBtn').onclick = () => {
+            toggleCurtain(false);
+            const cgpaSection = document.getElementById('cgpaSection');
+            cgpaSection.scrollIntoView({ behavior: 'smooth' });
+            openCgpaCalculator();
+        };
+        document.getElementById('drawerFindServiceBtn').onclick = () => {
+            toggleCurtain(false);
+            openServiceModal(document.getElementById('findServiceModal'));
+        };
+        document.getElementById('drawerRegisterServiceBtn').onclick = () => {
+            toggleCurtain(false);
+            openServiceModal(document.getElementById('registerServiceModal'));
+        };
+        document.getElementById('drawerShoeTrainingBtn').onclick = () => {
+            toggleCurtain(false);
+            openForm('training');
+        };
+        document.getElementById('drawerSaloonSessionBtn').onclick = () => {
+            toggleCurtain(false);
+            openForm('saloon');
+        };
+
+          // CGPA Calculator Logic
+        (function(){
+            const toggleBtn = document.getElementById('toggleDrawer');
+            const toggleIcon = document.getElementById('toggleIcon');
+            const drawer = document.getElementById('cgpaDrawer');
+            const courseContainer = document.getElementById('courseContainer');
+            const addCourseBtn = document.getElementById('addCourseBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const prevCgpaInput = document.getElementById('prevCgpa');
+            const prevUnitsInput = document.getElementById('prevUnits');
+            const gpaVal = document.getElementById('gpaVal');
+
+            if (!toggleBtn || !drawer) return;
+
+            function setDrawerOpen(open) {
+                drawer.classList.toggle('open', open);
+                toggleBtn.setAttribute('aria-expanded', open);
+                toggleIcon.textContent = open ? '▲' : '▼';
+            }
+
+            // Exposed so the side-drawer "CGPA Calculate" button can open it
+            window.openCgpaCalculator = function() {
+                setDrawerOpen(true);
+            };
+
+            // Toggle Drawer
+            toggleBtn.addEventListener('click', () => {
+                setDrawerOpen(!drawer.classList.contains('open'));
+            });
+
+            // Add New Course Row
+            addCourseBtn.addEventListener('click', () => {
+                const count = courseContainer.children.length + 1;
+                const div = document.createElement('div');
+                div.className = 'course';
+                div.innerHTML = `
+                    <input type="text" placeholder="Course ${count}" class="course-name">
+                    <input type="number" placeholder="" min="1" class="course-units">
+                    <select class="course-grade">
+                        <option value="4.0">A</option>
+                        <option value="3.0">B</option>
+                        <option value="2.0">C</option>
+                        <option value="1.0">D</option>
+                        <option value="0.0">F</option>
+                    </select>
+                    <button class="remove" title="Remove course">&times;</button>
+                `;
+                courseContainer.appendChild(div);
+                calculateCGPA();
+            });
+
+            // Remove Course Row
+            courseContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove')) {
+                    if (courseContainer.children.length > 1) {
+                        e.target.closest('.course').remove();
+                        calculateCGPA();
+                    }
+                }
+            });
+
+            // Clear All Fields
+            clearBtn.addEventListener('click', () => {
+                prevCgpaInput.value = '';
+                prevUnitsInput.value = '';
+                courseContainer.innerHTML = `
+                    <div class="course">
+                        <input type="text" placeholder="Course 1" class="course-name">
+                        <input type="number" placeholder="" min="1" class="course-units">
+                        <select class="course-grade">
+                            <option value="4.0">A</option>
+                            <option value="3.0">B</option>
+                            <option value="2.0">C</option>
+                            <option value="1.0">D</option>
+                            <option value="0.0">F</option>
+                        </select>
+                        <button class="remove" title="Remove course">&times;</button>
+                    </div>
+                `;
+                calculateCGPA();
+            });
+
+            // Recalculate GPA and cumulative CGPA using weighted previous units.
+            function calculateCGPA() {
+                const units = courseContainer.querySelectorAll('.course-units');
+                const grades = courseContainer.querySelectorAll('.course-grade');
+                const prevCgpa = parseFloat(prevCgpaInput.value);
+                const prevUnits = parseFloat(prevUnitsInput.value);
+
+                let currentUnits = 0;
+                let currentQualityPoints = 0;
+
+                units.forEach((unitInput, idx) => {
+                    const u = parseFloat(unitInput.value);
+                    const g = parseFloat(grades[idx].value);
+
+                    if (!isNaN(u) && u > 0) {
+                        currentUnits += u;
+                        currentQualityPoints += u * g;
+                    }
+                });
+
+                const currentGpa = currentUnits > 0
+                    ? currentQualityPoints / currentUnits
+                    : 0;
+
+                // A previous CGPA must be weighted by the total units on which it was earned.
+                if (!isNaN(prevCgpa) && (isNaN(prevUnits) || prevUnits <= 0)) {
+                    document.getElementById('unitsVal').textContent = currentUnits;
+                    gpaVal.textContent = currentGpa.toFixed(2);
+                    document.getElementById('cgpaVal').textContent = '--';
+                    document.getElementById('classVal').textContent = 'Enter previous total units';
+                    return;
+                }
+
+                if (currentUnits === 0 && isNaN(prevCgpa)) {
+                    document.getElementById('unitsVal').textContent = '0';
+                    gpaVal.textContent = '0.00';
+                    document.getElementById('cgpaVal').textContent = '0.00';
+                    document.getElementById('classVal').textContent = 'Classification: --';
+                    return;
+                }
+
+                let cgpa;
+                let cumulativeUnits;
+
+                if (!isNaN(prevCgpa)) {
+                    cumulativeUnits = prevUnits + currentUnits;
+                    cgpa = cumulativeUnits > 0
+                        ? ((prevCgpa * prevUnits) + currentQualityPoints) / cumulativeUnits
+                        : 0;
+                } else {
+                    cumulativeUnits = currentUnits;
+                    cgpa = currentGpa;
+                }
+
+                document.getElementById('unitsVal').textContent = currentUnits;
+                gpaVal.textContent = currentGpa.toFixed(2);
+                document.getElementById('cgpaVal').textContent = cgpa.toFixed(2);
+
+                let classification = 'Pass';
+                if (cgpa >= 3.50) {
+                    classification = 'Distinction';
+                } else if (cgpa >= 3.00) {
+                    classification = 'Upper';
+                } else if (cgpa >= 2.00) {
+                    classification = 'Lower';
+                } else {
+                    classification = 'Pass';
+                }
+
+                document.getElementById('classVal').textContent = `Classification: ${classification}`;
+            }
+
+            calculateBtn.addEventListener('click', calculateCGPA);
+            courseContainer.addEventListener('input', calculateCGPA);
+            courseContainer.addEventListener('change', calculateCGPA);
+            prevCgpaInput.addEventListener('input', calculateCGPA);
+            prevUnitsInput.addEventListener('input', calculateCGPA);
+
+            calculateCGPA();
+        })();
+
+/* ---------- Shoe Carousel & Modal (existing) ---------- */
+
+        const imageSourceList = [{
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOzZ9GEjs_WNsmmX8HpBbsSLxd4FdWOR_RfV-y0Vkg6Evv7v8bIF-1BME8TIf5Ct0eSE4I0n3vfyafAs8jEbCAPiSLGXprnej5QcFvz8CX4LWKfQzQP0sF33dQsPxOCBDkzYTLYZMDmuXznpegcYULOEoNNShyqcaKVIIVV_2JIW-rHIWWLZ6W61nbbW8/s486/1000028197.jpg',
+            title: 'Dc-Chestnut Brown',
+            sub: 'Price ₦10,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiUWGBoKJ1YQRR1Rb5TkEQLclYOBOtXKR6Dv5pq7NEdSMSwNV81XnqMNzBVAUqFkvynBONLXatJPKnJqyPIApA9hD-t_MI0bP4B9u6zQJ0dlSQ2eIFgHxLdpqIGyjQt_jiVkUsHHTioMILTyfNIw5EpTzvjMtiSBjJ4HrqNQ_gsl-qYh5-whGrwqVwixKU/s320/1000058846.jpg',
+            title: 'Put Motion',
+            sub: 'Price ₦15,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRSCQTPQQL6g-yfF83wOBDFQxjHDDzUwMBxluzJ4ekrom8X533_o8HuYGIjil-pcdGi-sGYnSy0SO6OKuiFlAZ9MzGDKk2RfLQYRRC7rKAcZztPhcBKxcT8t1ZI7RU-7XsqX5kuyKKBa_scNjVyHtZPUrVQFwjknJwEIHDDzx1Lsk3yP2IWUxPyB3Lm4A/s320/1000028196.jpg',         
+            title: 'Dc-onx',
+            sub: 'Price ₦10,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhqeQ5cPR5N5ZsSg1joCtGD0Sg29Y6r6tqJWlLpg-BH9O_OUGOieNqZxL9XO4rV5yweWr_dZWzxXVvqTrWXGGWYhxKory5RszZ6zZ_s_CNKp5-JzFlGevTqvBRNRj-QRDEQu3cqPGC3NnCEIsZueGPeAG__Mo-sUQxdomchPu05fhmKOL3O4O_D74qRNqs/s320/1000028195.jpg', 
+            title: 'Dc-Buckle-Down',
+            sub: 'Price ₦12,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiwtyCQV70XWTj5BC2MLDM2Cucs3C6LLKLGCP3SH7VS94XXKFriJverhcFeyWaPkGNAl2uEghHwxss_iBRbQ03PY8QZJGWk3nDERw1sJuzxUEnXtdlt8pGIr3TCq0_Xx6eh8u_4V6n2ggvzPLh_yMxegqgBYIPTo_VGIxcwVSA8WF-RX1MpTpI_F3gq9QU/s320/1000028194.jpg',
+            title: 'Dc-Hemes',
+            sub: 'Price ₦10,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtqeOiope0LUniQGDYWSAwdxo_fjumrM9csxACXZ7a41JJZgEkC_3KxW3eND1DkSZ2hyLKRj4QXDDvjRpg0XbzNmwaAYd6r9LYniVMCjHolmBMnkt80N9VwZWO7spBKsknM_5vFFSTg9qtMOjW6MsjaVQN0SVIVUCoGU5TaAw4swPDbzTM-zZDNM5Tr5E/s320/1000028192.jpg',
+            title: 'Dc-Chestnut',
+            sub: 'Price ₦10,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiHbbHTNyBW9913iLbiTIOdvDZ87PdYQXvyMm9x9zXJjRbfgLPlFhlSvQnUK962-RfW-poqiItz8PeKYSnKluy7GyIeiWyf9OR-pbYwYP0GOqg-bn6GuDPH4nEss82tlrZMjRjlazGro2DCS_oojDfssaoYOtLWocjuBg-JaDE1H5Q6bXAoXtcM0rfZS-4/s320/1000028193.jpg',
+            title:'Dc-Noir',
+            sub: 'Price ₦10,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjeosM7NYw3TQZuuPBlsczgO3h6jqx9mWOkseh5AJBQkrmCDdiOxkeHt7A6C4nIb_Oq8yoiFr0NF5nHvB6D50Pf0eU77ha2nmZ8rJIx8im8euaBy3dZumzceSdMUNX8m0P7JUXVmWntqf1nw2K3GbJYAEUfSmq-7khIMngPfD1W2Wm8KChBErws7OAAs2s/w267-h320/1000028191.jpg',
+            title: 'Dc-Time-Strap',
+            sub: 'Price ₦10,000'
+        },{
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgY4h4_OPJMXqUhIR7pt-b4TF6qM1oEsJdqQ9dEq_BEfwjuzX89a4eXQFDdreqwPaoqITZvet2pLBZ80HIVlGHWGx5pvSnqtNgk3-fZnL1IwTnQnQZhE4YAK-I8swB2utLpUbJhwvjSdKWsarRpzrYWGsVeLUKOUqZSL4V71IXQQJFaRZUbKPu2zQPvoz8/s320/1000055413.jpg',
+            title: 'Dc-Light walk ',  
+            sub: 'Price ₦15,000'
+        }, {
+            src: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCPvWGIO6m0Jy_opBfMR-W-NJYvmjnMqQ5AXkKPW5dSzGHLKu_tRDu1_ol3UGDxvz-4o3oSjLjNt-YP3zYWEjLzDsyWmCPK0HLqjYexiCrw_-H1xU5-ut_nM5i6LSsJnvOXiJeSi1Deyu4JxrwyMievSfl3ZcLqwglGrRcJR86Q3BSdFNk7WIVD6Zo3zM/s200/PhotoGrid_1698648726620.jpg',
+            title: '',
+            sub: 'You Can buy this Space'
+        }];
+
+        const carousel = document.getElementById('horizontal_slide');
+        let gridBuilt = false;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function renderCarousel() {
+            carousel.innerHTML = '';
+            const items = shuffleArray([...imageSourceList]);
+
+            items.forEach(item => {
+                const article = document.createElement('article');
+                article.className = 'shoe-card';
+
+                let descriptionHTML = '';
+                if (item.title || item.sub) {
+                    descriptionHTML = `<p class="shoe-card__description">${item.title ? `<strong>${item.title}</strong><br/>` : ''}${item.sub || ''}</p>`;
+                }
+
+                article.innerHTML = `
+                  <div class="shoe-card__media">
+                    <img src="${item.src}" alt="${item.title || 'Banner'}" loading="lazy" title="${item.title || ''}"/>
+                    ${descriptionHTML}
+                  </div>
+                  <button class="shoe-card__action" type="button">Shop Now &#187;</button>
+                `;
+
+                article.querySelector('img').onclick = () => {
+                    openSingleView(item.src, item.title || 'Banner', item);
+                    modalOverlay.classList.add('is-active');
+                };
+
+                const shopBtn = article.querySelector('.shoe-card__action');
+                shopBtn.onclick = () => openShoeForm(item.src, item.title || 'Slides / Footwear');
+
+                carousel.appendChild(article);
+            });
+        }
+
+        const scrollStep = 224;
+        setInterval(() => {
+            if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 15) {
+                carousel.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                carousel.scrollBy({ left: scrollStep, behavior: 'smooth' });
+            }
+        }, 4000);
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openGridBtn = document.getElementById('openGridBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        const gridView = document.getElementById('gridView');
+        const singleView = document.getElementById('singleView');
+        const formView = document.getElementById('formView');
+
+        const galleryContainer = document.getElementById('galleryContainer');
+        const detailImage = document.getElementById('detailImage');
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        const backToGridBtn = document.getElementById('backToGridBtn');
+        const orderForm = document.getElementById('orderForm');
+
+        const formTitle = document.getElementById('formTitle');
+        const shoeFields = document.getElementById('shoeFields');
+        const saloonFields = document.getElementById('saloonFields');
+        const shoeFootnote = document.getElementById('shoeFootnote');
+        const trainingVenue = document.getElementById('trainingVenue');
+        const visitDateInput = document.getElementById('visitDate');
+        const formTypeInput = document.getElementById('formType');
+        const formSubjectInput = document.getElementById('formSubject');
+        const formUrlInput = document.getElementById('formUrl');
+
+
+        function showSection(sectionToShow) {
+            [gridView, singleView, formView].forEach(section => {
+                section.hidden = section !== sectionToShow;
+            });
+        }
+
+        function buildGrid() {
+            galleryContainer.innerHTML = '';
+            imageSourceList.forEach((item) => {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'shoe-grid-item';
+                gridItem.innerHTML = `<img src="${item.src}" alt="${item.title || 'Banner'}" loading="lazy"/>`;
+                gridItem.onclick = () => openSingleView(item.src, item.title || 'Banner', item);
+                galleryContainer.appendChild(gridItem);
+            });
+            gridBuilt = true;
+        }
+
+        openGridBtn.onclick = () => {
+            buildGrid();
+            showSection(gridView);
+            modalOverlay.classList.add('is-active');
+        };
+
+        function openSingleView(src, alt, item = null) {
+            detailImage.src = src;
+            detailImage.alt = alt;
+            detailImage.dataset.title = item?.title || alt || '';
+            showSection(singleView);
+        }
+
+        function openForm(mode, imageTitle = '') {
+
+            const modeDetails = {
+                training: { type: 'Training Registration', subject: 'DNVOC Website - Training Registration' },
+                saloon: { type: 'Saloon Session Booking', subject: 'DNVOC Website - Saloon Session Booking' },
+                shoe: { type: 'Shoe Order', subject: 'DNVOC Website - Shoe Order' },
+            };
+
+            const details = modeDetails[mode] || modeDetails.training;
+            formTypeInput.value = details.type;
+            formSubjectInput.value = details.subject;
+            formUrlInput.value = window.location.href;
+
+            // Reset field visibilities
+            shoeFields.hidden = true;
+            saloonFields.hidden = true;
+            shoeFootnote.hidden = true;
+            trainingVenue.hidden = true;
+
+            // Reset mandatory validations
+            document.getElementById('productName').required = false;
+            document.getElementById('shoeSize').required = false;
+            visitDateInput.required = false;
+
+            if (mode === 'shoe') {
+                formTitle.textContent = 'Shop Quality Slides';
+                shoeFields.hidden = false;
+                shoeFootnote.hidden = false;
+                const productInput = document.getElementById('productName');
+                productInput.value = imageTitle || 'Slides / Footwear';
+                productInput.placeholder = imageTitle || 'Slides / Footwear';
+                document.getElementById('productName').required = true;
+                document.getElementById('shoeSize').required = true;
+            } else if (mode === 'saloon') {
+                formTitle.textContent = 'Book Session';
+                saloonFields.hidden = false;
+                visitDateInput.required = true;
+            } else if (mode === 'find_service' || mode === 'register_service') {
+                // Service forms are standalone modals and are opened directly below.
+                return;
+            } else {
+                formTitle.textContent = 'Register for Training';
+                trainingVenue.hidden = false;
+            }
+
+            showSection(formView);
+            modalOverlay.classList.add('is-active');
+        }
+
+        function openShoeForm(imageSrc, imageTitle = '') {
+            openForm('shoe', imageTitle);
+        }
+
+        function openTrainingForm() {
+            openForm('training');
+        }
+
+        function openSaloonForm() {
+            openForm('saloon');
+        }
+
+        document.querySelectorAll('.open-pop-form').forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                openTrainingForm();
+            };
+        });
+
+        document.querySelectorAll('.open-saloon-form').forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                openSaloonForm();
+            };
+        });
+
+        const findServiceModal = document.getElementById('findServiceModal');
+        const registerServiceModal = document.getElementById('registerServiceModal');
+        const findServiceForm = document.getElementById('findServiceForm');
+        const registerServiceForm = document.getElementById('registerServiceForm');
+        const standaloneGuarantorsContainer = document.getElementById('standaloneGuarantorsContainer');
+        const standaloneAddGuarantorBtn = document.getElementById('standaloneAddGuarantorBtn');
+
+        function openServiceModal(modal) {
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeServiceModal(modal, form) {
+            modal.classList.remove('active');
+            form.reset();
+            document.body.classList.remove('modal-open');
+            if (form === registerServiceForm) {
+                standaloneGuarantorsContainer.querySelectorAll('.guarantor-entry').forEach((entry, index) => {
+                    if (index > 0) entry.remove();
+                });
+            }
+        }
+
+        document.getElementById('findServiceBtn').onclick = () => openServiceModal(findServiceModal);
+        document.getElementById('registerServiceBtn').onclick = () => openServiceModal(registerServiceModal);
+        document.getElementById('findServiceClose').onclick = () => closeServiceModal(findServiceModal, findServiceForm);
+        document.getElementById('registerServiceClose').onclick = () => closeServiceModal(registerServiceModal, registerServiceForm);
+
+        [findServiceModal, registerServiceModal].forEach((modal) => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    const form = modal === findServiceModal ? findServiceForm : registerServiceForm;
+                    closeServiceModal(modal, form);
+                }
+            });
+        });
+
+        standaloneAddGuarantorBtn.onclick = () => {
+            const count = standaloneGuarantorsContainer.querySelectorAll('.guarantor-entry').length + 1;
+            const newFieldset = document.createElement('fieldset');
+            newFieldset.className = 'sub-fieldset guarantor-entry';
+            newFieldset.innerHTML = `
+                <legend>Guarantor / Reference ${count}</legend>
+                <div class="dnvoc-service-form-group">
+                    <label for="standaloneG${count}Name">Name</label>
+                    <input type="text" id="standaloneG${count}Name" name="guarantor${count}_name" placeholder="Full name">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="standaloneG${count}Phone">Phone Number</label>
+                    <input type="tel" id="standaloneG${count}Phone" name="guarantor${count}_phone" placeholder="Phone number">
+                </div>
+                <div class="dnvoc-service-form-group">
+                    <label for="standaloneG${count}Address">Address</label>
+                    <input type="text" id="standaloneG${count}Address" name="guarantor${count}_address" placeholder="Residential address">
+                </div>
+            `;
+            standaloneGuarantorsContainer.appendChild(newFieldset);
+        };
+
+        placeOrderBtn.onclick = () => {
+            openShoeForm(detailImage.src, detailImage.dataset.title || detailImage.alt);
+        };
+
+        backToGridBtn.onclick = () => {
+            if (gridBuilt && galleryContainer.children.length > 0) {
+                showSection(gridView);
+            } else {
+                closeModal();
+            }
+        };
+
+        function closeModal() {
+            modalOverlay.classList.remove('is-active');
+            orderForm.reset();
+            showSection(gridView);
+            
+            document.getElementById('productName').required = false;
+            document.getElementById('shoeSize').required = false;
+            visitDateInput.required = false;
+            
+            shoeFields.hidden = true;
+            saloonFields.hidden = true;
+            shoeFootnote.hidden = true;
+            trainingVenue.hidden = true;
+        }
+
+        closeModalBtn.onclick = closeModal;
+
+        window.onclick = (e) => {
+            if (e.target === modalOverlay) closeModal();
+        };
+
+        orderForm.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const submitButton = orderForm.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            formUrlInput.value = window.location.href;
+
+            try {
+                const response = await fetch(orderForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    body: new FormData(orderForm)
+                });
+
+                const result = await response.json().catch(() => ({}));
+
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || 'Unable to submit the form.');
+                }
+
+                alert('Submitted successfully! Your request has been sent.');
+                closeModal();
+            } catch (error) {
+                console.error('FormSubmit error:', error);
+                alert('Sorry, your submission could not be sent. Please check your internet connection and try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            }
+        };
+
+        async function submitStandaloneServiceForm(form, modal, successMessage) {
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            const urlInput = form.querySelector('input[name="_url"]');
+            if (urlInput) urlInput.value = window.location.href;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form)
+                });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.message || 'Unable to submit the form.');
+                }
+                alert(successMessage);
+                closeServiceModal(modal, form);
+                if (form === registerServiceForm) {
+                    const entries = standaloneGuarantorsContainer.querySelectorAll('.guarantor-entry');
+                    entries.forEach((entry, index) => {
+                        if (index > 0) entry.remove();
+                    });
+                }
+            } catch (error) {
+                console.error('FormSubmit error:', error);
+                alert('Sorry, your submission could not be sent. Please check your internet connection and try again.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
+            }
+        }
+
+        findServiceForm.onsubmit = (e) => {
+            e.preventDefault();
+            submitStandaloneServiceForm(findServiceForm, findServiceModal, 'Service request submitted successfully! We will contact you.');
+        };
+
+        registerServiceForm.onsubmit = (e) => {
+            e.preventDefault();
+            submitStandaloneServiceForm(registerServiceForm, registerServiceModal, 'Service registration submitted successfully! We will review your details.');
+        };
+
+        renderCarousel();
+        showSection(gridView);
+    </script>
+
+
+<script>
+//Ticker Messages 
+        const messages = [
+            {
+                text: "🛍️ Buy & sell to fellow students. Find great deals and stay informed about happening events within Auchi metropolis... Join our WhatsApp channels!",
+                modalHtml: "🛍️ Buy & sell with fellow students. Find great deals and stay informed about happening events within Auchi metropolis... Join our WhatsApp channels!"
+            },
+            {
+                text: "Register for the Next Voc Contest for a chance to win ₦50,000 + in cash prize 🏆 ... see link in side nav",
+                modalHtml: " Register for the Next Voc Contest for a chance to win ₦50,000 + cash prize 🏆... Shine your ⭐ star with Dnvoc"
+            },
+            {
+                text: "🎓 Get scholarships and 💼 jobs updates, discover Amazing deals 🔥 and promote your business to the residents of Auchi and environs. Join our WhatsApp channel...!",
+                modalHtml: "Get scholarships and 💼 jobs updates, discover Amazing deals 🔥 and promote your business to the residents of Auchi and environs. Join our WhatsApp channel...!"
+            },
+            {
+                text: "Interested in Footwear Craft and Leather Design? 👢 Register for our next shoe-making training. See link in the side nav.",
+                modalHtml: "Interested in Footwear Craft and Leather Design? 👢 Register for our next shoe-making training. See link in the side nav."
+            },
+            {
+                text: "Do you want a website 🌐 for your business to reach more customers and manage your business digitally? Talk to us at DNVOC.",
+                modalHtml: "Do you want a website 🌐 for your business to reach more customers and manage your business digitally? Talk to us at DNVOC."
+            },
+            {
+                text: "Have you tried the creamy Annyclem yogurt drink? 🥤 Click the WhatsApp icon at the bottom of this page to place your order and have it delivered to you in minutes.",
+                modalHtml: "Have you tried the creamy Annyclem yogurt drink? 🥤 Click the WhatsApp icon at the bottom of this page to place your order and have it delivered to you in minutes."
+            }
+        ];
+
+        let currentMsgIndex = 0;
+        const scrollDuration = 15000;
+        const reappearanceDelay = 4000;
+        const fullLoopDelay = 15000;
+
+        const tickerWidget = document.getElementById("tickerWidget");
+        const tickerText = document.getElementById("tickerText");
+        const modalText = document.getElementById("modalText");
+        const tickerModal = document.getElementById("tickerModal");
+
+        function displayNextMessage() {
+            // 1. Prepare message text while hidden
+            tickerText.textContent = messages[currentMsgIndex].text;
+            tickerWidget.classList.remove("scrolling");
+
+            // 2. Drop background bar down first
+            tickerWidget.classList.add("visible");
+
+            // 3. Start scroll smoothly 600ms after background bar settles
+            setTimeout(() => {
+                tickerWidget.classList.add("scrolling");
+            }, 600);
+
+            // 4. Slide bar back up after message finishes scrolling
+            setTimeout(() => {
+                tickerWidget.classList.remove("visible", "scrolling");
+                
+                currentMsgIndex++;
+                let nextDelay = reappearanceDelay;
+                
+                if (currentMsgIndex >= messages.length) {
+                    currentMsgIndex = 0;
+                    nextDelay = fullLoopDelay;
+                }
+
+                setTimeout(displayNextMessage, nextDelay);
+            }, scrollDuration + 600);
+        }
+
+        function openMessageModal() {
+            const index = currentMsgIndex < messages.length ? currentMsgIndex : messages.length - 1;
+            modalText.innerHTML = messages[index].modalHtml;
+            tickerModal.classList.add("active");
+        }
+
+        function closeMessageModal(e) {
+            e.stopPropagation();
+            tickerModal.classList.remove("active");
+        }
+
+        window.addEventListener("load", () => {
+            setTimeout(displayNextMessage, 3000);
+        });
+
+
+
+
+
+
+/* =========================================================
+           ===== DNVOC CUSTOMER REWARD BONUS (dnvcr-*) JS =====
+           ========================================================= */
+        (function () {
+            'use strict';
+
+            var DNVCR_STORAGE_KEY = 'dnvcr_loyalty_card_v1';
+            var DNVCR_LOCK_KEY    = 'dnvcr_loyalty_lock_v1';
+            var DNVCR_STAMPS_REQ  = 5;
+            var DNVCR_REWARD_AMT  = 100;
+            var DNVCR_MAX_FAILS   = 3;
+            var DNVCR_LOCKOUT_MS  = 30000;
+
+            var _dnvcrK = 42;
+            var _dnvcrP = [29, 19, 29, 25, 28, 30];
+            function dnvcrGetPin() {
+                return _dnvcrP.map(function (c) { return String.fromCharCode(c ^ _dnvcrK); }).join('');
+            }
+
+            function dnvcrGenId() {
+                return 'DNV-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+            }
+            function dnvcrGenRewardCode() {
+                return 'DNVOC100-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+            }
+            function dnvcrEsc(s) {
+                return String(s).replace(/[&<>"']/g, function (c) {
+                    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+                });
+            }
+            function dnvcrLoad() {
+                var raw = localStorage.getItem(DNVCR_STORAGE_KEY);
+                if (raw) {
+                    try {
+                        var p = JSON.parse(raw);
+                        if (p && typeof p === 'object' && p.id) return p;
+                    } catch (e) {}
+                }
+                var fresh = { id: dnvcrGenId(), stamps: 0, totalStamps: 0, history: [], activeReward: null };
+                dnvcrSave(fresh);
+                return fresh;
+            }
+            function dnvcrSave(card) {
+                try { localStorage.setItem(DNVCR_STORAGE_KEY, JSON.stringify(card)); } catch (e) {}
+            }
+
+            function dnvcrLockRemaining() {
+                try {
+                    var raw = localStorage.getItem(DNVCR_LOCK_KEY);
+                    if (!raw) return 0;
+                    var data = JSON.parse(raw);
+                    if (data.lockedUntil && data.lockedUntil > Date.now()) {
+                        return Math.ceil((data.lockedUntil - Date.now()) / 1000);
+                    }
+                    if (data.lockedUntil && data.lockedUntil <= Date.now()) {
+                        localStorage.removeItem(DNVCR_LOCK_KEY);
+                    }
+                } catch (e) {}
+                return 0;
+            }
+            function dnvcrRegisterFail() {
+                var data = { fails: 0, lockedUntil: 0 };
+                try { data = JSON.parse(localStorage.getItem(DNVCR_LOCK_KEY)) || data; } catch (e) {}
+                data.fails = (data.fails || 0) + 1;
+                if (data.fails >= DNVCR_MAX_FAILS) {
+                    data.lockedUntil = Date.now() + DNVCR_LOCKOUT_MS;
+                    data.fails = 0;
+                }
+                try { localStorage.setItem(DNVCR_LOCK_KEY, JSON.stringify(data)); } catch (e) {}
+                return dnvcrLockRemaining();
+            }
+            function dnvcrClearFails() {
+                try { localStorage.removeItem(DNVCR_LOCK_KEY); } catch (e) {}
+            }
+            function dnvcrFailsLeft() {
+                try {
+                    var data = JSON.parse(localStorage.getItem(DNVCR_LOCK_KEY) || '{}');
+                    return DNVCR_MAX_FAILS - (data.fails || 0);
+                } catch (e) { return DNVCR_MAX_FAILS; }
+            }
+
+            var $ = function (id) { return document.getElementById(id); };
+            var dnvcrToggleBtn   = $('dnvcrToggleBtn');
+            var dnvcrToggleIcon  = $('dnvcrToggleIcon');
+            var dnvcrDrawerEl    = $('dnvcrDrawer');
+            var dnvcrCardIdEl    = $('dnvcrCardId');
+            var dnvcrStampsGrid  = $('dnvcrStampsGrid');
+            var dnvcrProgress    = $('dnvcrProgressFill');
+            var dnvcrStampsCount = $('dnvcrStampsCount');
+            var dnvcrRewardSec   = $('dnvcrRewardSection');
+            var dnvcrAddStampBtn = $('dnvcrAddStampBtn');
+            var dnvcrRedeemBtn   = $('dnvcrRedeemBtn');
+            var dnvcrBackupBtn   = $('dnvcrBackupBtn');
+            var dnvcrRestoreBtn  = $('dnvcrRestoreBtn');
+            var dnvcrHistoryEl   = $('dnvcrHistory');
+
+            var dnvcrStaffModal      = $('dnvcrStaffModal');
+            var dnvcrStaffModalClose = $('dnvcrStaffModalClose');
+            var dnvcrStaffForm       = $('dnvcrStaffForm');
+            var dnvcrStaffModalTitle = $('dnvcrStaffModalTitle');
+            var dnvcrPinInput        = $('dnvcrPinInput');
+            var dnvcrStaffError      = $('dnvcrStaffError');
+            var dnvcrStaffSubmitBtn  = $('dnvcrStaffSubmitBtn');
+
+            var dnvcrPendingAction = null;
+
+            function dnvcrSetOpen(open) {
+                dnvcrDrawerEl.classList.toggle('open', open);
+                dnvcrToggleBtn.setAttribute('aria-expanded', open);
+                dnvcrToggleIcon.textContent = open ? '▲' : '▼';
+            }
+            dnvcrToggleBtn.addEventListener('click', function () {
+                dnvcrSetOpen(!dnvcrDrawerEl.classList.contains('open'));
+            });
+
+            function dnvcrRender() {
+                var card = dnvcrLoad();
+                dnvcrCardIdEl.textContent = card.id;
+
+                var filled = Math.min(card.stamps, DNVCR_STAMPS_REQ);
+                dnvcrStampsCount.textContent = filled + ' / ' + DNVCR_STAMPS_REQ + ' stamps';
+                dnvcrProgress.style.width = (filled / DNVCR_STAMPS_REQ) * 100 + '%';
+
+                dnvcrStampsGrid.innerHTML = '';
+                for (var i = 0; i < DNVCR_STAMPS_REQ; i++) {
+                    var d = document.createElement('div');
+                    d.className = 'dnvcr-stamp' + (i < filled ? ' filled' : '');
+                    d.textContent = i < filled ? '\u2605' : '';
+                    dnvcrStampsGrid.appendChild(d);
+                }
+
+                dnvcrRewardSec.innerHTML = '';
+                if (card.activeReward) {
+                    var box = document.createElement('div');
+                    box.className = 'dnvcr-reward-box';
+                    box.innerHTML =
+                        '<div class="dnvcr-reward-label">\uD83C\uDF89 YOU HAVE UNLOCKED</div>' +
+                        '<div class="dnvcr-reward-amount">\u20A6' + DNVCR_REWARD_AMT + ' OFF</div>' +
+                        '<div class="dnvcr-reward-code">' + dnvcrEsc(card.activeReward.code) + '</div>' +
+                        '<p class="dnvcr-reward-hint">Show this code to staff on your next purchase.</p>';
+                    dnvcrRewardSec.appendChild(box);
+
+                    var markBtn = document.createElement('button');
+                    markBtn.type = 'button';
+                    markBtn.className = 'dnvcr-btn dnvcr-btn--gold';
+                    markBtn.textContent = '\u2705 Mark as Used (by Staff)';
+                    markBtn.onclick = function () { dnvcrOpenStaffModal('redeem'); };
+                    dnvcrRewardSec.appendChild(markBtn);
+
+                    dnvcrRedeemBtn.disabled = true;
+                    dnvcrAddStampBtn.disabled = true;
+                } else {
+                    dnvcrRedeemBtn.disabled = card.stamps < DNVCR_STAMPS_REQ;
+                    dnvcrAddStampBtn.disabled = card.stamps >= DNVCR_STAMPS_REQ;
+                }
+
+                if (!card.history.length) {
+                    dnvcrHistoryEl.innerHTML = '<div class="dnvcr-history-empty">No activity yet. Start earning stamps!</div>';
+                } else {
+                    dnvcrHistoryEl.innerHTML = card.history.slice(-10).reverse().map(function (h) {
+                        var d = new Date(h.date);
+                        var dateStr = d.toLocaleDateString() + ' ' +
+                                      d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        if (h.type === 'stamp') {
+                            return '<div class="dnvcr-history-item">\u2B50 Stamp earned \u2014 ' + dateStr + '</div>';
+                        }
+                        if (h.type === 'reward') {
+                            return '<div class="dnvcr-history-item">\uD83C\uDF81 \u20A6' + h.amount +
+                                   ' reward used \u2014 <strong>' + dnvcrEsc(h.code) + '</strong> &middot; ' + dateStr + '</div>';
+                        }
+                        return '';
+                    }).join('');
+                }
+            }
+
+            function dnvcrOpenStaffModal(action) {
+                dnvcrPendingAction = action;
+                dnvcrStaffError.textContent = '';
+                dnvcrPinInput.value = '';
+                if (action === 'add') {
+                    dnvcrStaffModalTitle.textContent = 'Add Stamp';
+                    dnvcrStaffSubmitBtn.textContent = 'Add Stamp';
+                } else {
+                    dnvcrStaffModalTitle.textContent = 'Mark Reward Used';
+                    dnvcrStaffSubmitBtn.textContent = 'Confirm Used';
+                }
+                dnvcrStaffModal.classList.add('active');
+                setTimeout(function () { dnvcrPinInput.focus(); }, 120);
+            }
+            function dnvcrCloseStaffModal() {
+                dnvcrStaffModal.classList.remove('active');
+                dnvcrPendingAction = null;
+                dnvcrPinInput.value = '';
+                dnvcrStaffError.textContent = '';
+            }
+            dnvcrStaffModalClose.onclick = dnvcrCloseStaffModal;
+            dnvcrStaffModal.addEventListener('click', function (e) {
+                if (e.target === dnvcrStaffModal) dnvcrCloseStaffModal();
+            });
+
+            dnvcrStaffForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                dnvcrStaffError.textContent = '';
+
+                var lock = dnvcrLockRemaining();
+                if (lock > 0) {
+                    dnvcrStaffError.textContent = 'Too many wrong attempts. Try again in ' + lock + 's.';
+                    return;
+                }
+
+                var entered = dnvcrPinInput.value.trim();
+                if (entered !== dnvcrGetPin()) {
+                    var remain = dnvcrRegisterFail();
+                    if (remain > 0) {
+                        dnvcrStaffError.textContent = 'Too many wrong attempts. Locked for ' + remain + 's.';
+                    } else {
+                        dnvcrStaffError.textContent = 'Incorrect PIN. Attempts left: ' + dnvcrFailsLeft();
+                    }
+                    dnvcrPinInput.value = '';
+                    dnvcrPinInput.focus();
+                    return;
+                }
+
+                dnvcrClearFails();
+
+                if (dnvcrPendingAction === 'add') {
+                    var card = dnvcrLoad();
+                    if (card.activeReward) {
+                        dnvcrStaffError.textContent = 'Redeem or mark the active reward first.';
+                        return;
+                    }
+                    if (card.stamps >= DNVCR_STAMPS_REQ) {
+                        dnvcrStaffError.textContent = 'Stamp card is full. Redeem the reward first.';
+                        return;
+                    }
+                    card.stamps += 1;
+                    card.totalStamps += 1;
+                    card.history.push({ type: 'stamp', date: new Date().toISOString() });
+                    dnvcrSave(card);
+                    dnvcrCloseStaffModal();
+                    dnvcrRender();
+                } else if (dnvcrPendingAction === 'redeem') {
+                    var c2 = dnvcrLoad();
+                    if (!c2.activeReward) {
+                        dnvcrStaffError.textContent = 'No active reward to redeem.';
+                        return;
+                    }
+                    c2.history.push({
+                        type: 'reward',
+                        code: c2.activeReward.code,
+                        amount: c2.activeReward.amount,
+                        date: new Date().toISOString()
+                    });
+                    c2.stamps = Math.max(0, c2.stamps - DNVCR_STAMPS_REQ);
+                    c2.activeReward = null;
+                    dnvcrSave(c2);
+                    dnvcrCloseStaffModal();
+                    dnvcrRender();
+                }
+            });
+
+            dnvcrAddStampBtn.onclick = function () {
+                var card = dnvcrLoad();
+                if (card.activeReward) { alert('Mark the active reward as used first.'); return; }
+                if (card.stamps >= DNVCR_STAMPS_REQ) {
+                    alert('Stamp card is full. Redeem your \u20A6100 OFF reward first.');
+                    return;
+                }
+                dnvcrOpenStaffModal('add');
+            };
+
+            dnvcrRedeemBtn.onclick = function () {
+                var card = dnvcrLoad();
+                if (card.stamps < DNVCR_STAMPS_REQ) {
+                    alert('You need ' + DNVCR_STAMPS_REQ + ' stamps before you can redeem.');
+                    return;
+                }
+                if (card.activeReward) { alert('You already have an active reward.'); return; }
+                card.activeReward = {
+                    code: dnvcrGenRewardCode(),
+                    amount: DNVCR_REWARD_AMT,
+                    createdAt: new Date().toISOString()
+                };
+                dnvcrSave(card);
+                dnvcrRender();
+            };
+
+            dnvcrBackupBtn.onclick = function () {
+                var card = dnvcrLoad();
+                var code = btoa(JSON.stringify(card));
+                window.prompt(
+                    'Copy this code and keep it safe. Use Restore on the reward widget to recover your card on another device.',
+                    code
+                );
+            };
+            dnvcrRestoreBtn.onclick = function () {
+                var code = window.prompt('Paste your backup code:');
+                if (!code) return;
+                try {
+                    var card = JSON.parse(atob(code.trim()));
+                    if (!card || !card.id) throw new Error('bad');
+                    dnvcrSave(card);
+                    dnvcrRender();
+                    alert('Card restored successfully!');
+                } catch (e) {
+                    alert('Invalid backup code. Please check and try again.');
+                }
+            };
+
+            dnvcrRender();
+        })();
+
+        /* =========================================================
+           ===== OPPORTUNITIES WITH DNVOC (dnvoc-opp-*) JS =====
+           ========================================================= */
+        (function () {
+            'use strict';
+
+            var dnvcoppBtn       = document.getElementById('dnvocOppBtn');
+            var dnvcoppModal     = document.getElementById('dnvocOppModal');
+            var dnvcoppClose     = document.getElementById('dnvocOppClose');
+            var dnvcoppForm      = document.getElementById('dnvocOppForm');
+            var dnvcoppSubmit    = document.getElementById('dnvocOppSubmit');
+
+            if (!dnvcoppBtn || !dnvcoppModal || !dnvcoppForm) return;
+
+            function dnvcoppOpen() {
+                dnvcoppModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function dnvcoppCloseFn() {
+                dnvcoppModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            dnvcoppBtn.addEventListener('click', dnvcoppOpen);
+            dnvcoppClose.addEventListener('click', dnvcoppCloseFn);
+            dnvcoppModal.addEventListener('click', function (e) {
+                if (e.target === dnvcoppModal) dnvcoppCloseFn();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && dnvcoppModal.classList.contains('active')) {
+                    dnvcoppCloseFn();
+                }
+            });
+
+            dnvcoppForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                var originalText = dnvcoppSubmit.textContent;
+                dnvcoppSubmit.disabled = true;
+                dnvcoppSubmit.textContent = 'Submitting...';
+                try {
+                    var response = await fetch(dnvcoppForm.action, {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: new FormData(dnvcoppForm)
+                    });
+                    var result = await response.json().catch(function () { return {}; });
+                    if (!response.ok || result.success === false) {
+                        throw new Error(result.message || 'Unable to submit the form.');
+                    }
+                    alert('Thank you! Your expression of interest has been submitted. We will contact you when an opportunity matches your skill.');
+                    dnvcoppForm.reset();
+                    dnvcoppCloseFn();
+                } catch (err) {
+                    console.error('Opportunities form error:', err);
+                    alert('Sorry, your submission could not be sent. Please check your internet connection and try again.');
+                } finally {
+                    dnvcoppSubmit.disabled = false;
+                    dnvcoppSubmit.textContent = originalText;
+                }
+            });
+        })();
+
+        /* =========================================================
+           ===== SUGGESTIONS & FEEDBACK (dnvofb-*) JS =====
+           ========================================================= */
+        (function () {
+            'use strict';
+
+            var dnvofbOpenBtn  = document.getElementById('dnvofbOpenBtn');
+            var dnvofbModal    = document.getElementById('dnvofbModal');
+            var dnvofbClose    = document.getElementById('dnvofbClose');
+            var dnvofbForm     = document.getElementById('dnvofbForm');
+            var dnvofbSubmit   = document.getElementById('dnvofbSubmit');
+            var dnvofbStars    = document.getElementById('dnvofbStars');
+            var dnvofbRating   = document.getElementById('dnvofbRatingLabel');
+            var dnvofbRatingIn = document.getElementById('dnvofbRatingValue');
+            var dnvofbStarBtns = dnvofbStars ? Array.prototype.slice.call(dnvofbStars.querySelectorAll('.dnvofb-star')) : [];
+
+            if (!dnvofbOpenBtn || !dnvofbModal || !dnvofbForm) return;
+
+            var ratingLabels = {
+                1: '1 / 5 — Poor',
+                2: '2 / 5 — Fair',
+                3: '3 / 5 — Good',
+                4: '4 / 5 — Very good',
+                5: '5 / 5 — Excellent'
+            };
+            var selectedRating = 0;
+
+            function dnvofbPaint(value) {
+                dnvofbStarBtns.forEach(function (btn) {
+                    var v = parseInt(btn.dataset.value, 10);
+                    btn.classList.toggle('active', v <= value);
+                    btn.classList.remove('hovered');
+                });
+            }
+            function dnvofbSetRating(value) {
+                selectedRating = value;
+                dnvofbRatingIn.value = value ? value + ' / 5' : '';
+                dnvofbRating.textContent = value ? ratingLabels[value] : 'Tap a star to rate your experience';
+                dnvofbPaint(value);
+            }
+
+            dnvofbStarBtns.forEach(function (btn) {
+                var v = parseInt(btn.dataset.value, 10);
+
+                btn.addEventListener('click', function () {
+                    dnvofbSetRating(v);
+                });
+                btn.addEventListener('mouseenter', function () {
+                    dnvofbStarBtns.forEach(function (b) {
+                        var bv = parseInt(b.dataset.value, 10);
+                        b.classList.toggle('hovered', bv <= v);
+                    });
+                    dnvofbRating.textContent = ratingLabels[v];
+                });
+                btn.addEventListener('mouseleave', function () {
+                    dnvofbStarBtns.forEach(function (b) { b.classList.remove('hovered'); });
+                    dnvofbRating.textContent = selectedRating
+                        ? ratingLabels[selectedRating]
+                        : 'Tap a star to rate your experience';
+                });
+            });
+
+            function dnvofbOpenFn() {
+                dnvofbModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            function dnvofbCloseFn() {
+                dnvofbModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            dnvofbOpenBtn.addEventListener('click', dnvofbOpenFn);
+            dnvofbClose.addEventListener('click', dnvofbCloseFn);
+            dnvofbModal.addEventListener('click', function (e) {
+                if (e.target === dnvofbModal) dnvofbCloseFn();
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && dnvofbModal.classList.contains('active')) {
+                    dnvofbCloseFn();
+                }
+            });
+
+            dnvofbForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                if (!selectedRating) {
+                    alert('Please tap a star to rate your experience before submitting.');
+                    return;
+                }
+
+                var originalText = dnvofbSubmit.textContent;
+                dnvofbSubmit.disabled = true;
+                dnvofbSubmit.textContent = 'Submitting...';
+                try {
+                    var response = await fetch(dnvofbForm.action, {
+                        method: 'POST',
+                        headers: { 'Accept': 'application/json' },
+                        body: new FormData(dnvofbForm)
+                    });
+                    var result = await response.json().catch(function () { return {}; });
+                    if (!response.ok || result.success === false) {
+                        throw new Error(result.message || 'Unable to submit the form.');
+                    }
+                    alert('Thank you! Your feedback has been submitted. We truly appreciate it.');
+                    dnvofbForm.reset();
+                    dnvofbSetRating(0);
+                    dnvofbCloseFn();
+                } catch (err) {
+                    console.error('Feedback form error:', err);
+                    alert('Sorry, your feedback could not be sent. Please check your internet connection and try again.');
+                } finally {
+                    dnvofbSubmit.disabled = false;
+                    dnvofbSubmit.textContent = originalText;
+                }
+            });
+        })();
+
+    </script>
+</body>
+</html>
