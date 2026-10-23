@@ -1,0 +1,2196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DNVOC Application Portal - Purchase forms, submit applications, and complete registration for ND/HND programmes.">
+    <meta property="og:title" content="DNVOC Application Portal | Form Purchase &amp; Registration" />
+    <title>DNVOC Application Portal | Form Purchase &amp; Registration</title>
+
+<link rel="icon" type="image/png" href="favicon.png"> <link rel="apple-touch-icon" href="favicon.png">
+
+
+    <style>
+        /* ---------- Design Tokens ---------- */
+        :root {
+            --gold: #d7ae5e;
+            --gold-dark: #9b742d;
+            --gold-light: #e8cf8a;
+            --ink: #111;
+            --line: #cfcfcf;
+            --paper: #fff;
+            --dark: #1a1a1a;
+            --soft: #fafafa;
+            --error: #c0392b;
+            --radius: 8px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ---------- Global Reset ---------- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html {
+            width: 100%;
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            width: 100%;
+            min-width: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+        button {
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        img {
+            max-width: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        [hidden] {
+            display: none !important;
+        }
+
+        /* ---------- Layout ---------- */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ---------- Header ---------- */
+        .page-header {
+            background: var(--dark);
+            color: #fff;
+            padding: 18px 0;
+            border-bottom: 4px solid var(--gold);
+            text-align: center;
+        }
+        .page-header h1 {
+            margin: 0;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: clamp(20px, 3vw, 28px);
+            letter-spacing: 1px;
+            color: var(--gold);
+        }
+        .page-header p {
+            margin: 6px 0 0;
+            font-size: 15px;
+            color: #ccc;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* ---------- Payment Notice ---------- */
+        .notice-box {
+            background: #fdf9ef;
+            border: 2px solid var(--gold);
+            border-left: 8px solid var(--gold);
+            border-radius: var(--radius);
+            padding: 22px 22px 18px;
+            margin: 24px 0 8px;
+            box-shadow: var(--shadow);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .notice-box h2 {
+            margin: 0 0 10px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 20px;
+            letter-spacing: 1px;
+            color: var(--gold-dark);
+            text-transform: uppercase;
+        }
+        .notice-lead {
+            margin: 0 0 16px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #3a3020;
+            font-weight: 600;
+        }
+        .notice-account {
+            list-style: none;
+            margin: 0 0 16px;
+            padding: 0;
+        }
+        .notice-account li {
+            font-size: 16px;
+            margin: 8px 0;
+            color: #333;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+        .notice-account li span {
+            display: inline;
+            min-width: 0;
+            color: var(--gold);
+            font-size: 16px;
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 700;
+        }
+        .notice-account li strong {
+            color: #000;
+            letter-spacing: 0;
+            font-weight: 700;
+        }
+        .notice-note {
+            margin: 10px 0 0;
+            font-size: 14px;
+            color: #5a5a5a;
+            line-height: 1.7;
+        }
+        .notice-note a {
+            color: var(--gold-dark);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .notice-note a:hover,
+        .notice-note a:focus-visible {
+            color: #888;
+            outline: none;
+        }
+
+        /* ---------- Step Toggle Buttons ---------- */
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin: 10px 0 0;
+            padding: 14px 16px;
+            background: var(--dark);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+        .toggle-btn:hover,
+        .toggle-btn:focus-visible,
+        .toggle-btn.is-open {
+            background: var(--gold);
+            color: #000;
+            outline: none;
+        }
+        .toggle-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .toggle-step {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.75;
+        }
+        .toggle-title {
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 17px;
+            letter-spacing: 0.5px;
+        }
+        .toggle-icon {
+            margin-left: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 26px;
+            line-height: 1;
+            transition: transform 0.25s ease;
+        }
+        .toggle-btn.is-open .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        /* ---------- Section Cards ---------- */
+        .form-section {
+            background: var(--paper);
+            border: 2px solid var(--gold);
+            border-top: none;
+            border-radius: 0 0 var(--radius) var(--radius);
+            padding: 22px 20px;
+            margin: 0;
+            box-shadow: var(--shadow);
+            animation: sectionReveal 0.25s ease;
+        }
+        @keyframes sectionReveal {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: none; }
+        }
+        .form-section h2 {
+            margin: 0 0 16px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 20px;
+            color: var(--gold-dark);
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed var(--gold-light);
+        }
+        .form-section h3 {
+            margin: 20px 0 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .form-section h3:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ---------- Form Groups ---------- */
+        .form-group {
+            margin-bottom: 16px;
+            min-width: 0;
+        }
+        .form-group label {
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 5px;
+        }
+        .form-group label .required {
+            color: var(--error);
+            margin-left: 2px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background: var(--soft);
+            font-size: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--ink);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(215, 174, 94, 0.25);
+            background: var(--paper);
+        }
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .form-group .hint {
+            display: block;
+            font-size: 11px;
+            color: #888;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-top: 4px;
+        }
+
+        /* ---------- Grid Helpers ---------- */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+        .date-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            text-align: center;
+            border: 2px solid #fff;
+            border-radius: var(--radius);
+            background: var(--dark);
+            color: #f8f9fa;
+            cursor: pointer;
+            line-height: 1.2;
+            transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        .btn:hover,
+        .btn:focus-visible {
+            background: var(--gold);
+            color: #000;
+            border-color: #000;
+            outline: none;
+        }
+        .btn--primary {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+        .btn--primary:hover {
+            background: var(--gold-dark);
+            border-color: var(--gold-dark);
+            color: #fff;
+        }
+        .btn--block {
+            display: block;
+            width: 100%;
+        }
+        .btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        /* ---------- Qualification Tables ---------- */
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 10px 0;
+            border-radius: 6px;
+        }
+        table.qual-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+        }
+        table.qual-table--wide {
+            min-width: 640px;
+        }
+        table.qual-table th,
+        table.qual-table td {
+            border: 1px solid var(--line);
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: middle;
+        }
+        table.qual-table th {
+            background: var(--gold-light);
+            color: #000;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        table.qual-table td input,
+        table.qual-table td select {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+            background: #fff;
+        }
+        table.qual-table td input:focus,
+        table.qual-table td select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 2px rgba(215, 174, 94, 0.2);
+        }
+        .row-action {
+            text-align: center;
+        }
+        .table-hint {
+            font-size: 12px;
+            color: #888;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 6px 0 10px;
+            font-style: italic;
+            line-height: 1.45;
+        }
+
+        /* ---------- Add / Remove Row Buttons ---------- */
+        .btn-add-row {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 9px 20px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: var(--radius);
+            font-family: Impact, Haettenschweiler, sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .btn-add-row:hover {
+            background: var(--gold-dark);
+            color: #fff;
+        }
+        .btn-remove-row {
+            background: none;
+            border: none;
+            color: #c0392b;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 6px;
+        }
+        .btn-remove-row:hover {
+            color: #e74c3c;
+        }
+
+        /* ---------- Conditional Sections ---------- */
+        .conditional-section {
+            display: none;
+        }
+        .conditional-section.active {
+            display: block;
+        }
+
+        /* ---------- Scratch Card Box ---------- */
+        .scratch-box {
+            background: #fff8e7;
+            border: 2px dashed var(--gold);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin: 18px 0;
+        }
+        .scratch-box h3 {
+            margin: 0 0 4px;
+            color: var(--gold-dark);
+            font-family: Impact, Haettenschweiler, sans-serif;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+        }
+        .scratch-box .scratch-title {
+            margin: 0 0 14px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #7a5a13;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* ---------- Section Submit Footer ---------- */
+        .section-submit {
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 2px dashed var(--gold-light);
+            text-align: center;
+        }
+        .section-submit .btn {
+            min-width: 240px;
+        }
+        .section-submit .submit-note {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #888;
+            margin: 10px 0 0;
+        }
+        .section-submit .submit-note a {
+            color: var(--gold-dark);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .section-submit .submit-note a:hover {
+            color: #888;
+        }
+
+        /* ---------- Footer ---------- */
+        .page-footer {
+            text-align: center;
+            padding: 24px 16px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #888;
+            border-top: 1px solid var(--line);
+            margin-top: 40px;
+        }
+
+        /* ============================================================
+           HAMBURGER BUTTON + SIDE CURTAIN DRAWER
+           ============================================================ */
+        .hamburger-btn {
+            position: fixed;
+            top: 25px;
+            right: 15px;
+            z-index: 10001;
+            background: var(--gold);
+            color: #000;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .hamburger-btn:hover {
+            transform: scale(1.05);
+        }
+        .hamburger-btn span {
+            display: block;
+            width: 22px;
+            height: 3px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+        .hamburger-btn.is-active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-btn.is-active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.is-active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .curtain-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: min(85vw, 380px);
+            height: 100%;
+            background-color: var(--gold-light);
+            color: #fff;
+            z-index: 10003;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .curtain-drawer.active {
+            transform: translateX(0);
+        }
+
+        .curtain-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: -6px;
+        }
+        .curtain-close-btn {
+            background: transparent;
+            border: 0;
+            color: #fff;
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .curtain-close-btn:hover {
+            color: var(--gold-dark);
+        }
+
+        .curtain-content {
+            padding: 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .curtain-nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .curtain-nav-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin: 0 0 2px 2px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        .curtain-link-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 14px;
+            background: #242424;
+            color: #f1f1f1;
+            text-decoration: none;
+            border-radius: 6px;
+            font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid #333;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .curtain-link-btn:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+        }
+
+        /* WhatsApp Promo Box */
+        .drawer-wa-box {
+            background: #0d2818;
+            border: 1px solid #128C7E;
+            border-radius: 8px;
+            padding: 14px;
+            color: #e2f7ed;
+        }
+        .drawer-wa-title {
+            color: #25D366;
+            font-family: Impact, sans-serif;
+            font-size: 18px;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .drawer-wa-promo {
+            font-family: sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            margin: 0 0 10px;
+            padding-left: 16px;
+            list-style: disc;
+        }
+        .drawer-wa-promo li {
+            margin-bottom: 6px;
+        }
+        .drawer-wa-btn {
+            display: block;
+            text-align: center;
+            background: #25D366;
+            color: #000;
+            font-weight: bold;
+            font-family: sans-serif;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .drawer-wa-btn:hover {
+            background: #1eb857;
+        }
+
+        /* ---------- Utility ---------- */
+        .mt-2 { margin-top: 16px; }
+
+        /* ============================================================
+           RESPONSIVE  —  Mobile & Tablet & iPad
+           ============================================================ */
+        @media (max-width: 900px) {
+            .container { padding: 0 14px; }
+        }
+
+        @media (max-width: 700px) {
+            .curtain-drawer {
+                left: 0;
+                right: auto;
+                transform: translateX(-100%);
+                width: min(85vw, 340px);
+            }
+            .curtain-drawer.active { transform: translateX(0); }
+            .curtain-close-btn { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .form-section {
+                padding: 18px 14px;
+            }
+            .form-section h2 { font-size: 18px; }
+            .form-section h3 { font-size: 14px; }
+            .page-header { padding: 16px 0; }
+            .page-header h1 { font-size: 18px; padding: 0 56px; }
+            .page-header p { font-size: 13px; padding: 0 56px; }
+            .notice-box { padding: 16px 14px 12px; }
+            .section-submit .btn { width: 100%; min-width: 0; }
+            .btn { padding: 12px 18px; font-size: 15px; }
+            .toggle-btn { padding: 13px 14px; }
+            .toggle-title { font-size: 16px; }
+            .hamburger-btn { top: 5px; }
+        }
+
+        @media (max-width: 400px) {
+            .container { padding: 0 10px; }
+            .form-section { padding: 16px 11px; }
+
+    .hamburger-btn { top: 5px; }
+            .page-header h1 { font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===================== HAMBURGER BUTTON ===================== -->
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- ===================== CURTAIN DRAWER MENU ===================== -->
+    <aside class="curtain-drawer" id="curtainDrawer" aria-label="Navigation drawer">
+        <div class="curtain-content">
+
+            <div class="curtain-header">
+                <button class="curtain-close-btn" id="closeDrawerBtn" aria-label="Close menu">&times;</button>
+            </div>
+
+            <!-- Quick Jump Actions -->
+            <div class="curtain-nav-group">
+                <div class="curtain-nav-title">Quick links &amp; Forms</div>
+                <a href="https://dnvoc-cafe-and-saloon.dnvoc.workers.dev/" class="curtain-link-btn">🏠 Home Page</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="curtain-link-btn">📚 Past Questions Directory</a>
+                <button type="button" class="curtain-link-btn" data-open="form-purchase">🛒 Purchase Form</button>
+                <button type="button" class="curtain-link-btn" data-open="personal-data">📝 Application Form</button>
+                <button type="button" class="curtain-link-btn" data-open="registration-details">📋 Registration Form</button>
+                <a href="https://wa.me/2349013357735" target="_blank" rel="noopener noreferrer" class="curtain-link-btn">💬 Contact Support</a>
+            </div>
+
+            <!-- WhatsApp Community Promotion -->
+            <div class="curtain-nav-group">
+                <div class="curtain-nav-title">Community Channel</div>
+                <div class="drawer-wa-box">
+                    <div class="drawer-wa-title">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Dnvoc Cafe &amp; Salon
+                    </div>
+                    <ul class="drawer-wa-promo">
+                        <li><strong>Buy &amp; Sell</strong> – Exchange goods and services and discover great deals.</li>
+                        <li><strong>Stay informed</strong> – About happening events within Auchi metropolis.</li>
+                        <li><strong>DNVOC Updates</strong> – Stay informed about upcoming Dnvoc offers, events, and promos.</li>
+                        <li><strong>Lost &amp; Found Directory</strong> – We post your misplaced items for identification and retrieval.</li>
+                    </ul>
+                    <a href="https://whatsapp.com/channel/0029VaCBij80bIduavXyDK2t" target="_blank" rel="noopener noreferrer" class="drawer-wa-btn">Join WhatsApp Channel &#8301;</a>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="page-header">
+        <div class="container">
+     <h1>DNVOC Application Portal</h1>
+        
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- ===================== PAYMENT NOTICE ===================== -->
+        <div class="notice-box">
+            <p class="notice-lead">
+                Form purchase will be processed upon your payment of the specified purchase amount
+                into the following account:
+            </p>
+
+            <ul class="notice-account">
+                <li><span>Bank:</span> <strong>Opay</strong></li>
+                <li><span>Account No:</span> <strong>9013357735</strong></li>
+                <li><span>Account Name:</span> <strong>Bossey Thomas</strong></li>
+            </ul>
+
+            <p class="notice-note">
+                &bull; After payment, please proceed to complete the application form below with your correct information.
+            </p>
+            <p class="notice-note">
+                &bull; Attachment such as document and passport can be sent to this number:
+                <a href="https://wa.me/2349013357735" target="_blank" rel="noopener noreferrer">+234 (0) 901-335-7735</a>
+                on Whatsapp.
+            </p>
+        </div>
+
+        <!-- =========================================================
+             STEP 1 — FORM PURCHASE
+             ========================================================= -->
+        <button type="button" class="toggle-btn" data-target="form-purchase"
+                aria-expanded="false" aria-controls="form-purchase">
+            <span class="toggle-text">
+                <span class="toggle-title">Purchase Form</span>
+            </span>
+            <span class="toggle-icon" aria-hidden="true">+</span>
+        </button>
+
+        <section class="form-section" id="form-purchase" hidden>
+            <h2>Form Purchase</h2>
+
+            <div class="form-group">
+                <label for="proposed-programme">Proposed Programme of Study <span class="required">*</span></label>
+                <select id="proposed-programme" required>
+                    <option value="">-- Select Programme --</option>
+                    <option value="ND">ND (National Diploma)</option>
+                    <option value="HND">HND (Higher National Diploma)</option>
+                </select>
+            </div>
+
+            <!-- ND-only: JAMB Registration Number (conditional) -->
+            <div class="conditional-section" id="nd-jamb-section">
+                <div class="form-group">
+                    <label for="nd-jamb-reg">JAMB Registration Number (ND) <span class="required">*</span></label>
+                    <input type="text" id="nd-jamb-reg" placeholder="e.g. 20000090HB">
+                    <span class="hint">Enter your 10-digit JAMB registration number.</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="proposed-course">Proposed Course of Study <span class="required">*</span></label>
+                <select id="proposed-course" required>
+                    <option value="">-- Select Course --</option>
+                    <option>ACCOUNTANCY</option>
+                    <option>AGRIC &amp; BIO-ENVIRONMENTAL ENG. TECH.</option>
+                    <option>AGRIC EXTENSION &amp; MANAGEMENT</option>
+                    <option>AGRICULTURAL TECHNOLOGY</option>
+                    <option>ARCHITECTURAL TECHNOLOGY</option>
+                    <option>ARTIFICIAL INTELLIGENCE TECHNOLOGY</option>
+                    <option>AUTOMOTIVE MECHATRONICS ENG. TECH.</option>
+                    <option>BANKING &amp; FINANCE</option>
+                    <option>BIOCHEMISTRY OPTION</option>
+                    <option>BIOLOGY/MICROBIOLOGY OPTION</option>
+                    <option>BUILDING TECHNOLOGY</option>
+                    <option>BUSINESS ADMINISTRATION</option>
+                    <option>CERAMICS &amp; GLASS TECHNOLOGY</option>
+                    <option>CERAMICS TECHNOLOGY</option>
+                    <option>CHEMICAL ENGINEERING TECH.</option>
+                    <option>CHEMISTRY</option>
+                    <option>CHEMISTRY/BIOCHEMISTRY OPTION</option>
+                    <option>CIVIL ENGINEERING TECH.</option>
+                    <option>COMMUNICATION IN FILM &amp; MULTIMEDIA PRODUCTION</option>
+                    <option>COMMUNITY HEALTH</option>
+                    <option>COMPUTER ENGINEERING TECH.</option>
+                    <option>COMPUTER NETWORKS &amp; CLOUD COMPUTING TECHNOLOGY</option>
+                    <option>COMPUTER SCIENCE</option>
+                    <option>COOPERATIVE ECONOMICS &amp; MANAGEMENT</option>
+                    <option>CROP PRODUCTION TECHNOLOGY</option>
+                    <option>CYBER SECURITY TECHNOLOGY</option>
+                    <option>CYBER SECURITY TECHNOLOGY &amp; DATA PROTECTION</option>
+                    <option>ELECTRICAL (POWER &amp; MACHINES OPTION)</option>
+                    <option>ELECTRICAL/ELECTRONICS ENG. TECH.</option>
+                    <option>ELECTRONICS &amp; TELECOMS OPTION</option>
+                    <option>ENVIRONMENTAL BIOLOGY OPTION</option>
+                    <option>ENVIRONMENTAL SCIENCE &amp; MANAGEMENT TECHNOLOGY</option>
+                    <option>ESTATE MANAGEMENT</option>
+                    <option>FARM POWER &amp; MACHINERY OPTION</option>
+                    <option>FASHION DESIGN &amp; CLOTHING TECH.</option>
+                    <option>FISHERIES TECHNOLOGY</option>
+                    <option>FOOD TECHNOLOGY</option>
+                    <option>GENERAL ART &amp; IND. DESIGN</option>
+                    <option>GENERAL STUDIES</option>
+                    <option>GEOLOGICAL TECHNOLOGY</option>
+                    <option>GEOLOGY OPTION</option>
+                    <option>GRAPHICS OPTION</option>
+                    <option>HOSPITALITY MANAGEMENT</option>
+                    <option>HUMAN RESOURCES MANAGEMENT</option>
+                    <option>INDUSTRIAL MECHATRONICS ENG. TECH.</option>
+                    <option>JOURNALISM &amp; MEDIA PRODUCTION</option>
+                    <option>LIBRARY &amp; INFORMATION SCIENCE</option>
+                    <option>LOCAL GOVERNMENT &amp; DEVELOPMENT STUDIES</option>
+                    <option>MANAGEMENT</option>
+                    <option>MARKETING</option>
+                    <option>MASS COMMUNICATION</option>
+                    <option>MECHANICAL (MANUFACTURING OPTION)</option>
+                    <option>MECHANICAL (PLANT ENG OPTION)</option>
+                    <option>MECHANICAL (POWER &amp; PLANT OPTION)</option>
+                    <option>MECHANICAL ENGINEERING TECH.</option>
+                    <option>MECHATRONICS ENGINEERING TECH.</option>
+                    <option>MICROBIOLOGY OPTION</option>
+                    <option>MICROFINANCE &amp; ENTERPRISE DEVELOPMENT</option>
+                    <option>MINERALS &amp; PETROLEUM RESOURCES ENG. TECH.</option>
+                    <option>MINING OPTION</option>
+                    <option>OFFICE TECHNOLOGY &amp; MANAGEMENT</option>
+                    <option>PAINTING</option>
+                    <option>PETROLEUM &amp; GAS PROCESSING TECH.</option>
+                    <option>PHARMACEUTICAL TECHNOLOGY</option>
+                    <option>PHOTOGRAPHY TECHNOLOGY</option>
+                    <option>PHYSICS WITH ELECTRONICS</option>
+                    <option>POLYMER TECHNOLOGY</option>
+                    <option>POST-HARVEST ENGINEERING TECH. OPTION</option>
+                    <option>PRE-FASHION DESIGN &amp; CLOTHING TECH.</option>
+                    <option>PRE-PHOTOGRAPHY TECHNOLOGY</option>
+                    <option>PRINTING TECH.</option>
+                    <option>PROCUREMENT &amp; SUPPLY CHAIN MANAGEMENT</option>
+                    <option>PUBLIC ADMINISTRATION</option>
+                    <option>QUANTITY SURVEYING</option>
+                    <option>SCIENCE LABORATORY TECH.</option>
+                    <option>SCULPTURE OPTION</option>
+                    <option>SOCIAL DEVELOPMENT</option>
+                    <option>SOCIAL WELFARE OPTION</option>
+                    <option>SOFTWARE &amp; WEB DEVELOPMENT</option>
+                    <option>SOIL &amp; WATER OPTION</option>
+                    <option>STATISTICS</option>
+                    <option>STRATEGIC</option>
+                    <option>STRATEGIC COMMUNICATION &amp; MEDIA STUDIES</option>
+                    <option>STRUCTURAL OPTION</option>
+                    <option>SURVEYING &amp; GEOINFORMATICS</option>
+                    <option>TAXATION</option>
+                    <option>TEXTILES OPTION</option>
+                    <option>TOURISM MANAGEMENT TECHNOLOGY</option>
+                    <option>TRANSPORTATION OPTION</option>
+                    <option>URBAN AND REGIONAL PLANNING</option>
+                    <option>WATER OPTION</option>
+                    <option>WELDING &amp; FABRICATION ENGINEERING</option>
+                </select>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="mode-of-study">Intended Mode of Study <span class="required">*</span></label>
+                    <select id="mode-of-study" required>
+                        <option value="">-- Select Mode --</option>
+                        <option>Morning</option>
+                        <option>Evening</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Surname <span class="required">*</span></label>
+                    <input type="text" id="surname" placeholder="Enter surname" required>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="other-names">Other Names <span class="required">*</span></label>
+                    <input type="text" id="other-names" placeholder="Enter other names" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" placeholder="e.g. 08012345678" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email / Username <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+            </div>
+
+            <!-- SECTION SUBMIT -->
+            <div class="section-submit">
+                <button type="button" class="btn btn--primary btn--block" id="submit-purchase-btn"
+                        style="max-width:420px; margin:0 auto;">
+                    Submit Form Purchase Request
+                </button>
+                <p class="submit-note">This sends the Form Purchase details above to the DNVOC desk.</p>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             STEP 2 — APPLICATION FORM
+             ========================================================= -->
+        <button type="button" class="toggle-btn" data-target="personal-data"
+                aria-expanded="false" aria-controls="personal-data">
+            <span class="toggle-text">
+                <span class="toggle-title">Application Form</span>
+            </span>
+            <span class="toggle-icon" aria-hidden="true">+</span>
+        </button>
+
+        <section class="form-section" id="personal-data" hidden>
+            <h2>Application Form Details</h2>
+
+            <h3>Personal Data</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="dob">Date of Birth <span class="required">*</span></label>
+                    <input type="date" id="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="sex">Sex</label>
+                    <select id="sex" required>
+                        <option value="">-- Select --</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="marital-status">Marital Status</label>
+                    <select id="marital-status" required>
+                        <option value="">-- Select --</option>
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Divorced</option>
+                        <option>Widowed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nationality">Nationality</label>
+                    <input type="text" id="nationality" value="Nigerian" required>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" placeholder="e.g. Edo" required>
+                </div>
+                <div class="form-group">
+                    <label for="lga">L.G.A <span class="required">*</span></label>
+                    <input type="text" id="lga" placeholder="e.g. Etsako West" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="perm-address">Permanent Home Address <span class="required">*</span></label>
+                <textarea id="perm-address" placeholder="Enter your permanent home address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="parent-name-address">Name and Address of Parent/Guardian <span class="required">*</span></label>
+                <textarea id="parent-name-address" placeholder="Enter parent/guardian name and address" required></textarea>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="parent-occupation">Occupation of Parents/Guardian</label>
+                    <input type="text" id="parent-occupation" placeholder="e.g. Civil Servant">
+                </div>
+                <div class="form-group">
+                    <label for="parent-phone">Parent Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="parent-phone" placeholder="e.g. 08012345678" required>
+                </div>
+            </div>
+
+            <!-- ===== EDUCATIONAL QUALIFICATION ===== -->
+            <h3>Educational Qualification</h3>
+            <p class="table-hint">
+                Enter the examination details once below — they apply to every subject you list.
+            </p>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="app-exam-body">Examination Body</label>
+                    <select id="app-exam-body">
+                        <option value="">-- Select Examination --</option>
+                        <option>WAEC</option>
+                        <option>NECO</option>
+                        <option>NABTEB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="app-exam-center">Center Number</label>
+                    <input type="text" id="app-exam-center" placeholder="e.g. 4020123456">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="app-exam-no">Examination Number</label>
+                    <input type="text" id="app-exam-no" placeholder="e.g. 4020123456">
+                </div>
+                <div class="form-group">
+                    <label>Examination Date</label>
+                    <div class="date-split">
+                        <select id="app-exam-month" data-label="Examination Month">
+                            <option value="">Month</option>
+                            <option>January</option><option>February</option><option>March</option><option>April</option>
+                            <option>May</option><option>June</option><option>July</option><option>August</option>
+                            <option>September</option><option>October</option><option>November</option><option>December</option>
+                        </select>
+                        <input type="text" id="app-exam-year" data-label="Examination Year" placeholder="Year">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="qual-table">
+                    <thead>
+                        <tr>
+                            <th style="width:44px;">S/N</th>
+                            <th>Subject</th>
+                            <th style="width:80px;">Grades</th>
+                            <th style="width:44px;">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appSubjectsBody">
+                        <tr>
+                            <td class="sn">1.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">2.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">3.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">4.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">5.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn-add-row" id="addAppSubjectBtn">+ Add Another Subject</button>
+
+            <!-- ===== CERTIFICATES COMBINED ===== -->
+            <div class="form-group mt-2" style="max-width:420px;">
+                <label for="certificates-combined">How Many Certificates Have you Combined?</label>
+                <select id="certificates-combined">
+                    <option value="">-- Select --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <span class="hint">Selecting 2 reveals an extra table to capture the additional result.</span>
+            </div>
+
+            <!-- ===== COMBINED CERTIFICATE TABLE (shown when 2 selected) ===== -->
+            <div class="conditional-section" id="combined-cert-section">
+                <h3>Certificate Combination Details</h3>
+                <p class="table-hint">
+                    You indicated that you combined more than one certificate. Enter the examination details of the
+                    additional result once below, then list the subjects.
+                </p>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="app-comb-exam-body">Examination Body</label>
+                        <select id="app-comb-exam-body">
+                            <option value="">-- Select Examination --</option>
+                            <option>WAEC</option>
+                            <option>NECO</option>
+                            <option>NABTEB</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="app-comb-center">Center Number</label>
+                        <input type="text" id="app-comb-center" placeholder="e.g. 4020123456">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="app-comb-exam-no">Examination Number</label>
+                        <input type="text" id="app-comb-exam-no" placeholder="e.g. 4020123456">
+                    </div>
+                    <div class="form-group">
+                        <label>Examination Date</label>
+                        <div class="date-split">
+                            <select id="app-comb-exam-month" data-label="Combined Examination Month">
+                                <option value="">Month</option>
+                                <option>January</option><option>February</option><option>March</option><option>April</option>
+                                <option>May</option><option>June</option><option>July</option><option>August</option>
+                                <option>September</option><option>October</option><option>November</option><option>December</option>
+                            </select>
+                            <input type="text" id="app-comb-exam-year" data-label="Combined Examination Year" placeholder="Year">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="qual-table">
+                        <thead>
+                            <tr>
+                                <th style="width:44px;">S/N</th>
+                                <th>Subject</th>
+                                <th style="width:80px;">Grades</th>
+                                <th style="width:44px;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appCombinedBody">
+                            <tr>
+                                <td class="sn">1.</td>
+                                <td><input type="text" placeholder="Subject"></td>
+                                <td><input type="text" placeholder="Grade"></td>
+                                <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn-add-row" id="addAppCombRowBtn">+ Add Another Subject</button>
+            </div>
+
+            <!-- ===== SCRATCH CARD DETAILS ===== -->
+            <div id="nd-scratch-section">
+                <div class="scratch-box">
+                    <h3>For ND Only</h3>
+                    <p class="scratch-title">
+                        Please Provide Your WASCE/NECO Scratch Card Pin Number For Result Checking.
+                    </p>
+
+                    <div class="grid-3">
+                        <div class="form-group">
+                            <label for="scratch-exam-number">Examination Number / Reference Number</label>
+                            <input type="text" id="scratch-exam-number" placeholder="e.g. 4020123456">
+                        </div>
+                        <div class="form-group">
+                            <label for="scratch-pin">Scratch Card Pin Number</label>
+                            <input type="text" id="scratch-pin" placeholder="e.g. 123456789012">
+                        </div>
+                        <div class="form-group">
+                            <label for="scratch-year">Examination Year</label>
+                            <select id="scratch-year">
+                                <option value="">-- Select Year --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== JAMB DETAILS ===== -->
+            <h3>Enter Your JAMB Exam Details here:</h3>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="jamb-reg">JAMB Registration Number</label>
+                    <input type="text" id="jamb-reg" placeholder="e.g. 20000090HB">
+                </div>
+                <div class="form-group">
+                    <label for="jamb-year">Year Examination was Taken</label>
+                    <input type="text" id="jamb-year" placeholder="e.g. 2024">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="subject1-score">Subject 1 Score (e.g. Mathematics 60)</label>
+                    <input type="text" id="subject1-score" placeholder="e.g. Mathematics 60">
+                </div>
+                <div class="form-group">
+                    <label for="subject2-score">Subject 2 Score (e.g. English 50)</label>
+                    <input type="text" id="subject2-score" placeholder="e.g. English 50">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="subject3-score">Subject 3 Score</label>
+                    <input type="text" id="subject3-score" placeholder="e.g. Physics 55">
+                </div>
+                <div class="form-group">
+                    <label for="subject4-score">Subject 4 Score</label>
+                    <input type="text" id="subject4-score" placeholder="e.g. Chemistry 60">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="total-jamb">Total JAMB Score</label>
+                <input type="text" id="total-jamb" placeholder="e.g. 225">
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="first-choice-school">First Choice of School Chosen in JAMB</label>
+                    <input type="text" id="first-choice-school" placeholder="Enter school name">
+                </div>
+                <div class="form-group">
+                    <label for="first-choice-course">First Choice of Course Chosen in JAMB</label>
+                    <input type="text" id="first-choice-course" placeholder="Enter course name">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="second-choice-school">Second Choice of School Chosen in JAMB</label>
+                    <input type="text" id="second-choice-school" placeholder="Enter school name">
+                </div>
+                <div class="form-group">
+                    <label for="second-choice-course">Second Choice of Course Chosen in JAMB</label>
+                    <input type="text" id="second-choice-course" placeholder="Enter course name">
+                </div>
+            </div>
+
+            <!-- ===== ADDITIONAL DETAILS ===== -->
+            <div class="form-group mt-2">
+                <label for="reason-choice">Reason for Choice of Course</label>
+                <textarea id="reason-choice" placeholder="why did you chose this course..."></textarea>
+            </div>
+
+            <!-- ===== SCHOOLS ATTENDED (moved here) ===== -->
+            <div id="schools-attended-section">
+                <h3>Schools Attended</h3>
+                <p class="table-hint">For HND and Post-HND, include school where ND Certificate was obtained.</p>
+
+                <div class="table-wrap">
+                    <table class="qual-table qual-table--wide">
+                        <thead>
+                            <tr>
+                                <th>School</th>
+                                <th>From (Month)</th>
+                                <th>From (Year)</th>
+                                <th>To (Month)</th>
+                                <th>To (Year)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="School name"></td>
+                                <td>
+                                    <select>
+                                        <option value="">Month</option>
+                                        <option>January</option><option>February</option><option>March</option><option>April</option>
+                                        <option>May</option><option>June</option><option>July</option><option>August</option>
+                                        <option>September</option><option>October</option><option>November</option><option>December</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Year" style="width:80px;"></td>
+                                <td>
+                                    <select>
+                                        <option value="">Month</option>
+                                        <option>January</option><option>February</option><option>March</option><option>April</option>
+                                        <option>May</option><option>June</option><option>July</option><option>August</option>
+                                        <option>September</option><option>October</option><option>November</option><option>December</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Year" style="width:80px;"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" placeholder="School name"></td>
+                                <td>
+                                    <select>
+                                        <option value="">Month</option>
+                                        <option>January</option><option>February</option><option>March</option><option>April</option>
+                                        <option>May</option><option>June</option><option>July</option><option>August</option>
+                                        <option>September</option><option>October</option><option>November</option><option>December</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Year" style="width:80px;"></td>
+                                <td>
+                                    <select>
+                                        <option value="">Month</option>
+                                        <option>January</option><option>February</option><option>March</option><option>April</option>
+                                        <option>May</option><option>June</option><option>July</option><option>August</option>
+                                        <option>September</option><option>October</option><option>November</option><option>December</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" placeholder="Year" style="width:80px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="offices-held">Offices Held at School</label>
+                <input type="text" id="offices-held" placeholder="e.g. Head Boy, Class Prefect">
+            </div>
+
+            <div class="form-group">
+                <label for="fees-responsible">Who will be responsible for your fees?</label>
+                <textarea id="fees-responsible" placeholder="e.g. Parent, Guardian, Self..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="convicted">Have you been convicted before?</label>
+                <select id="convicted">
+                    <option value="">-- Select --</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+
+            <div class="conditional-section" id="conviction-details">
+                <div class="form-group">
+                    <label for="conviction-nature">If yes, state nature of offence</label>
+                    <textarea id="conviction-nature" placeholder="State the nature of the offence"></textarea>
+                </div>
+            </div>
+
+            <!-- SECTION SUBMIT -->
+            <div class="section-submit">
+                <button type="button" class="btn btn--primary btn--block" id="submit-application-btn"
+                        style="max-width:420px; margin:0 auto;">
+                    Submit Application Form
+                </button>
+                <p class="submit-note">This sends the Application Form details above to the DNVOC desk.</p>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             STEP 3 — REGISTRATION FORM
+             ========================================================= -->
+        <button type="button" class="toggle-btn" data-target="registration-details"
+                aria-expanded="false" aria-controls="registration-details">
+            <span class="toggle-text">
+                <span class="toggle-title">Registration Form</span>
+            </span>
+            <span class="toggle-icon" aria-hidden="true">+</span>
+        </button>
+
+        <section class="form-section" id="registration-details" hidden>
+            <h2>Registration Form Details</h2>
+            <p class="table-hint">Please fill the section below after school fees payment has been made to get your registration form.</p>
+
+            <h3>Section A — Personal Information</h3>
+
+            <div class="form-group">
+                <label for="reg-mode">Mode of Study</label>
+                <select id="reg-mode">
+                    <option value="">-- Select --</option>
+                    <option>Morning</option>
+                    <option>Evening</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-dob">Date of Birth <span class="required">*</span></label>
+                <input type="date" id="reg-dob" required>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-sex">Sex</label>
+                    <select id="reg-sex">
+                        <option value="">-- Select --</option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-marital">Marital Status</label>
+                    <select id="reg-marital">
+                        <option value="">-- Select --</option>
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Divorced</option>
+                        <option>Widowed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-maiden">Maiden Names (if married)</label>
+                <input type="text" id="reg-maiden" placeholder="Enter maiden name">
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-nationality">Nationality</label>
+                    <input type="text" id="reg-nationality" value="Nigerian">
+                </div>
+                <div class="form-group">
+                    <label for="reg-state-origin">State of Origin <span class="required">*</span></label>
+                    <input type="text" id="reg-state-origin" placeholder="e.g. Edo" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-lga-origin">L.G.A of Origin</label>
+                <input type="text" id="reg-lga-origin" placeholder="e.g. Etsako West">
+            </div>
+
+            <div class="form-group">
+                <label for="reg-off-campus">Off Campus Address <span class="required">*</span></label>
+                <textarea id="reg-off-campus" placeholder="Enter off-campus address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-perm-address">Permanent Home Address <span class="required">*</span></label>
+                <textarea id="reg-perm-address" placeholder="Enter permanent home address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-parent-name">Parent/Guardian Name <span class="required">*</span></label>
+                <input type="text" id="reg-parent-name" placeholder="Enter parent/guardian name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="reg-parent-address">Parent/Guardian Address <span class="required">*</span></label>
+                <textarea id="reg-parent-address" placeholder="Enter parent/guardian address" required></textarea>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-student-phone">Student's Contact Phone No <span class="required">*</span></label>
+                    <input type="tel" id="reg-student-phone" placeholder="e.g. 08012345678" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-parent-phone">Parent/Guardian Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="reg-parent-phone" placeholder="e.g. 08012345678" required>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-nin">Student National Identity Number (NIN) <span class="required">*</span></label>
+                    <input type="text" id="reg-nin" placeholder="Enter 11-digit NIN" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Student Email <span class="required">*</span></label>
+                    <input type="email" id="reg-email" placeholder="student@example.com" required>
+                </div>
+            </div>
+
+            <h3>Section B — Bursary Details</h3>
+            <p class="table-hint">Ignore if school fees payment was made with us.</p>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="bursary-amount">Amount Paid (₦)</label>
+                    <input type="text" id="bursary-amount" placeholder="e.g. 50000">
+                </div>
+                <div class="form-group">
+                    <label for="bursary-date">Date of Payment</label>
+                    <input type="date" id="bursary-date">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="bursary-bank">Name of Bank</label>
+                    <input type="text" id="bursary-bank" placeholder="e.g. Opay">
+                </div>
+                <div class="form-group">
+                    <label for="bursary-place">Place of Payment</label>
+                    <input type="text" id="bursary-place" placeholder="e.g. DNVOC Office">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="bursary-teller">Teller Number(s)</label>
+                    <input type="text" id="bursary-teller" placeholder="Enter teller number">
+                </div>
+                <div class="form-group">
+                    <label for="bursary-reason">Reason for Payment</label>
+                    <input type="text" id="bursary-reason" placeholder="e.g. School Fees">
+                </div>
+            </div>
+
+            <h3>Section C — Educational Qualifications</h3>
+            <p class="table-hint">
+                Enter the examination details once below — they apply to every subject you list.
+            </p>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-exam-body">Examination Body</label>
+                    <select id="reg-exam-body">
+                        <option value="">-- Select Examination --</option>
+                        <option>WAEC</option>
+                        <option>NECO</option>
+                        <option>NABTEB</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reg-exam-center">Center Number</label>
+                    <input type="text" id="reg-exam-center" placeholder="e.g. 4020123456">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="reg-exam-no">Examination Number</label>
+                    <input type="text" id="reg-exam-no" placeholder="e.g. 4020123456">
+                </div>
+                <div class="form-group">
+                    <label>Examination Date</label>
+                    <div class="date-split">
+                        <select id="reg-exam-month" data-label="Examination Month">
+                            <option value="">Month</option>
+                            <option>January</option><option>February</option><option>March</option><option>April</option>
+                            <option>May</option><option>June</option><option>July</option><option>August</option>
+                            <option>September</option><option>October</option><option>November</option><option>December</option>
+                        </select>
+                        <input type="text" id="reg-exam-year" data-label="Examination Year" placeholder="Year">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table class="qual-table">
+                    <thead>
+                        <tr>
+                            <th style="width:44px;">S/N</th>
+                            <th>Subject</th>
+                            <th style="width:80px;">Grades</th>
+                            <th style="width:44px;">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="regSubjectsBody">
+                        <tr>
+                            <td class="sn">1.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">2.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">3.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">4.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                        <tr>
+                            <td class="sn">5.</td>
+                            <td><input type="text" placeholder="Subject"></td>
+                            <td><input type="text" placeholder="Grade"></td>
+                            <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" class="btn-add-row" id="addRegSubjectBtn">+ Add Another Subject</button>
+
+            <!-- ===== COMBINED CERTIFICATE OPTION (REGISTRATION) ===== -->
+            <div class="form-group mt-2" style="max-width:420px;">
+                <label for="reg-certificates-combined">How Many Certificates Have you Combined?</label>
+                <select id="reg-certificates-combined">
+                    <option value="">-- Select --</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+                <span class="hint">Selecting 2 reveals an extra table to capture the additional result.</span>
+            </div>
+
+            <div class="conditional-section" id="reg-combined-cert-section">
+                <h3>Certificate Combination Details</h3>
+                <p class="table-hint">
+                    You indicated that you combined more than one certificate. Enter the examination details of the
+                    additional result once below, then list the subjects.
+                </p>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="reg-comb-exam-body">Examination Body</label>
+                        <select id="reg-comb-exam-body">
+                            <option value="">-- Select Examination --</option>
+                            <option>WAEC</option>
+                            <option>NECO</option>
+                            <option>NABTEB</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-comb-center">Center Number</label>
+                        <input type="text" id="reg-comb-center" placeholder="e.g. 4020123456">
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="reg-comb-exam-no">Examination Number</label>
+                        <input type="text" id="reg-comb-exam-no" placeholder="e.g. 4020123456">
+                    </div>
+                    <div class="form-group">
+                        <label>Examination Date</label>
+                        <div class="date-split">
+                            <select id="reg-comb-exam-month" data-label="Combined Examination Month">
+                                <option value="">Month</option>
+                                <option>January</option><option>February</option><option>March</option><option>April</option>
+                                <option>May</option><option>June</option><option>July</option><option>August</option>
+                                <option>September</option><option>October</option><option>November</option><option>December</option>
+                            </select>
+                            <input type="text" id="reg-comb-exam-year" data-label="Combined Examination Year" placeholder="Year">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="qual-table">
+                        <thead>
+                            <tr>
+                                <th style="width:44px;">S/N</th>
+                                <th>Subject</th>
+                                <th style="width:80px;">Grades</th>
+                                <th style="width:44px;">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regCombinedBody">
+                            <tr>
+                                <td class="sn">1.</td>
+                                <td><input type="text" placeholder="Subject"></td>
+                                <td><input type="text" placeholder="Grade"></td>
+                                <td class="row-action"><button type="button" class="btn-remove-row" title="Remove row">&times;</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="button" class="btn-add-row" id="addRegCombRowBtn">+ Add Another Subject</button>
+            </div>
+
+            <!-- SECTION SUBMIT -->
+            <div class="section-submit">
+                <button type="button" class="btn btn--primary btn--block" id="submit-registration-btn"
+                        style="max-width:420px; margin:0 auto;">
+                    Submit Registration Form
+                </button>
+                <p class="submit-note">
+                    Attachment such as document and passport can be sent to this number:
+                    <a href="https://wa.me/2349013357735" target="_blank" rel="noopener noreferrer">+234 (0) 901-335-7735</a>
+                    on WhatsApp.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2025 DNVOC Cafe &amp; Salon. All rights reserved.</p>
+            <p>Contact: 0901-335-7735 | Dwinliz.nvm@gmail.com</p>
+            <p>Auchi, Edo State, Nigeria</p>
+        </div>
+    </footer>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        (function () {
+            'use strict';
+
+            var forEach = Array.prototype.forEach;
+
+            /* =========================================================
+               1. SIDE CURTAIN DRAWER
+               ========================================================= */
+            var hamburgerBtn = document.getElementById('hamburgerBtn');
+            var curtainDrawer = document.getElementById('curtainDrawer');
+            var closeDrawerBtn = document.getElementById('closeDrawerBtn');
+
+            function toggleCurtain(open) {
+                if (!hamburgerBtn || !curtainDrawer) return;
+                hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (open) {
+                    hamburgerBtn.classList.add('is-active');
+                    curtainDrawer.classList.add('active');
+                } else {
+                    hamburgerBtn.classList.remove('is-active');
+                    curtainDrawer.classList.remove('active');
+                }
+            }
+
+            /* =========================================================
+               2. STEP ACCORDION (one form open at a time)
+               ========================================================= */
+            var toggleButtons = document.querySelectorAll('.toggle-btn');
+            var sections = document.querySelectorAll('.form-section');
+
+            function closeAllSections() {
+                forEach.call(sections, function (sec) { sec.hidden = true; });
+                forEach.call(toggleButtons, function (btn) {
+                    btn.classList.remove('is-open');
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+            }
+
+            function openSection(id, shouldScroll) {
+                var btn = document.querySelector('.toggle-btn[data-target="' + id + '"]');
+                var sec = document.getElementById(id);
+                if (!btn || !sec) return;
+
+                closeAllSections();
+
+                sec.hidden = false;
+                btn.classList.add('is-open');
+                btn.setAttribute('aria-expanded', 'true');
+
+                if (shouldScroll) {
+                    setTimeout(function () {
+                        try {
+                            btn.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } catch (e) {
+                            btn.scrollIntoView();
+                        }
+                    }, 60);
+                }
+            }
+
+            forEach.call(toggleButtons, function (btn) {
+                btn.addEventListener('click', function () {
+                    var id = btn.getAttribute('data-target');
+                    var sec = document.getElementById(id);
+                    if (!sec) return;
+
+                    if (sec.hidden) {
+                        openSection(id, false);
+                    } else {
+                        closeAllSections();
+                    }
+                });
+            });
+
+            /* ---- Drawer wiring ---- */
+            if (hamburgerBtn && curtainDrawer) {
+                hamburgerBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    toggleCurtain(!curtainDrawer.classList.contains('active'));
+                });
+
+                if (closeDrawerBtn) {
+                    closeDrawerBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        toggleCurtain(false);
+                    });
+                }
+
+                curtainDrawer.addEventListener('click', function (e) {
+                    e.stopPropagation();
+
+                    var opener = e.target.closest ? e.target.closest('[data-open]') : null;
+                    if (opener) {
+                        toggleCurtain(false);
+                        openSection(opener.getAttribute('data-open'), true);
+                        return;
+                    }
+
+                    var link = e.target.closest ? e.target.closest('a') : null;
+                    if (link) {
+                        var href = link.getAttribute('href') || '';
+                        if (href.charAt(0) === '#') toggleCurtain(false);
+                    }
+                });
+
+                document.addEventListener('click', function () {
+                    if (curtainDrawer.classList.contains('active')) toggleCurtain(false);
+                });
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') toggleCurtain(false);
+                });
+            }
+
+            /* =========================================================
+               3. CONDITIONAL LOGIC — Programme / Conviction
+               ========================================================= */
+            var programmeSelect = document.getElementById('proposed-programme');
+            var ndJambSection = document.getElementById('nd-jamb-section');
+
+            function syncProgramme() {
+                var value = programmeSelect ? programmeSelect.value : '';
+                if (ndJambSection) ndJambSection.classList.toggle('active', value === 'ND');
+            }
+            if (programmeSelect) programmeSelect.addEventListener('change', syncProgramme);
+
+            var convictedSelect = document.getElementById('convicted');
+            var convictionDetails = document.getElementById('conviction-details');
+            if (convictedSelect && convictionDetails) {
+                convictedSelect.addEventListener('change', function () {
+                    convictionDetails.classList.toggle('active', this.value === 'Yes');
+                });
+            }
+
+            /* =========================================================
+               4. SUBJECT ROW TABLES (add / remove)
+               ========================================================= */
+            function renumberRows(tbody) {
+                var rows = tbody.querySelectorAll('tr');
+                forEach.call(rows, function (row, i) {
+                    var sn = row.querySelector('.sn');
+                    if (sn) sn.textContent = (i + 1) + '.';
+                });
+            }
+
+            function setupSubjectTable(tbodyId, addBtnId) {
+                var tbody = document.getElementById(tbodyId);
+                var addBtn = document.getElementById(addBtnId);
+                if (!tbody || !addBtn) return;
+
+                addBtn.addEventListener('click', function () {
+                    var firstRow = tbody.querySelector('tr');
+                    if (!firstRow) return;
+
+                    var newRow = firstRow.cloneNode(true);
+                    forEach.call(newRow.querySelectorAll('input'), function (input) {
+                        input.value = '';
+                    });
+                    forEach.call(newRow.querySelectorAll('select'), function (sel) {
+                        sel.selectedIndex = 0;
+                    });
+
+                    tbody.appendChild(newRow);
+                    renumberRows(tbody);
+                });
+
+                tbody.addEventListener('click', function (e) {
+                    var removeBtn = e.target.closest ? e.target.closest('.btn-remove-row') : null;
+                    if (!removeBtn) return;
+
+                    if (tbody.querySelectorAll('tr').length > 1) {
+                        removeBtn.closest('tr').remove();
+                        renumberRows(tbody);
+                    } else {
+                        alert('At least one subject row is required.');
+                    }
+                });
+            }
+
+            setupSubjectTable('appSubjectsBody', 'addAppSubjectBtn');
+            setupSubjectTable('appCombinedBody', 'addAppCombRowBtn');
+            setupSubjectTable('regSubjectsBody', 'addRegSubjectBtn');
+            setupSubjectTable('regCombinedBody', 'addRegCombRowBtn');
+
+            /* =========================================================
+               5. COMBINED CERTIFICATE REVEAL
+               ========================================================= */
+            function setupCertificateReveal(selectId, sectionId) {
+                var select = document.getElementById(selectId);
+                var section = document.getElementById(sectionId);
+                if (!select || !section) return;
+
+                select.addEventListener('change', function () {
+                    var val = parseInt(this.value, 10);
+                    section.classList.toggle('active', !isNaN(val) && val >= 2);
+                });
+            }
+
+            setupCertificateReveal('certificates-combined', 'combined-cert-section');
+            setupCertificateReveal('reg-certificates-combined', 'reg-combined-cert-section');
+
+            /* =========================================================
+               6. EXAMINATION YEAR DROPDOWN (Scratch Card)
+               ========================================================= */
+            var scratchYear = document.getElementById('scratch-year');
+            if (scratchYear) {
+                var currentYear = new Date().getFullYear();
+                for (var y = currentYear; y >= currentYear - 30; y--) {
+                    var opt = document.createElement('option');
+                    opt.value = String(y);
+                    opt.textContent = String(y);
+                    scratchYear.appendChild(opt);
+                }
+            }
+
+            /* =========================================================
+               7. EMAIL SUBMISSION ENGINE (FormSubmit AJAX)
+               ========================================================= */
+            var FORM_ENDPOINT = 'https://formsubmit.co/ajax/dwinliz.nvm@gmail.com';
+
+            function getLabelText(field) {
+                if (field.id) {
+                    var lab = document.querySelector('label[for="' + field.id.replace(/"/g, '\\"') + '"]');
+                    if (lab) return lab.textContent.replace(/\*/g, '').trim();
+                }
+                var wrap = field.closest('label');
+                if (wrap) return wrap.textContent.replace(/\*/g, '').trim();
+                return field.getAttribute('data-label') ||
+                       field.name ||
+                       field.id ||
+                       field.placeholder ||
+                       'Field';
+            }
+
+            function collectSectionFields(section) {
+                var items = [];
+                var used = {};
+                var tables = Array.prototype.slice.call(section.querySelectorAll('table'));
+                var fields = section.querySelectorAll('input, select, textarea');
+
+                forEach.call(fields, function (field) {
+                    var type = (field.type || '').toLowerCase();
+
+                    if (type === 'file') return;
+                    if (type === 'submit' || type === 'button' || type === 'reset') return;
+                    if ((type === 'checkbox' || type === 'radio') && !field.checked) return;
+                    if (field.offsetParent === null) return;
+
+                    var label;
+                    var table = field.closest('table');
+
+                    if (table) {
+                        var td = field.closest('td');
+                        var tr = field.closest('tr');
+                        var tbody = field.closest('tbody');
+                        var header = 'Column';
+
+                        if (td && tr) {
+                            var idx = Array.prototype.indexOf.call(tr.children, td);
+                            var headRow = table.querySelector('thead tr');
+                            if (headRow && headRow.children[idx]) {
+                                header = headRow.children[idx].textContent.trim();
+                            }
+                        }
+                        var rowNum = '';
+                        if (tbody && tr) {
+                            rowNum = ' Row ' + (Array.prototype.indexOf.call(tbody.children, tr) + 1);
+                        }
+                        var tIndex = tables.indexOf(table) + 1;
+                        label = 'Table ' + tIndex + ' - ' + header + rowNum;
+                    } else {
+                        label = getLabelText(field);
+                    }
+
+                    if (!label) label = 'Field';
+
+                    var key = label;
+                    var n = 2;
+                    while (Object.prototype.hasOwnProperty.call(used, key)) {
+                        key = label + ' (' + n + ')';
+                        n++;
+                    }
+                    used[key] = true;
+
+                    var value = field.value;
+                    if (type === 'checkbox') value = 'Yes';
+
+                    items.push({ key: key, value: value });
+                });
+
+                return items;
+            }
+
+            function validateSection(section) {
+                var required = section.querySelectorAll('[required]');
+                var firstInvalid = null;
+
+                forEach.call(required, function (field) {
+                    if (field.offsetParent === null) return;
+                    if (!String(field.value || '').trim()) {
+                        field.style.borderColor = '#c0392b';
+                        field.style.boxShadow = '0 0 0 3px rgba(192, 57, 43, 0.15)';
+                        if (!firstInvalid) firstInvalid = field;
+                    } else {
+                        field.style.borderColor = '';
+                        field.style.boxShadow = '';
+                    }
+                });
+
+                if (firstInvalid) {
+                    alert('Please fill in all required fields correctly before submitting.');
+                    try {
+                        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } catch (e) {
+                        firstInvalid.scrollIntoView();
+                    }
+                    try { firstInvalid.focus({ preventScroll: true }); } catch (e2) { firstInvalid.focus(); }
+                    return false;
+                }
+                return true;
+            }
+
+            function sendToEmail(items, subject, button) {
+                var originalText = button.textContent;
+                button.disabled = true;
+                button.textContent = 'Sending...';
+
+                var fd = new FormData();
+                fd.append('_subject', subject);
+                fd.append('_template', 'table');
+                fd.append('_captcha', 'false');
+                fd.append('_url', window.location.href);
+                fd.append('submitted_from', window.location.href);
+                fd.append('submitted_at', new Date().toLocaleString());
+
+                items.forEach(function (item) {
+                    fd.append(item.key, item.value);
+                });
+
+                return fetch(FORM_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: fd
+                })
+                .then(function (res) {
+                    return res.text().then(function (text) {
+                        var data = {};
+                        try { data = JSON.parse(text); } catch (e) { /* ignore */ }
+                        if (!res.ok || data.success === false) {
+                            throw new Error(data.message || 'Unable to submit the form.');
+                        }
+                        return data;
+                    });
+                })
+                .then(function () {
+                    alert('Submitted successfully!\n\nYour information has been sent to the DNVOC desk.');
+                })
+                .catch(function (err) {
+                    console.error('FormSubmit error:', err);
+                    alert('Sorry, your submission could not be sent.\nPlease check your internet connection and try again.');
+                })
+                .then(function () {
+                    button.disabled = false;
+                    button.textContent = originalText;
+                });
+            }
+
+            function bindSectionSubmit(buttonId, sectionId, subject) {
+                var button = document.getElementById(buttonId);
+                var section = document.getElementById(sectionId);
+                if (!button || !section) return;
+
+                button.addEventListener('click', function () {
+                    if (!validateSection(section)) return;
+                    var items = collectSectionFields(section);
+                    if (!items.length) {
+                        alert('There is nothing to submit in this section yet.');
+                        return;
+                    }
+                    sendToEmail(items, subject, button);
+                });
+            }
+
+            bindSectionSubmit('submit-purchase-btn', 'form-purchase',
+                'DNVOC Portal | Form Purchase Submission');
+            bindSectionSubmit('submit-application-btn', 'personal-data',
+                'DNVOC Portal | Application Form Submission');
+            bindSectionSubmit('submit-registration-btn', 'registration-details',
+                'DNVOC Portal | Registration Form Submission');
+
+            /* =========================================================
+               8. CLEAR ERROR STYLING ON INPUT
+               ========================================================= */
+            forEach.call(
+                document.querySelectorAll('input, select, textarea'),
+                function (field) {
+                    field.addEventListener('input', function () {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                    });
+                    field.addEventListener('change', function () {
+                        this.style.borderColor = '';
+                        this.style.boxShadow = '';
+                    });
+                }
+            );
+
+            /* =========================================================
+               9. INITIAL SETUP
+               ========================================================= */
+            syncProgramme();
+
+        })();
+    </script>
+
+</body>
+</html>
